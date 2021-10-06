@@ -1,0 +1,7 @@
+*.pdf
+Otto_Day/
+week1/*.pdf
+macroevolution/*.pdf
+macroevolution/*.ppt
+
+*/.ipynb_checkpoints
