@@ -114,15 +114,10 @@ update_time_probs <- function(la, trait_rates, pars, N, ddmodel, t){
             (laN[2] + muN[2] + trait_rates[2]) * N[2]
     
     t_event = ifelse(denom == 0, Inf, t + stats::rexp(1,denom))
-    if (N[1]==0){
-        rates = c(0, laN[2], 0, muN[2], 0, trait_rates[2])
-        event_probs = rates/sum(rates)
-    } else if (N[2]==0){
-        rates = c(laN[1], 0, muN[1], 0, trait_rates[1], 0)
-        event_probs = rates/sum(rates)
-    } else {
-        event_probs = c(laN, muN, trait_rates)/sum(laN, muN, trait_rates)
-    }
+
+    rates = c(laN[1]*N[1], laN[2]*N[2], muN[1]*N[1], muN[2]*N[2], 
+                trait_rates[1]*N[1], trait_rates[2]*N[2])
+    event_probs = rates/sum(rates)
     
     return(list(t = t_event, p = event_probs))
 }
