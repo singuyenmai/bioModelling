@@ -3,5 +3,7 @@ Otto_Day/
 week1/*.pdf
 macroevolution/*.pdf
 macroevolution/*.ppt
+macroevolution/DDD/
+macroevolution/document/
 
 */.ipynb_checkpoints
