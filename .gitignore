@@ -6,4 +6,7 @@ macroevolution/*.ppt
 macroevolution/DDD/
 macroevolution/document/
 
+paramEstimation/*.pdf
+paramEstimation/*.docx
+
 */.ipynb_checkpoints
