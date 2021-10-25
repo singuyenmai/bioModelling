@@ -8,5 +8,6 @@ macroevolution/document/
 
 paramEstimation/*.pdf
 paramEstimation/*.docx
+paramEstimation/*.html
 
 */.ipynb_checkpoints
