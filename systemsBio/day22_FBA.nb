@@ -1,0 +1,482 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     19870,        474]
+NotebookOptionsPosition[     16111,        414]
+NotebookOutlinePosition[     17034,        442]
+CellTagsIndexPosition[     16991,        439]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["Biological Modelling and Model Analysis - day XXII", "Subtitle",
+ CellChangeTimes->{{3.6829991255094852`*^9, 3.68299914575751*^9}, 
+   3.682999421015033*^9, {3.683964417430398*^9, 3.6839644182337*^9}, {
+   3.684654757959724*^9, 3.684654759005673*^9}, {3.686301063843093*^9, 
+   3.6863010670734158`*^9}, {3.77968220643496*^9, 3.779682208045836*^9}, 
+   3.779785006876133*^9, 3.780023577341305*^9, {3.8117340090653973`*^9, 
+   3.811734010069129*^9}, {3.844218937881899*^9, 
+   3.844218939079405*^9}},ExpressionUUID->"7370bfdc-709a-4df4-9928-\
+023137078b46"],
+
+Cell[CellGroupData[{
+
+Cell["Metabolic modelling", "Title",
+ CellChangeTimes->{{3.682998874641573*^9, 3.682998895360573*^9}, {
+  3.683964426788683*^9, 3.683964434866899*^9}, {3.684654763386012*^9, 
+  3.68465476916544*^9}, {3.6863010720429125`*^9, 3.6863010964753556`*^9}, {
+  3.6863012265993667`*^9, 3.686301238856592*^9}, {3.779682211280781*^9, 
+  3.7796822142181945`*^9}},ExpressionUUID->"004a4d00-5538-4fcc-b645-\
+0d201c26df25"],
+
+Cell["Sander van Doorn", "Subsubtitle",
+ CellChangeTimes->{{3.68299919036697*^9, 
+  3.6829991932712607`*^9}},ExpressionUUID->"5811ea05-b2b5-42b4-9141-\
+c43f07c9a951"],
+
+Cell["Groningen Institute for Evolutionary Life Sciences", "Subsubtitle",
+ CellChangeTimes->{{3.6829992274406776`*^9, 
+  3.6829992458415174`*^9}},ExpressionUUID->"561c1669-5a78-49b5-b567-\
+963b56226416"],
+
+Cell["g.s.van.doorn@rug.nl", "Subsubtitle",
+ CellChangeTimes->{{3.68299926217015*^9, 
+  3.6829992690098343`*^9}},ExpressionUUID->"723b14b7-7394-4311-a0f0-\
+b1267fc85f08"],
+
+Cell[CellGroupData[{
+
+Cell["Flux-balance-analysis", "Section",
+ CellChangeTimes->{{3.6829992928352165`*^9, 3.6829992962185545`*^9}, {
+  3.684053399255887*^9, 3.6840534106583014`*^9}, {3.684654781552939*^9, 
+  3.6846548024536753`*^9}, {3.6846563835799923`*^9, 3.684656406863645*^9}, {
+  3.686301208622569*^9, 3.6863012217918863`*^9}, {3.7796953359166474`*^9, 
+  3.779695374090106*^9}, {3.780024285848259*^9, 
+  3.7800242902554703`*^9}},ExpressionUUID->"30edb0b4-5b93-4991-8317-\
+dab6fe4c943a"],
+
+Cell["First, I specify the names of metabolites and fluxes", "Text",
+ CellChangeTimes->{{3.780046891121901*^9, 
+  3.7800469174398603`*^9}},ExpressionUUID->"4cb4e2ab-45a7-4f72-bca0-\
+6b0fb5db1e64"],
+
+Cell[BoxData[{
+ RowBox[{"metabolites", "=", 
+  RowBox[{"{", 
+   RowBox[{
+   "\"\<C_P\>\"", ",", "\"\<C\>\"", ",", "\"\<N\>\"", ",", "\"\<E\>\""}], 
+   "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{"fluxes", "=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    SubscriptBox["v", "i"], ",", 
+    RowBox[{"{", 
+     RowBox[{"i", ",", "1", ",", "6"}], "}"}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.780023613965342*^9, 3.7800237034947557`*^9}, {
+   3.7800237510032177`*^9, 3.780023790877099*^9}, {3.7800238944143467`*^9, 
+   3.780023897918751*^9}, 3.7800245738264923`*^9, {3.780024604880237*^9, 
+   3.780024626121147*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"e045bd7e-b826-467d-986d-48315a36daec"],
+
+Cell["\<\
+Determine the number of rows and columns of the stoichiometric matrix\
+\>", "Text",
+ CellChangeTimes->{{3.780048356427614*^9, 
+  3.780048370210588*^9}},ExpressionUUID->"f98bbaad-23e1-46dc-ad47-\
+f6641cce58a2"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"{", 
+   RowBox[{
+    SubscriptBox["n", "row"], ",", 
+    SubscriptBox["n", "col"]}], "}"}], "=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"Length", "[", "metabolites", "]"}], ",", 
+    RowBox[{"Length", "[", "fluxes", "]"}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.7800237297397137`*^9, 3.780023745602055*^9}},
+ CellLabel->"In[3]:=",ExpressionUUID->"c6250902-ce1b-48ec-9c80-37598d8a8600"],
+
+Cell["Specify the stoichiometric matrix", "Text",
+ CellChangeTimes->{{3.7800483766293993`*^9, 3.780048387681219*^9}, 
+   3.811734003389983*^9},ExpressionUUID->"bec0ce03-438f-4e21-bfa7-\
+9cdd2868ef5f"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"S", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1", ",", "0", ",", "0", ",", 
+        RowBox[{"-", "1"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "1", ",", "0", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0", ",", "1", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "1"}], ",", "0", ",", "0", ",", "2"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", 
+        RowBox[{"-", "2"}], ",", "0", ",", "3"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0", ",", 
+        RowBox[{"-", "1"}], ",", 
+        RowBox[{"-", "1"}]}], "}"}]}], "}"}], "//", "Transpose"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"TableForm", "[", 
+  RowBox[{"S", ",", 
+   RowBox[{"TableHeadings", "->", 
+    RowBox[{"{", 
+     RowBox[{"metabolites", ",", "fluxes"}], "}"}]}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.780023842634961*^9, 3.780023849023357*^9}, {
+  3.780023880385838*^9, 3.780024070084284*^9}, {3.780024634787284*^9, 
+  3.78002464546375*^9}},
+ CellLabel->"In[4]:=",ExpressionUUID->"8763cd58-63a5-45a4-abca-4661809f8a27"],
+
+Cell["\<\
+The objective is to maximise the biomass production flux, which is the 6-th \
+flux:\
+\>", "Text",
+ CellChangeTimes->{{3.780048413207096*^9, 
+  3.780048437186973*^9}},ExpressionUUID->"9c3327ae-a4bf-45b2-bb2f-\
+19d9d9eaff8f"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"indexBiomassProductionFlux", " ", "=", " ", "6"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"objective", "=", 
+  RowBox[{"ReplacePart", "[", 
+   RowBox[{
+    RowBox[{"Table", "[", 
+     RowBox[{"0", ",", 
+      SubscriptBox["n", "col"]}], "]"}], ",", 
+    RowBox[{"indexBiomassProductionFlux", "\[Rule]", "1"}]}], 
+   "]"}]}]}], "Input",
+ CellChangeTimes->{{3.7796826383125916`*^9, 3.779682656486811*^9}, {
+   3.779682885538066*^9, 3.7796828988536725`*^9}, {3.7796829595559025`*^9, 
+   3.779682990773212*^9}, {3.7796830288161793`*^9, 3.7796830481962748`*^9}, {
+   3.779683145587102*^9, 3.7796831770896854`*^9}, {3.7796832781034102`*^9, 
+   3.7796832960615826`*^9}, 3.779683708090352*^9, {3.7796838351989717`*^9, 
+   3.779683860530854*^9}, {3.7796839079887514`*^9, 3.7796839445922155`*^9}, 
+   3.7796839807093687`*^9, {3.779684136567361*^9, 3.779684166199931*^9}, {
+   3.779785345369074*^9, 3.779785347697435*^9}, {3.779789566164225*^9, 
+   3.779789575986156*^9}, 3.7800240873445272`*^9, 3.780024520335392*^9},
+ CellLabel->"In[6]:=",ExpressionUUID->"364cb492-76f5-47a3-818e-36b1cd50e2f4"],
+
+Cell[TextData[{
+ "Now we need to specify the constraints for the elements of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"S", ".", "v"}], TraditionalForm]],ExpressionUUID->
+  "8389c25f-7029-4dc8-afc0-fecbc8e710db"],
+ ". Here we require flux balance for all metabolites, i.e., each element of  ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"S", ".", "v"}], TraditionalForm]],ExpressionUUID->
+  "11495f1b-8dae-439a-aaae-dae526f5160b"],
+ " must be exactly equal to zero. Bounds for the rows are specified by a pair \
+of two numbers, the first specifies the boundary value (in this case, 0), the \
+second specifies the type of constraint (value 0 specifies an equality \
+constraint; value +1 specifies a lower limit, value -1 specifies an upper \
+limit for the corresponding element of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"S", ".", "v"}], TraditionalForm]],ExpressionUUID->
+  "d450fa51-25d9-4dd0-9155-cef6d56c69e7"],
+ ")"
+}], "Text",
+ CellChangeTimes->{{3.780048456160574*^9, 
+  3.780048688655778*^9}},ExpressionUUID->"faacb27d-40fe-4b82-ad20-\
+cc43f278174e"],
+
+Cell[BoxData[
+ RowBox[{"rowBounds", "=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"0", ",", "0"}], "}"}], ",", 
+    SubscriptBox["n", "row"]}], "]"}]}]], "Input",
+ CellChangeTimes->{
+  3.779789568263236*^9, {3.780024248600292*^9, 3.7800242493715773`*^9}, 
+   3.780024528710075*^9, 3.7800253351720324`*^9, {3.7800435755747023`*^9, 
+   3.7800435779318027`*^9}},
+ CellLabel->"In[8]:=",ExpressionUUID->"c45e91b2-6746-4504-84ae-db35a1adae24"],
+
+Cell["\<\
+We also need to define constraints for the individual fluxes. These are \
+specified as a pair of numbers corresponding to a lower and upper limit for \
+the flux. \
+\>", "Text",
+ CellChangeTimes->{{3.780048724290814*^9, 3.780048782130313*^9}, {
+  3.780048899269704*^9, 
+  3.7800488999650993`*^9}},ExpressionUUID->"d208e8bd-b801-4492-82b5-\
+3a1ec6cca428"],
+
+Cell[BoxData[
+ RowBox[{"colBounds", " ", "=", " ", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"0", ",", "100"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", "100"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", "100"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", "100"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", "100"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", "100"}], "}"}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.779683457532064*^9, 3.779683505207407*^9}, {
+   3.7796835385023637`*^9, 3.779683604605713*^9}, {3.7796836453242035`*^9, 
+   3.7796836491998305`*^9}, {3.779687823794178*^9, 3.779687828155031*^9}, {
+   3.7797853539697657`*^9, 3.7797853694557657`*^9}, {3.7797901197073812`*^9, 
+   3.779790178953195*^9}, {3.779790233979475*^9, 3.779790234436368*^9}, {
+   3.7797904199439774`*^9, 3.779790420286359*^9}, {3.779790710243311*^9, 
+   3.779790712841449*^9}, {3.779790753631106*^9, 3.779790776863162*^9}, 
+   3.779791659596054*^9, {3.779791695896607*^9, 3.779791720449288*^9}, {
+   3.780024203052257*^9, 3.7800242439311857`*^9}, {3.780043668371112*^9, 
+   3.7800436867645473`*^9}, {3.780044812009036*^9, 3.780044842634203*^9}, 
+   3.780044889691444*^9, {3.78004657245653*^9, 3.780046579277033*^9}, 
+   3.7800468508461113`*^9, {3.780048694836486*^9, 3.780048708247663*^9}},
+ CellLabel->"In[9]:=",ExpressionUUID->"8a5ae45b-be8f-4f5c-9a0d-2343cd9b35ce"],
+
+Cell[TextData[{
+ "Finally, we are ready to solve the optimisation problem. Since ",
+ StyleBox["LinearProgramming", "Input"],
+ " will attempt to minimize the objective function, we need to pass it to the \
+function with a minus sign in front. "
+}], "Text",
+ CellChangeTimes->{{3.780048800403963*^9, 
+  3.780048883614339*^9}},ExpressionUUID->"f3b3dfe1-7cd5-4f33-ae2b-\
+cdf5f76361b9"],
+
+Cell[BoxData[
+ RowBox[{"fluxes", "=", 
+  RowBox[{
+   RowBox[{"LinearProgramming", "[", 
+    RowBox[{
+     RowBox[{"-", "objective"}], ",", " ", "S", ",", " ", "rowBounds", ",", 
+     " ", "colBounds"}], "]"}], "//", "N"}]}]], "Input",
+ CellChangeTimes->{{3.780024302159581*^9, 3.780024312323353*^9}, {
+  3.7800246838337383`*^9, 3.780024684243381*^9}},
+ CellLabel->"In[10]:=",ExpressionUUID->"45b15100-5166-4ee2-b155-3e19c04f002a"],
+
+Cell[TextData[{
+ "The null space of the matrix ",
+ Cell[BoxData[
+  FormBox["S", TraditionalForm]],ExpressionUUID->
+  "6eec8514-434d-4871-8195-35517223712c"],
+ " contains all flux vectors that satisfy the flux balance condition ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"S", ".", "v"}], TraditionalForm]],ExpressionUUID->
+  "95c67b2d-9d9d-41af-9b67-5bf4e3e86020"],
+ ". Accordingly, it provides information about the degrees of freedom of the \
+metabolic network. In this example, ",
+ StyleBox["NullSpace[S]", "Input"],
+ " informs us that the organism can \[OpenCurlyDoubleQuote]trade in\
+\[CloseCurlyDoubleQuote] 3 times reaction 1 +  3 times reaction 4 against 2 \
+times reaction 2 + 1 time reaction 5 without this have any effect on the net \
+rates of metabolite change."
+}], "Text",
+ CellChangeTimes->{{3.780048912688244*^9, 3.78004915318816*^9}, 
+   3.811740170346198*^9},ExpressionUUID->"461c7f28-f4be-4a6c-b55c-\
+3a6038b9dd55"],
+
+Cell[BoxData[
+ RowBox[{"NullSpace", "[", "S", "]"}]], "Input",
+ CellChangeTimes->{{3.780024761673308*^9, 3.7800247651598167`*^9}},
+ CellLabel->"In[11]:=",ExpressionUUID->"f400730e-4f95-41ba-ab1b-51e918b0d366"],
+
+Cell["\<\
+To incorporate more sophisticated constraints such as a molecular crowding or \
+a membrane crowding constraint, we need to extend the stoichoimetric matrix \
+with additional rows:\
+\>", "Text",
+ CellChangeTimes->{{3.780049172211347*^9, 
+  3.780049230090775*^9}},ExpressionUUID->"a03d0e18-ba18-4b99-a541-\
+29a271a10bfc"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{"S2", "=", 
+    RowBox[{"Join", "[", 
+     RowBox[{"S", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"1", ",", "1", ",", "1", ",", "0", ",", "0", ",", "0"}], 
+         "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "0", ",", "1", ",", "1", ",", "1"}], 
+         "}"}]}], "}"}]}], "]"}]}], ")"}], "//", "MatrixForm"}]], "Input",
+ CellChangeTimes->{{3.7800249168339357`*^9, 3.78002497824687*^9}, 
+   3.780045768166547*^9, {3.780049316057816*^9, 3.7800493165110073`*^9}, {
+   3.8117404531184387`*^9, 3.811740461056737*^9}},
+ CellLabel->"In[12]:=",ExpressionUUID->"3e6ae4b9-e955-4258-a0dc-692340bf30fb"],
+
+Cell["\<\
+This allows us to define additional upper limits for arbitrary linear \
+combinations of the fluxes\
+\>", "Text",
+ CellChangeTimes->{{3.780049240584279*^9, 
+  3.780049301237937*^9}},ExpressionUUID->"e847192c-f851-4c05-90d5-\
+1c6fb0de1f8c"],
+
+Cell[BoxData[
+ RowBox[{"rowBounds2", "=", 
+  RowBox[{"Join", "[", 
+   RowBox[{"rowBounds", ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1", ",", 
+        RowBox[{"-", "1"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", 
+        RowBox[{"-", "1"}]}], "}"}]}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.780025003915978*^9, 3.780025028855294*^9}, {
+  3.780025550221259*^9, 3.7800255543113127`*^9}},
+ CellLabel->"In[13]:=",ExpressionUUID->"ba4f2bb6-cd7d-4b43-b5fd-aabcfc9b1cf0"],
+
+Cell["\<\
+You can see that the organism prefers the more efficient pathway if all \
+fluxes contribute equally to molecular and membrane crowding\
+\>", "Text",
+ CellChangeTimes->{{3.78004932588251*^9, 3.7800493762543087`*^9}, 
+   3.844218043259129*^9},ExpressionUUID->"dbbbf80d-c31d-4f93-b2cd-\
+6761b360f691"],
+
+Cell[BoxData[
+ RowBox[{"fluxes", "=", 
+  RowBox[{
+   RowBox[{"LinearProgramming", "[", 
+    RowBox[{
+     RowBox[{"-", "objective"}], ",", " ", "S2", ",", " ", "rowBounds2", ",", 
+     " ", "colBounds"}], "]"}], "//", "N"}]}]], "Input",
+ CellChangeTimes->{{3.780025068177608*^9, 3.780025069930646*^9}},
+ CellLabel->"In[14]:=",ExpressionUUID->"8e024087-51cf-4e7c-9cd1-785f06f67d5f"],
+
+Cell["\<\
+The result changes qualitatively if transport reaction 2 is substantially \
+more costly than reaction 1:\
+\>", "Text",
+ CellChangeTimes->{{3.780049383649431*^9, 3.780049421469102*^9}, {
+  3.780049507628023*^9, 3.780049520112535*^9}, {3.84421816001886*^9, 
+  3.844218160164743*^9}},ExpressionUUID->"39dcabe9-c9de-4561-ac47-\
+49981d0e1728"],
+
+Cell[BoxData[
+ RowBox[{"S2", "=", 
+  RowBox[{"Join", "[", 
+   RowBox[{"S", ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1", ",", "1.6", ",", "1", ",", "0", ",", "0", ",", "0"}], 
+       "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0", ",", "0", ",", "1", ",", "1", ",", "1"}], 
+       "}"}]}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.7800249168339357`*^9, 3.78002497824687*^9}, 
+   3.780045768166547*^9, {3.780049316057816*^9, 3.7800493165110073`*^9}, {
+   3.780049431093725*^9, 3.780049496931531*^9}},
+ CellLabel->"In[15]:=",ExpressionUUID->"126c8544-3890-4cbb-9d43-0a9abcdedf58"],
+
+Cell[BoxData[
+ RowBox[{"fluxes", "=", 
+  RowBox[{
+   RowBox[{"LinearProgramming", "[", 
+    RowBox[{
+     RowBox[{"-", "objective"}], ",", " ", "S2", ",", " ", "rowBounds2", ",", 
+     " ", "colBounds"}], "]"}], "//", "N"}]}]], "Input",
+ CellChangeTimes->{{3.780025068177608*^9, 3.780025069930646*^9}},
+ CellLabel->"In[16]:=",ExpressionUUID->"e4fd0e44-d8e5-4fce-9aeb-b65ef3390514"]
+}, Open  ]]
+}, Open  ]]
+},
+NotebookEventActions->{"WindowClose" :> FrontEndExecute[
+    FrontEndToken["DeleteGeneratedCells"]]},
+WindowSize->{1440., 765.75},
+WindowMargins->{{0, Automatic}, {0, Automatic}},
+PrintingCopies->1,
+PrintingPageRange->{32000, 32000},
+PrintingOptions->{"Magnification"->1.,
+"PaperOrientation"->"Portrait",
+"PaperSize"->{595.1999999999999, 841.68}},
+FrontEndVersion->"12.3 for Linux x86 (64-bit) (July 9, 2021)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[StyleDefinitions -> "Default.nb"]]}, 
+  WindowMargins -> {{Automatic, 414}, {72.75, Automatic}}, Visible -> False, 
+  FrontEndVersion -> "12.3 for Linux x86 (64-bit) (July 9, 2021)", 
+  StyleDefinitions -> "PrivateStylesheetFormatting.nb"],
+ExpressionUUID->"c083a4f7-a766-4b7d-8a69-347c18b37bfa"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 561, 8, 53, "Subtitle",ExpressionUUID->"7370bfdc-709a-4df4-9928-023137078b46"],
+Cell[CellGroupData[{
+Cell[1144, 32, 408, 6, 98, "Title",ExpressionUUID->"004a4d00-5538-4fcc-b645-0d201c26df25"],
+Cell[1555, 40, 166, 3, 31, "Subsubtitle",ExpressionUUID->"5811ea05-b2b5-42b4-9141-c43f07c9a951"],
+Cell[1724, 45, 203, 3, 31, "Subsubtitle",ExpressionUUID->"561c1669-5a78-49b5-b567-963b56226416"],
+Cell[1930, 50, 170, 3, 31, "Subsubtitle",ExpressionUUID->"723b14b7-7394-4311-a0f0-b1267fc85f08"],
+Cell[CellGroupData[{
+Cell[2125, 57, 470, 7, 68, "Section",ExpressionUUID->"30edb0b4-5b93-4991-8317-dab6fe4c943a"],
+Cell[2598, 66, 196, 3, 35, "Text",ExpressionUUID->"4cb4e2ab-45a7-4f72-bca0-6b0fb5db1e64"],
+Cell[2797, 71, 690, 16, 51, "Input",ExpressionUUID->"e045bd7e-b826-467d-986d-48315a36daec"],
+Cell[3490, 89, 219, 5, 35, "Text",ExpressionUUID->"f98bbaad-23e1-46dc-ad47-f6641cce58a2"],
+Cell[3712, 96, 426, 11, 29, "Input",ExpressionUUID->"c6250902-ce1b-48ec-9c80-37598d8a8600"],
+Cell[4141, 109, 200, 3, 35, "Text",ExpressionUUID->"bec0ce03-438f-4e21-bfa7-9cdd2868ef5f"],
+Cell[4344, 114, 1196, 32, 51, "Input",ExpressionUUID->"8763cd58-63a5-45a4-abca-4661809f8a27"],
+Cell[5543, 148, 233, 6, 35, "Text",ExpressionUUID->"9c3327ae-a4bf-45b2-bb2f-19d9d9eaff8f"],
+Cell[5779, 156, 1125, 21, 51, "Input",ExpressionUUID->"364cb492-76f5-47a3-818e-36b1cd50e2f4"],
+Cell[6907, 179, 1049, 24, 81, "Text",ExpressionUUID->"faacb27d-40fe-4b82-ad20-cc43f278174e"],
+Cell[7959, 205, 465, 11, 29, "Input",ExpressionUUID->"c45e91b2-6746-4504-84ae-db35a1adae24"],
+Cell[8427, 218, 363, 8, 35, "Text",ExpressionUUID->"d208e8bd-b801-4492-82b5-3a1ec6cca428"],
+Cell[8793, 228, 1435, 28, 29, "Input",ExpressionUUID->"8a5ae45b-be8f-4f5c-9a0d-2343cd9b35ce"],
+Cell[10231, 258, 381, 8, 35, "Text",ExpressionUUID->"f3b3dfe1-7cd5-4f33-ae2b-cdf5f76361b9"],
+Cell[10615, 268, 430, 9, 29, "Input",ExpressionUUID->"45b15100-5166-4ee2-b155-3e19c04f002a"],
+Cell[11048, 279, 930, 20, 58, "Text",ExpressionUUID->"461c7f28-f4be-4a6c-b55c-3a6038b9dd55"],
+Cell[11981, 301, 209, 3, 29, "Input",ExpressionUUID->"f400730e-4f95-41ba-ab1b-51e918b0d366"],
+Cell[12193, 306, 329, 7, 35, "Text",ExpressionUUID->"a03d0e18-ba18-4b99-a541-29a271a10bfc"],
+Cell[12525, 315, 711, 17, 29, "Input",ExpressionUUID->"3e6ae4b9-e955-4258-a0dc-692340bf30fb"],
+Cell[13239, 334, 248, 6, 35, "Text",ExpressionUUID->"e847192c-f851-4c05-90d5-1c6fb0de1f8c"],
+Cell[13490, 342, 526, 14, 29, "Input",ExpressionUUID->"ba4f2bb6-cd7d-4b43-b5fd-aabcfc9b1cf0"],
+Cell[14019, 358, 308, 6, 35, "Text",ExpressionUUID->"dbbbf80d-c31d-4f93-b2cd-6761b360f691"],
+Cell[14330, 366, 381, 8, 29, "Input",ExpressionUUID->"8e024087-51cf-4e7c-9cd1-785f06f67d5f"],
+Cell[14714, 376, 348, 7, 35, "Text",ExpressionUUID->"39dcabe9-c9de-4561-ac47-49981d0e1728"],
+Cell[15065, 385, 634, 15, 29, "Input",ExpressionUUID->"126c8544-3890-4cbb-9d43-0a9abcdedf58"],
+Cell[15702, 402, 381, 8, 29, "Input",ExpressionUUID->"e4fd0e44-d8e5-4fce-9aeb-b65ef3390514"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
