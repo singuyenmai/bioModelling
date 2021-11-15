@@ -1,0 +1,4170 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    187886,       4162]
+NotebookOptionsPosition[    173567,       3977]
+NotebookOutlinePosition[    174537,       4008]
+CellTagsIndexPosition[    174494,       4005]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Biological Modelling and Model Analysis - day VII", "BookChapterLabel",
+ CellChangeTimes->{{3.6829991255094852`*^9, 3.68299914575751*^9}, 
+   3.682999421015033*^9, {3.683964417430398*^9, 3.6839644182337*^9}, {
+   3.684211167243585*^9, 3.6842111677952013`*^9}, {3.6846008011508827`*^9, 
+   3.684600802071863*^9}, {3.684600951496284*^9, 3.6846009519396544`*^9}, 
+   3.747467470854506*^9},ExpressionUUID->"a23dd455-0523-477c-ae46-\
+7944a0e56dd3"],
+
+Cell["Unravelling complex dynamics by a separation of time-scales", \
+"BookChapterTitle",
+ CellChangeTimes->{{3.682998874641573*^9, 3.682998895360573*^9}, {
+  3.683964426788683*^9, 3.683964434866899*^9}, {3.6842111720763702`*^9, 
+  3.684211179683154*^9}, {3.778819976759632*^9, 
+  3.7788199903269167`*^9}},ExpressionUUID->"d6c93ce4-b311-400b-89c1-\
+64e549cf53f5"],
+
+Cell[CellGroupData[{
+
+Cell["Franjo Weissing & Sander van Doorn", "Author",
+ CellChangeTimes->{{3.68299919036697*^9, 3.6829991932712607`*^9}, {
+  3.684211182529632*^9, 
+  3.6842111910280933`*^9}},ExpressionUUID->"bd960820-3a55-44a2-a2c5-\
+d1ce64e5f56a"],
+
+Cell["Groningen Institute for Evolutionary Life Sciences", "Institution",
+ CellChangeTimes->{{3.6829992274406776`*^9, 
+  3.6829992458415174`*^9}},ExpressionUUID->"ad187f7f-fb39-4c06-b65e-\
+64acd62302c1"],
+
+Cell["g.s.van.doorn@rug.nl", "Department",
+ CellChangeTimes->{{3.68299926217015*^9, 
+  3.6829992690098343`*^9}},ExpressionUUID->"5c7aefa1-0f0a-4f66-bbf1-\
+6c39e003ee87"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Model rescaling and non-dimensionalisation", "Section",
+ CellChangeTimes->{{3.6829992928352165`*^9, 3.6829992962185545`*^9}, {
+  3.684053399255887*^9, 3.6840534106583014`*^9}, {3.684654781552939*^9, 
+  3.6846548024536753`*^9}, {3.6846563835799923`*^9, 
+  3.684656406863645*^9}},ExpressionUUID->"da32e5f4-da1d-48b2-9492-\
+eb4961d607c9"],
+
+Cell[TextData[{
+ "Consider the following model for bacteria (",
+ Cell[BoxData[
+  FormBox["B", TraditionalForm]],ExpressionUUID->
+  "2a14efdb-2a54-4f63-bfd0-e2a52912b502"],
+ ") growing in a chemostat. The variable ",
+ Cell[BoxData[
+  FormBox["S", TraditionalForm]],ExpressionUUID->
+  "76d79179-4a3e-4c78-a9e7-ce2b3ead9186"],
+ " represents the concentration of a growth limiting resource (e.g., a sugar) \
+in the chemostat."
+}], "Text",
+ CellChangeTimes->{{3.68465859716885*^9, 3.684658622359797*^9}, {
+  3.684658654870171*^9, 3.684658708004175*^9}, {3.6846587669053497`*^9, 
+  3.6846588263192577`*^9}},ExpressionUUID->"958e58dc-0e60-4904-9ed3-\
+6013983abf3f"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"eqS", "[", 
+   RowBox[{"B_", ",", "S_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"\[Phi]", 
+    RowBox[{"(", 
+     RowBox[{"S0", "-", "S"}], ")"}]}], "-", 
+   RowBox[{"c", " ", "B", " ", 
+    FractionBox["S", 
+     RowBox[{"S", "+", "K"}]]}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"eqB", "[", 
+   RowBox[{"B_", ",", "S_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"c", " ", "\[Eta]", " ", "B", " ", 
+    FractionBox["S", 
+     RowBox[{"S", "+", "K"}]]}], "-", 
+   RowBox[{"\[Phi]", " ", "B", " "}]}]}]}], "Input",
+ CellChangeTimes->{{3.6846584439331093`*^9, 3.6846585772235813`*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"d68d0eb6-e483-436b-830e-b787e7633ee1"],
+
+Cell["The parameters of the model are: ", "Text",
+ CellChangeTimes->{{3.6846588332848797`*^9, 3.684658840671934*^9}, {
+  3.684658903358938*^9, 
+  3.6846590949340267`*^9}},ExpressionUUID->"adb1c4de-28f1-41a9-ac46-\
+4e3fd1c779e3"],
+
+Cell[TextData[{
+ "\t",
+ Cell[BoxData[
+  FormBox["\[Phi]", TraditionalForm]],ExpressionUUID->
+  "dc79f199-3127-490a-b99b-e418c11a0325"],
+ "\tthe flow-rate of the chemostat; "
+}], "Text",
+ CellChangeTimes->{{3.6846588332848797`*^9, 3.684658840671934*^9}, {
+  3.684658903358938*^9, 3.6846590958150053`*^9}, {3.684659169058609*^9, 
+  3.684659169765613*^9}},ExpressionUUID->"1a8a7a41-1c1c-4454-b066-\
+e13dbe58394d"],
+
+Cell[TextData[{
+ "\t",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["S", "0"], TraditionalForm]],ExpressionUUID->
+  "59e37919-3c60-4375-b8a0-bf8ad5c07c48"],
+ "\tthe concentration of the resource in the inflow medium; "
+}], "Text",
+ CellChangeTimes->{{3.6846588332848797`*^9, 3.684658840671934*^9}, {
+  3.684658903358938*^9, 3.684659104201803*^9}, {3.68465917292271*^9, 
+  3.684659173531711*^9}},ExpressionUUID->"65614f9f-d9ba-408e-85d8-\
+8ebc6dd8da03"],
+
+Cell[TextData[{
+ "\t",
+ Cell[BoxData[
+  FormBox["c", TraditionalForm]],ExpressionUUID->
+  "647918de-20c6-4ff4-8c4b-c7d649f47eb6"],
+ "\tthe maximum consumption rate of the sugar by a bacterium; "
+}], "Text",
+ CellChangeTimes->{{3.6846588332848797`*^9, 3.684658840671934*^9}, {
+  3.684658903358938*^9, 3.68465910790318*^9}, {3.6846591769065647`*^9, 
+  3.684659177392416*^9}},ExpressionUUID->"35077b58-2466-463b-adc3-\
+8707ec80d3cd"],
+
+Cell[TextData[{
+ "\t",
+ Cell[BoxData[
+  FormBox["K", TraditionalForm]],ExpressionUUID->
+  "df1ab886-d772-4dfa-b37b-f436e3392d7f"],
+ "\tthe half-saturation constant of the functional response;"
+}], "Text",
+ CellChangeTimes->{{3.6846588332848797`*^9, 3.684658840671934*^9}, {
+  3.684658903358938*^9, 3.684659125514151*^9}, {3.6846591807896643`*^9, 
+  3.684659181222643*^9}},ExpressionUUID->"3a857580-8629-4ce2-9d9a-\
+2d4e9f8601ea"],
+
+Cell[TextData[{
+ "\t",
+ Cell[BoxData[
+  FormBox["\[Eta]", TraditionalForm]],ExpressionUUID->
+  "a3c2d712-e040-4760-ad3a-33ed18e8f06c"],
+ "\tthe conversion efficiency for bacterial growth on the available resource"
+}], "Text",
+ CellChangeTimes->{{3.6846588332848797`*^9, 3.684658840671934*^9}, {
+  3.684658903358938*^9, 3.684659139560313*^9}, {3.684659184309401*^9, 
+  3.684659225736107*^9}, {3.684659285224135*^9, 
+  3.684659291106372*^9}},ExpressionUUID->"25b18b9e-98c9-48e1-b8a6-\
+f28ac78e01cc"],
+
+Cell["", "Text",
+ CellChangeTimes->{{3.6846588332848797`*^9, 3.684658840671934*^9}, {
+  3.684658903358938*^9, 3.684659139560313*^9}, {3.684659184309401*^9, 
+  3.684659225736107*^9}, {3.684659285224135*^9, 
+  3.6846592911030188`*^9}},ExpressionUUID->"ceb73622-1b67-424b-b9b7-\
+794ce0716403"],
+
+Cell[TextData[{
+ StyleBox["Q1: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Choose appropriate units for the variables, and infer the \
+dimensions of the model parameters",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6846588332848797`*^9, 3.684658840671934*^9}, {
+  3.684658903358938*^9, 3.684659139560313*^9}, {3.684659184309401*^9, 
+  3.684659225736107*^9}, {3.684659285224135*^9, 3.684659331451066*^9}, {
+  3.684659368168975*^9, 
+  3.684659402423229*^9}},ExpressionUUID->"48ed2ecb-e8ad-45b9-b81f-\
+d9e9928d6168"],
+
+Cell["", "Text",ExpressionUUID->"24ae78da-e67a-45e1-8fa7-8958ff1834aa"],
+
+Cell[TextData[{
+ StyleBox["Q2: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Eliminate parameters by rescaling the model. How many \
+dimensionless parameters remain after rescaling? Give an interpretation for \
+the rescaled variables and the dimensionless parameter combinations.",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6846588332848797`*^9, 3.684658840671934*^9}, {
+  3.684658903358938*^9, 3.684659139560313*^9}, {3.684659184309401*^9, 
+  3.684659225736107*^9}, {3.684659285224135*^9, 3.684659331451066*^9}, {
+  3.684659406009886*^9, 3.684659529593507*^9}, {3.684662944499014*^9, 
+  3.68466296266722*^9}},ExpressionUUID->"d06305e9-9fd5-4e96-af99-\
+e4dd980c1378"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Bursting in pancreatic ",
+ StyleBox["\[Beta]-",
+  FontWeight->"Plain"],
+ "cells"
+}], "Section",
+ CellChangeTimes->{{3.6829992928352165`*^9, 3.6829992962185545`*^9}, {
+  3.684053399255887*^9, 3.6840534106583014`*^9}, {3.684473282880713*^9, 
+  3.684473311320716*^9}},ExpressionUUID->"7316a506-e24a-4ba7-95c6-\
+3aa614574f9c"],
+
+Cell[CellGroupData[{
+
+Cell["Model definition", "Subsection",
+ CellChangeTimes->{{3.684214916377565*^9, 3.684214922037405*^9}, {
+  3.684468534015853*^9, 
+  3.684468538140348*^9}},ExpressionUUID->"b5b81bd7-03f4-4d6d-8b28-\
+deed0d97a0ca"],
+
+Cell[TextData[{
+ "Pancreatic \[Beta]-cells play a key role in the regulation of the blood \
+glucose concentration. Their primary function is to produce, store and \
+release the hormone insulin. \[Beta]-cells in an intact islet of Langerhans \
+exhibit bursting electrical activity, i.e., they alternate between periods of \
+spontaneous electrical spiking and a resting state without rapid electrical \
+activity. This behaviour is thought to be regulated by the intracellular ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],ExpressionUUID->
+  "5e22cc4c-9e8e-408b-846b-8265a1389472"],
+ "concentration. The electrical activity of \[Beta]-cells can be described by \
+the following model, which was originally suggested by Catherine Morris and \
+Harold Lecar (",
+ StyleBox["Biophys. J.",
+  FontSlant->"Italic"],
+ " ",
+ StyleBox["35",
+  FontWeight->"Bold"],
+ ": 193-213 (1981)): "
+}], "Text",
+ CellChangeTimes->{{3.683964776135131*^9, 3.683964967347437*^9}, {
+  3.683965028754643*^9, 3.683965028756803*^9}, {3.684053425326909*^9, 
+  3.684053430015729*^9}, {3.6844735038848763`*^9, 3.684473531205822*^9}, {
+  3.684473567531537*^9, 3.684473593111326*^9}, {3.6844736686731377`*^9, 
+  3.684473801574164*^9}, {3.6844738394887247`*^9, 3.6844738553815928`*^9}, {
+  3.6844739289958677`*^9, 3.684474090154101*^9}, {3.684474123557878*^9, 
+  3.6844742688821373`*^9}, {3.684474321977748*^9, 3.684474363239541*^9}, {
+  3.684474442951288*^9, 3.684474517896854*^9}, {3.684474592697666*^9, 
+  3.684474594104718*^9}},ExpressionUUID->"1fcb480f-5ee0-477e-b9a6-\
+c3e22c92861a"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"eqV", "[", 
+   RowBox[{"V_", ",", "W_", ",", "Ca_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{"J", "-", 
+     RowBox[{
+      SubscriptBox["g", "ca"], 
+      RowBox[{
+       SubscriptBox["m", "\[Infinity]"], "[", "V", "]"}], 
+      RowBox[{"(", 
+       RowBox[{"V", "-", 
+        SubscriptBox["v", "ca"]}], ")"}]}], "-", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         SubscriptBox["g", "k"], "W"}], "+", 
+        RowBox[{
+         SubscriptBox["g", "kca"], " ", 
+         RowBox[{"z", "[", "Ca", "]"}]}]}], " ", ")"}], 
+      RowBox[{"(", 
+       RowBox[{"V", "-", 
+        SubscriptBox["v", "K"]}], ")"}]}], "-", 
+     RowBox[{
+      SubscriptBox["g", "l"], 
+      RowBox[{"(", 
+       RowBox[{"V", "-", 
+        SubscriptBox["v", "l"]}], ")"}]}]}], ")"}], "/", 
+   "Cm"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"eqW", "[", 
+   RowBox[{"V_", ",", "W_"}], "]"}], ":=", 
+  RowBox[{"0.23", "  ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["w", "\[Infinity]"], "[", "V", "]"}], "-", "W"}], ")"}], 
+    "/", 
+    RowBox[{"\[Tau]", "[", "V", "]"}]}]}]}]}], "Input",
+ CellChangeTimes->{{3.684211221795672*^9, 3.684211235639113*^9}, {
+   3.6842113109038143`*^9, 3.684211341000008*^9}, {3.684211445345533*^9, 
+   3.684211502342806*^9}, {3.684211684581571*^9, 3.684211696496876*^9}, {
+   3.6842166251962357`*^9, 3.684216659308909*^9}, {3.684217595939378*^9, 
+   3.68421761189119*^9}, {3.6842177020487328`*^9, 3.684217727930935*^9}, {
+   3.684222407069105*^9, 3.684222415410874*^9}, {3.68422251432663*^9, 
+   3.684222535034788*^9}, 3.684222758145708*^9, {3.684463574572156*^9, 
+   3.684463609199415*^9}, {3.6844636518464937`*^9, 3.6844636638734093`*^9}, {
+   3.684463727459634*^9, 3.684463827107873*^9}, {3.684463862116486*^9, 
+   3.6844638672457647`*^9}, {3.6844642289874897`*^9, 3.684464295908208*^9}, {
+   3.684464385818719*^9, 3.684464454265895*^9}, {3.684464499275956*^9, 
+   3.6844645014445963`*^9}, {3.684464660824621*^9, 3.684464671575164*^9}, {
+   3.684464791516897*^9, 3.6844647940466423`*^9}, {3.684464862501449*^9, 
+   3.6844648762388077`*^9}, {3.684465261821595*^9, 3.6844652629919767`*^9}, {
+   3.6844653193236713`*^9, 3.6844653226568823`*^9}, {3.684467433134385*^9, 
+   3.684467500907234*^9}},
+ CellLabel->"In[3]:=",ExpressionUUID->"68e474df-f17b-432a-8d63-b6851e922947"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   SubscriptBox["m", "\[Infinity]"], "[", "V_", "]"}], ":=", 
+  RowBox[{
+   FractionBox["1", "2"], 
+   RowBox[{"(", 
+    RowBox[{"1", "+", 
+     RowBox[{"Tanh", "[", 
+      FractionBox[
+       RowBox[{"V", "+", "1.2"}], "18."], "]"}]}], 
+    ")"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   SubscriptBox["w", "\[Infinity]"], "[", "V_", "]"}], ":=", 
+  RowBox[{
+   FractionBox["1", "2"], 
+   RowBox[{"(", 
+    RowBox[{"1", "+", 
+     RowBox[{"Tanh", "[", 
+      FractionBox[
+       RowBox[{"V", "-", "12."}], "17.4"], "]"}]}], 
+    ")"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"z", "[", "Ca_", "]"}], ":=", 
+  FractionBox["Ca", 
+   RowBox[{"10.", "+", "Ca"}]]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Tau]", "[", "V_", "]"}], ":=", 
+  RowBox[{"1", "/", 
+   RowBox[{"Cosh", "[", 
+    FractionBox[
+     RowBox[{"V", "-", "12."}], "34.8"], "]"}]}]}]}], "Input",
+ CellChangeTimes->{{3.684464537191059*^9, 3.684464688306467*^9}, {
+   3.6844647327608767`*^9, 3.684464759173326*^9}, 3.684465410448698*^9, {
+   3.6844663569010363`*^9, 3.6844663575755444`*^9}, {3.684466699872879*^9, 
+   3.684466700787528*^9}, {3.684467183004201*^9, 3.684467184684743*^9}, 
+   3.684467588100091*^9, {3.684467821616213*^9, 3.6844678217106647`*^9}},
+ CellLabel->"In[5]:=",ExpressionUUID->"7c67c848-fc28-4c11-83d4-43e5fb4d45e2"],
+
+Cell[BoxData[
+ RowBox[{"pars", "=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{
+     SubscriptBox["g", "ca"], "\[Rule]", "4."}], ",", " ", 
+    RowBox[{
+     SubscriptBox["v", "ca"], "\[Rule]", "120."}], ",", 
+    RowBox[{
+     SubscriptBox["g", "k"], "\[Rule]", "8."}], ",", 
+    RowBox[{
+     SubscriptBox["g", "kca"], " ", "\[Rule]", " ", ".25"}], ",", 
+    RowBox[{
+     SubscriptBox["v", "K"], "\[Rule]", 
+     RowBox[{"-", "84."}]}], ",", 
+    RowBox[{
+     SubscriptBox["g", "l"], "\[Rule]", " ", "2."}], ",", 
+    RowBox[{
+     SubscriptBox["v", "l"], "\[Rule]", 
+     RowBox[{"-", "60."}]}], ",", 
+    RowBox[{"J", "\[Rule]", "45."}], ",", 
+    RowBox[{"Cm", "\[Rule]", "20.0"}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.684464838410509*^9, 3.6844648403242283`*^9}, {
+  3.6844648936768208`*^9, 3.6844649956422377`*^9}, {3.684465332158963*^9, 
+  3.684465338513474*^9}, {3.6844654437219067`*^9, 3.684465444125927*^9}, {
+  3.6844663117700653`*^9, 3.684466320060635*^9}, {3.684467679301217*^9, 
+  3.684467692449098*^9}},
+ CellLabel->"In[9]:=",ExpressionUUID->"bf5f048c-ea4e-407a-bb98-4402f302e295"],
+
+Cell[TextData[{
+ "You will perhaps recognise that the structure of the model is similar to \
+the Hodgkin-Huxley model. The first equation describes the change of the \
+membrane potential (",
+ Cell[BoxData[
+  FormBox["V", TraditionalForm]],ExpressionUUID->
+  "a08395b4-6a79-43ff-be2f-70bf5c24fa51"],
+ ") as a consequence of four currents: an external stimulus current ",
+ Cell[BoxData[
+  FormBox["J", TraditionalForm]],ExpressionUUID->
+  "71849143-bc4d-4e79-b65d-a0b67c5d2cf8"],
+ ", a voltage-dependent ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],ExpressionUUID->
+  "7caa75e8-0dd2-42a4-ae1c-f54942a0e764"],
+ "current, a voltage-dependent ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox[
+    StyleBox["K",
+     FontSlant->"Plain"], "+"], TraditionalForm]],ExpressionUUID->
+  "0637b773-d852-428d-87ba-cbc1f14a2ee4"],
+ "current, and a leak current. The conductivity of the membrane for ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox[
+    StyleBox["K",
+     FontSlant->"Plain"], "+"], TraditionalForm]],ExpressionUUID->
+  "237d3692-2da4-4078-87c3-e22fed9e2083"],
+ " is captured by the gating variable ",
+ Cell[BoxData[
+  FormBox["W", TraditionalForm]],ExpressionUUID->
+  "f1fc2664-3067-40a8-b0d4-0d34c323222d"],
+ ", which changes on a fast time scale according to the second equation. Some \
+of the ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox[
+    StyleBox["K",
+     FontSlant->"Plain"], "+"], TraditionalForm]],ExpressionUUID->
+  "436d2707-1016-4186-a631-94fac6779b81"],
+ "channels are sensitive to the intracellular ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],ExpressionUUID->
+  "2a943842-afcf-465e-a9f7-aeb7e694d944"],
+ "concentration, so the model includes a calcium-dependent contribution ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["g", "kca"], 
+    RowBox[{"z", "[", "Ca", "]"}]}], TraditionalForm]],ExpressionUUID->
+  "94a88644-547b-4403-8147-63244e75c7b4"],
+ " to the ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox[
+    StyleBox["K",
+     FontSlant->"Plain"], "+"], TraditionalForm]],ExpressionUUID->
+  "d2d10f62-9635-448e-8bf5-e214ad3322af"],
+ "conductivity. The parameters ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["g", "ca"], TraditionalForm]],ExpressionUUID->
+  "6a81f24c-9a12-4bc2-98e9-fd92846a6a72"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["g", "k"], TraditionalForm]],ExpressionUUID->
+  "a8632003-cd80-46a1-859b-533afa1ec1aa"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["g", "kca"], TraditionalForm]],ExpressionUUID->
+  "96d53c71-7c56-426f-8465-eca3e012ffe2"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["g", "l"], TraditionalForm]],ExpressionUUID->
+  "798f662b-0fd2-47f9-99c8-caf78b790c48"],
+ " correspond to the maximum conductances for each respective current \
+component and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["v", "ca"], TraditionalForm]],ExpressionUUID->
+  "224a9ec6-bfb3-4dc1-9955-0db7490baf9b"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["v", "k"], TraditionalForm]],ExpressionUUID->
+  "21317395-498c-4a24-93f2-b0bd027c169b"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["v", "l"], TraditionalForm]],ExpressionUUID->
+  "1f1cb05e-dd47-4d22-90be-20133b032cba"],
+ " are the equilibrium membrane potentials for the calcium, potassium and \
+leak currents in isolation. ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["C", "m"], TraditionalForm]],ExpressionUUID->
+  "1dcacd6f-9278-4112-851c-3dc5fc6fec1d"],
+ " is the membrane capacitance. The functions ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["m", "\[Infinity]"], TraditionalForm]],ExpressionUUID->
+  "a91c2d5d-bb3b-4b06-85b5-36ac757639fb"],
+ ",  ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["w", "\[Infinity]"], TraditionalForm]],ExpressionUUID->
+  "29158cde-7676-4108-a39a-47fdcf35ce98"],
+ " and \[Tau] were fitted to data from patch-clamp and biochemical \
+experiments."
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQBWIQ/S+I5e2soteOJnKvWWYDaU61GTwgerc5hOYq0zI7
+BqRvNRwA0y8C/gRPLn7tKDEtLRxERzF9jAbRf/qV40F0RNfUDBDdG29UCaIX
+LX5fC6KZzN7Ug2i1e/KdIDr1nctcEK18q3AhiK6wmrMZRG/ztN8FooNWpe8H
+0V8K4k6CaPbNey6BaI9gsTsg+lakM5g2qtj2AkTPVQh5A6L3zQv+AKL5mKpZ
+pgDpV8xsciB61aWT2iA6J+qZGYieL/DIAURfkYhyB9G5IVt9QPSOO48CQbTD
+uQUhIHrnh4cRILrF2yQBTGtL5YLos2mnm0D0jReX+kC0H6fWYRANANn7rus=
+
+  "],ExpressionUUID->"33138530-d05a-4648-8358-4133ed038356"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Equilibria and their stability", "Subsection",
+ CellChangeTimes->{{3.684214916377565*^9, 3.684214922037405*^9}, {
+  3.684468534015853*^9, 3.6844685558940687`*^9}, {3.684468651423153*^9, 
+  3.6844686521482*^9}},ExpressionUUID->"8111d1dc-6ba4-4351-bba6-50d685f4d9bf"],
+
+Cell[TextData[{
+ "The model has complicated non-linear terms, so it is not possible to obtain \
+explicit solution for the equilibria. However, we can solve for the \
+equilibrium value of ",
+ Cell[BoxData[
+  FormBox["W", TraditionalForm]],ExpressionUUID->
+  "421b62a1-bb1e-4faf-abdd-2de9d1e92698"],
+ "..."
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQB2IQ/S+I5e2soteOJnKvWWYDaU61GTwgerc5hOYq0zI7
+BqRvNRwA0y8C/gRPLn7tKDEtLRxERzF9jAbRf/qV40F0RNfUDBDdG29UCaIX
+LX5fC6KZzN7Ug2i1e/KdIDr1nctcEK18q3AhiK6wmrMZRG/ztN8FooNWpe8H
+0V8K4k6CaPbNey6BaI9gsTsg+lakM5g2qtj2AkTPVQh5A6L3zQv+AKL5mKpZ
+pgDpV8xsciB61aWT2iA6J+qZGYieL/DIAURfkYhyB9G5IVt9QPSOO48CQbTD
+uQUhIHrnh4cRILrF2yQBTGtL5YLos2mnm0D0jReX+kC0H6fWYRD9ouze3KlA
+ekEh72oQ3cYsuBFEX2DIAtMA2sC/lQ==
+  "],ExpressionUUID->"5ea504a5-4d33-4619-8e5c-ce3aa146b55f"],
+
+Cell[BoxData[
+ RowBox[{"solW", "=", 
+  RowBox[{
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"eqW", "[", 
+       RowBox[{"V", ",", "W"}], "]"}], "\[Equal]", "0"}], ",", "W"}], "]"}], "//",
+    "First"}]}]], "Input",
+ CellChangeTimes->{{3.684211523430284*^9, 3.684211563136348*^9}, {
+  3.6842118679493237`*^9, 3.684211870489229*^9}, {3.6842166630830593`*^9, 
+  3.684216674125532*^9}, {3.684464782431595*^9, 3.684464806172245*^9}, {
+  3.684465002831991*^9, 3.684465013502646*^9}, {3.684465186178749*^9, 
+  3.684465190610948*^9}, {3.6844652402346287`*^9, 3.68446524553839*^9}, {
+  3.68446555979841*^9, 3.684465560355932*^9}, {3.6844656816024*^9, 
+  3.684465765251554*^9}},
+ CellLabel->"In[10]:=",ExpressionUUID->"b4083939-aa2b-4ea4-9857-e4e7700c838a"],
+
+Cell[TextData[{
+ "... and use this result to plot the equilibrium values of ",
+ Cell[BoxData[
+  FormBox["V", TraditionalForm]],ExpressionUUID->
+  "1bfc7591-c0e1-48d8-a16b-5b972ce48531"],
+ " as a function of the intracellular  ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],ExpressionUUID->
+  "4c0a8416-1468-4d01-a8fa-10e77167852e"],
+ "concentration."
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQB2IQ/S+I5e2soteOJnKvWWYDaU61GTwgerc5hOYq0zI7
+BqRvNRwA0y8C/gRPLn7tKDEtLRxERzF9jAbRf/qV40F0RNfUDBDdG29UCaIX
+LX5fC6KZzN7Ug2i1e/KdIDr1nctcEK18q3AhiK6wmrMZRG/ztN8FooNWpe8H
+0V8K4k6CaPbNey6BaI9gsTsg+lakM5g2qtj2AkTPVQh5A6L3zQv+AKL5mKpZ
+pgDpV8xsciB61aWT2iA6J+qZGYieL/DIAURfkYhyB9G5IVt9QPSOO48CQbTD
+uQUhIHrnh4cRILrF2yQBTGtL5YLos2mnm0D0jReX+kC0H6fWYRD9ouze3KlA
+ekEh72oQ3cYsuBFEn1D7vgtEAwDfBcBJ
+  "],ExpressionUUID->"63acbaab-d4d6-4c35-b707-d4435d1772ce"],
+
+Cell[BoxData[
+ RowBox[{"equilibria", "=", 
+  RowBox[{"ContourPlot", "[", 
+   RowBox[{
+    RowBox[{"0", "\[Equal]", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"eqV", "[", 
+         RowBox[{"V", ",", "W", ",", "Ca"}], "]"}], "/.", "solW"}], "/.", 
+       "pars"}], ")"}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{"Ca", ",", "0", ",", "20"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"V", ",", 
+      RowBox[{"-", "40"}], ",", "20"}], "}"}], ",", 
+    RowBox[{"PlotPoints", "\[Rule]", "100"}], ",", 
+    RowBox[{"ContourStyle", "\[Rule]", "Black"}], ",", 
+    RowBox[{"FrameLabel", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{"\"\<[Ca]\>\"", ",", "\"\<V\>\""}], "}"}]}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.684465779062523*^9, 3.684465863032241*^9}, {
+  3.68446596001934*^9, 3.684465964382833*^9}, {3.684466159100485*^9, 
+  3.684466159483479*^9}, {3.684466369127035*^9, 3.684466369621119*^9}, {
+  3.6844671982108994`*^9, 3.684467202202531*^9}, {3.684468301284705*^9, 
+  3.684468304381818*^9}, {3.684468577658235*^9, 3.684468611896041*^9}, {
+  3.684468662401547*^9, 3.684468689199431*^9}, {3.8444031553565197`*^9, 
+  3.844403167287339*^9}},
+ CellLabel->"In[11]:=",ExpressionUUID->"c74d64a7-fc34-47f5-9391-7fd71cf783f9"],
+
+Cell[TextData[{
+ "As you can see, there is a single equilibrium for low ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],ExpressionUUID->
+  "a99cfa56-5794-4079-bfa1-90cac32554ea"],
+ "concentrations. Two additional equilibria appear at high ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],ExpressionUUID->
+  "ad35a8bd-2556-4ae2-bdeb-285d60c24047"],
+ "concentrations."
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGCQAGIQ/S+I5e2soteOJnKvWWYDaU61GTwgerc5hOYq0zI7
+BqRvNRwA0y8C/gRPLn7tKDEtLRxERzF9jAbRf/qV40F0RNfUDBDdG29UCaIX
+LX5fC6KZzN7Ug2i1e/KdIDr1nctcEK18q3AhiK6wmrMZRG/ztN8FooNWpe8H
+0V8K4k6CaPbNey6BaI9gsTsg+lakM5g2qtj2AkTPVQh5A6L3zQv+AKL5mKpZ
+pgDpV8xsciB61aWT2iA6J+qZGYieL/DIAURfkYhyB9G5IVt9QPSOO48CQbTD
+uQUhIHrnh4cRILrF2yQBTGtL5YLos2mnm0D0jReX+kC0H6fWYRD9ouze3KlA
+ekEh72oQ3cYsuBFEn1D7vgtE61muOw6io44duAyiAS23yUE=
+  "],ExpressionUUID->"384be966-d462-4ab4-b3ce-39b735903274"],
+
+Cell["\<\
+Use the following procedure to determine the stability of the equilibria:\
+\>", "Text",
+ CellChangeTimes->CompressedData["
+1:eJwlxUEoQwEABuD19qIJcdE4DK122MphrYmLrSlEmvdemadMauNgMdNMEkmK
+woFJeAy3KaVlMQulsMRhOWitlRW9vGFKuSx5/3P4+qr7higHIZPJykX4lyLf
+N0YEs0ElkJviCs16IT6r/b/AqzVeiyemL6V5a45e8Qhm5ZqzE7PEVzfOLavt
+2LbgH8CLdv043tv/nMSEMTOFNanKeez4aOSwOuHexb76rRAOtzREMBXsv8Df
+wz0xnB+KxnEzXZbEiS6LtN4X5jFXxWTw+TadxcXEBLkq/ibPU+FgPKbDg+yr
+Ee+UpE34Uck2YRdz3IZPkukObHoIMPg0+2zDs62GXmldhQvfO+9m8BMfX8Lt
+Cu0V5r0pzi8ecBcd4Dl56RG+1fxEcE3d4Q2OWh1JTFnGXrDPM8rjPwIg0Xw=
+
+  "],ExpressionUUID->"b2b85124-6838-4c99-87c6-3c952b8dd156"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"stabilityAnalysis", "[", "Ca_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"eql", ",", "eqi", ",", "J"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Off", "[", 
+      StyleBox[
+       RowBox[{"NSolve", "::", "ratnz"}], "MessageName"], 
+      StyleBox["]", "MessageName"]}], 
+     StyleBox[";", "MessageName"], 
+     RowBox[{"eql", "=", 
+      RowBox[{"NSolve", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"eqV", "[", 
+             RowBox[{"V", ",", "W", ",", "Ca"}], "]"}], "\[Equal]", "0.0"}], 
+           ",", 
+           RowBox[{
+            RowBox[{"eqW", "[", 
+             RowBox[{"V", ",", "W"}], "]"}], "\[Equal]", "0.0"}]}], "}"}], "/.",
+          "pars"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"V", ",", "W"}], "}"}], ",", "Reals"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Print", "[", 
+      RowBox[{"\"\<Number of equilibria: \>\"", ",", " ", 
+       RowBox[{"Length", "[", "eql", "]"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{"stability", " ", "analysis"}], " ", "*)"}], 
+     "\[IndentingNewLine]", 
+     RowBox[{"J", " ", "=", " ", 
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"eqV", "[", 
+            RowBox[{"V", ",", "W", ",", "Ca"}], "]"}], ",", 
+           RowBox[{"eqW", "[", 
+            RowBox[{"V", ",", "W"}], "]"}]}], "}"}], "/.", "pars"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"{", 
+          RowBox[{"V", ",", "W"}], "}"}], "}"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Do", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"eqi", "=", 
+         RowBox[{"eql", "[", 
+          RowBox[{"[", "i", "]"}], "]"}]}], " ", ";", "\[IndentingNewLine]", 
+        RowBox[{"Print", "[", 
+         RowBox[{
+         "\"\<equilibrium \>\"", ",", " ", "i", ",", " ", "\"\<: \>\"", ",", 
+          " ", "eqi"}], "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"Print", "[", 
+         RowBox[{"\"\<   eigenvalues: \>\"", ",", 
+          RowBox[{
+           RowBox[{"J", "/.", "eqi"}], "//", "Eigenvalues"}]}], "]"}], ";"}], 
+       "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "1", ",", " ", 
+         RowBox[{"Length", "[", "eql", "]"}]}], "}"}]}], "]"}]}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.684472437988826*^9, 3.68447252223341*^9}, {
+  3.6844725545090723`*^9, 3.684472821035384*^9}},
+ CellLabel->"In[12]:=",ExpressionUUID->"58de45c7-2b99-4198-b62e-3b05928ff067"],
+
+Cell[BoxData[
+ RowBox[{"stabilityAnalysis", "[", "15.0", "]"}]], "Input",
+ CellChangeTimes->{{3.684472530339024*^9, 3.684472538217641*^9}, {
+  3.68447884981439*^9, 3.684478912317293*^9}, {3.6844790811661654`*^9, 
+  3.684479082108912*^9}, {3.684479547592057*^9, 3.684479551009321*^9}, {
+  3.684479793595368*^9, 3.684479794714405*^9}},
+ CellLabel->"In[13]:=",ExpressionUUID->"0147f1bd-d1a6-4adf-bb5c-b7844092dc9b"],
+
+Cell[TextData[{
+ StyleBox["Q3: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Determine the stability and type (node, saddle or spiral) of the \
+three equilibria that occur at ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Ca", "=", "15"}], TraditionalForm]],
+  FontWeight->"Bold",ExpressionUUID->"1190b4f0-34f9-4e43-a631-6a84abe8a076"],
+ StyleBox[". ",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479277305757*^9}, {3.684479675525605*^9, 3.684479678079468*^9}, {
+   3.684479918032226*^9, 3.684479966844119*^9}, {3.778820061268436*^9, 
+   3.77882006133175*^9}},ExpressionUUID->"4c40c494-8358-46cf-bfa6-\
+b73994d4ecb8"],
+
+Cell[TextData[StyleBox["",
+ FontWeight->"Bold"]], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479282930292*^9}},ExpressionUUID->"e4225c8b-7a36-4744-90bd-\
+147050fc6e07"],
+
+Cell[TextData[{
+ StyleBox["Q4: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Use the procedure ",
+  FontWeight->"Bold"],
+ StyleBox["stabilityAnalysis[] ", "Input"],
+ StyleBox["to investigate the sudden appearance of the lower two equilibria \
+between ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Ca", "=", "5.801"}], TraditionalForm]],
+  FontWeight->"Bold",ExpressionUUID->"060bdbb5-8065-4fdc-9344-0a9ec6bc7c3d"],
+ StyleBox[" and ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Ca", "=", "5.802"}], TraditionalForm]],
+  FontWeight->"Bold",ExpressionUUID->"bf15ca30-6793-430d-ad1a-3e08886e5fb2"],
+ StyleBox[". Which bifurcation occurs here?",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479330381472*^9}, {3.6844793822005653`*^9, 3.684479431914246*^9}, {
+   3.6844794879879293`*^9, 3.6844794923149776`*^9}, {3.684479523138383*^9, 
+   3.684479656599291*^9}, {3.684479978946348*^9, 3.6844799832385683`*^9}, {
+   3.778820065435638*^9, 
+   3.77882006570242*^9}},ExpressionUUID->"d67b7a4e-6902-4440-9d8a-\
+7424792a5e86"],
+
+Cell[BoxData[
+ RowBox[{"stabilityAnalysis", "[", "5.801", "]"}]], "Input",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479282930292*^9}, {3.8444024619879313`*^9, 3.844402469681473*^9}, {
+   3.844403234330723*^9, 3.844403241230343*^9}},
+ CellLabel->"In[14]:=",ExpressionUUID->"7fb65bfc-15b2-4822-a58a-89c8a5c17731"],
+
+Cell[BoxData[
+ RowBox[{"stabilityAnalysis", "[", "5.802", "]"}]], "Input",
+ CellChangeTimes->{{3.844402473555427*^9, 3.844402475251638*^9}, {
+   3.8444025053325977`*^9, 3.844402513541209*^9}, {3.8444026505095873`*^9, 
+   3.844402650851288*^9}, 3.8444171124593687`*^9},
+ CellLabel->"In[15]:=",ExpressionUUID->"fc0ed8fc-5ff8-4bd8-9eff-d810dc140cb0"],
+
+Cell["\<\
+Fold bifurcation of a saddle point and a stable node (resting state). For \
+Ca2+ concentration >= 5.802, there are a saddle point and a stable node at \
+the resting state. At somewhere between 5.801 and 5.802, the two points \
+collide and annihilate each other, so that none of them exist for Ca2+ \
+concentration < 5.802. \
+\>", "Text",
+ CellChangeTimes->{{3.8444066048933277`*^9, 
+  3.8444067627013407`*^9}},ExpressionUUID->"16ef102d-bb69-4393-a002-\
+43445ec5e6ed"],
+
+Cell["", "Text",ExpressionUUID->"e4e2bab6-e242-4337-a484-0867277f1e0f"],
+
+Cell[TextData[{
+ StyleBox["Q5: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Now focus on the upper equilibrium and verify that it undergoes a \
+Hopf bifurcation. Locate the exact position of the bifurcation point. ",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479330381472*^9}, {3.6844793822005653`*^9, 3.684479431914246*^9}, {
+   3.6844794879879293`*^9, 3.6844794923149776`*^9}, {3.684479523138383*^9, 
+   3.684479656599291*^9}, {3.684479756955843*^9, 3.684479774846922*^9}, {
+   3.684479877481009*^9, 3.684479896898038*^9}, {3.6844799899413433`*^9, 
+   3.6844800178306713`*^9}, {3.684480320465049*^9, 3.684480320483506*^9}, {
+   3.778820070523456*^9, 
+   3.7788200706313066`*^9}},ExpressionUUID->"f9f90d76-0546-4c3e-b7a1-\
+50b17689af9f"],
+
+Cell[BoxData[
+ RowBox[{"stabilityAnalysis", "[", "9.3", "]"}]], "Input",
+ CellChangeTimes->{{3.844403188971716*^9, 3.844403191868618*^9}, {
+  3.844403557155592*^9, 3.844403640150004*^9}, {3.84440478946607*^9, 
+  3.844404789702759*^9}, {3.84440498064425*^9, 3.8444049808180723`*^9}},
+ CellLabel->"In[16]:=",ExpressionUUID->"214808cc-5c11-49a0-be61-8e597a03fc84"],
+
+Cell["\<\
+At Ca2+ concentration >= 9.3, the upper equilibrium changes from stable \
+spiral into unstable spiral. This is Hopf bifurcation. \
+\>", "Text",
+ CellChangeTimes->{{3.844403647755987*^9, 3.844403705411359*^9}, {
+  3.844404824190262*^9, 3.844404825357201*^9}, {3.844406789127162*^9, 
+  3.844406825165307*^9}},ExpressionUUID->"29f21c19-9df9-4191-8ee6-\
+3633ef5a582c"],
+
+Cell["", "Text",ExpressionUUID->"957d1024-7103-41ba-a5f5-0c092d65adf3"],
+
+Cell[TextData[{
+ StyleBox["Q6: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Copy the above plot of the equilibrium values on a piece of paper, \
+but use different line styles to distinguish between stable and unstable \
+equilibria (e.g., use a dashed line for the unstable equilibria). Also \
+indicate the position of the bifurcation points.",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479330381472*^9}, {3.6844793822005653`*^9, 3.684479431914246*^9}, {
+   3.6844794879879293`*^9, 3.6844794923149776`*^9}, {3.684479523138383*^9, 
+   3.684479656599291*^9}, {3.684479756955843*^9, 3.684479774846922*^9}, {
+   3.684479877481009*^9, 3.684479896898038*^9}, {3.6844799899413433`*^9, 
+   3.6844800178306713`*^9}, {3.684480320465049*^9, 3.68448033548237*^9}, {
+   3.684480506396783*^9, 3.6844805713733177`*^9}, {3.684480620976695*^9, 
+   3.6844808009389753`*^9}, {3.7788200745928593`*^9, 
+   3.778820074721466*^9}},ExpressionUUID->"b7b7e802-afbf-4e51-adb5-\
+027b3c972efe"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["A stable periodic solution", "Subsection",
+ CellChangeTimes->{{3.684480939473117*^9, 3.684480944495893*^9}, {
+  3.684491502980364*^9, 
+  3.68449150830857*^9}},ExpressionUUID->"d671aa80-4776-484e-a1c5-\
+2532c9579b72"],
+
+Cell["\<\
+Hopf bifurcations give rise to limit cycles, which can be either stable or \
+unstable. To find out which cycles appear in the model, we solve the model \
+numerically and show the trajectories in a phaseportrait with null-clines and \
+vector field.\
+\>", "Text",
+ CellChangeTimes->CompressedData["
+1:eJwlxU8oQ3EAB/D1tmhCXDQO82e1w1YOaz1xsUUhEttinjKpjYPFptYkkaQo
+HNgIj+E2pbQsRqzUWLLDOLDWyg562TCl7DDy+87h06dyYERjpHg8XimBfzWC
+tw1rQq0UJwSbZKF0PR+f1fyfZ5PRAXJk2p+d68hoV8YSapHT1I0Z6rMXZ5Yl
+BqxfcAzhRYNiHO/tf0xiik5OYWmsfB4b3xtZLIlYdrG9bsuDvS31PqxxD17i
+r9G+IM71nIdxs7YkiiM9DdkVdi+H2QpdEl9sa1O4kJoQrJJf+Tli7A4H5XiY
+eaHxTlFchR9ETBM2647b8Ek03olVIZcOn6ae9Xi2VdmfXV5mxnem2xn8yIWX
+cLtQdoU5W4x1kF2WggM8xy8+wjfSbx+urj28xkzAf4+fQl1pJ9n6k65aI/8B
+HUHTKw==
+  "],ExpressionUUID->"9b87b7b8-42b7-4747-a61f-c6002b4a3304"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"phasePortrait", "[", 
+   RowBox[{"Ca_", ",", 
+    RowBox[{"initialConditions_List", ":", 
+     RowBox[{"{", "}"}]}]}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "eql", ",", "fixedPoints", ",", "nullClines", ",", "vectorField", ",", 
+      "sys", ",", "vars", ",", "tEnd", ",", "init", ",", "solution", ",", 
+      "trajectories"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"(*", " ", 
+     RowBox[{"locate", " ", "equilibria"}], " ", "*)"}], 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Off", "[", 
+      StyleBox[
+       RowBox[{"NSolve", "::", "ratnz"}], "MessageName"], 
+      StyleBox["]", "MessageName"]}], 
+     StyleBox[";", "MessageName"], 
+     RowBox[{"eql", "=", 
+      RowBox[{"NSolve", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"eqV", "[", 
+             RowBox[{"V", ",", "W", ",", "Ca"}], "]"}], "\[Equal]", "0.0"}], 
+           ",", 
+           RowBox[{
+            RowBox[{"eqW", "[", 
+             RowBox[{"V", ",", "W"}], "]"}], "\[Equal]", "0.0"}]}], "}"}], "/.",
+          "pars"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"V", ",", "W"}], "}"}], ",", "Reals"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"fixedPoints", " ", "=", " ", 
+      RowBox[{"ListPlot", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"V", ",", " ", "W"}], "}"}], " ", "/.", " ", "eql"}], " ", 
+        ",", " ", 
+        RowBox[{"PlotStyle", " ", "\[Rule]", " ", 
+         RowBox[{"{", 
+          RowBox[{"{", 
+           RowBox[{"Black", ",", " ", 
+            RowBox[{"PointSize", "[", "0.02", "]"}]}], "}"}], "}"}]}], ",", 
+        RowBox[{"PlotRange", " ", "\[Rule]", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "40"}], ",", " ", "20"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.1"}], ",", " ", "0.6"}], "}"}]}], "}"}]}], ",", 
+        RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+        RowBox[{"FrameLabel", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"\"\<V\>\"", ",", "\"\<W\>\""}], "}"}]}], ",", 
+        RowBox[{"AspectRatio", "\[Rule]", "1"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{"draw", " ", "null", " ", "clines"}], " ", "*)"}], 
+     "\[IndentingNewLine]", 
+     RowBox[{"nullClines", " ", "=", " ", 
+      RowBox[{"ContourPlot", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"eqV", "[", 
+              RowBox[{"V", ",", " ", "W", ",", "Ca"}], "]"}], " ", "/.", " ", 
+             "pars"}], ")"}], " ", "==", " ", "0"}], ",", " ", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"eqW", "[", 
+              RowBox[{"V", ",", " ", "W"}], "]"}], " ", "/.", " ", "pars"}], 
+            ")"}], " ", "==", " ", "0"}]}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"V", ",", " ", 
+          RowBox[{"-", "40"}], ",", " ", "20"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"W", ",", " ", 
+          RowBox[{"-", "0.1"}], ",", " ", "0.6"}], "}"}], ",", 
+        RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+        RowBox[{"FrameLabel", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"\"\<V\>\"", ",", "\"\<W\>\""}], "}"}]}], ",", 
+        RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+        RowBox[{"PlotPoints", " ", "\[Rule]", " ", "100"}], ",", " ", 
+        RowBox[{"ContourStyle", " ", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"Dashed", ",", "Orange"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"Dashed", ",", " ", 
+             RowBox[{"Darker", "[", "Red", "]"}]}], "}"}]}], "}"}]}]}], 
+       "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{"draw", " ", "vector", " ", "field"}], " ", "*)"}], 
+     "\[IndentingNewLine]", 
+     RowBox[{"vectorField", " ", "=", " ", 
+      RowBox[{"VectorPlot", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"eqV", "[", 
+            RowBox[{"V", ",", " ", "W", ",", "Ca"}], "]"}], ",", " ", 
+           RowBox[{"eqW", "[", 
+            RowBox[{"V", ",", " ", "W"}], "]"}]}], "}"}], "/.", "pars"}], ",",
+         " ", 
+        RowBox[{"{", 
+         RowBox[{"V", ",", " ", 
+          RowBox[{"-", "40"}], ",", " ", "20"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"W", ",", " ", 
+          RowBox[{"-", "0.1"}], ",", " ", "0.6"}], "}"}], ",", 
+        RowBox[{"VectorStyle", "\[Rule]", " ", "Gray"}], ",", 
+        RowBox[{"VectorPoints", "\[Rule]", "Fine"}], ",", 
+        RowBox[{"PlotRange", " ", "\[Rule]", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "40"}], ",", " ", "20"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.1"}], ",", " ", "0.6"}], "}"}]}], "}"}]}], ",", 
+        RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+        RowBox[{"FrameLabel", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"\"\<V\>\"", ",", "\"\<W\>\""}], "}"}]}], ",", 
+        RowBox[{"AspectRatio", "\[Rule]", "1"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{"run", " ", "simulations"}], " ", "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Length", "[", "initialConditions", "]"}], ">", "0"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"sys", " ", "=", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"D", "[", 
+              RowBox[{
+               RowBox[{"V", "[", "t", "]"}], ",", " ", "t"}], "]"}], " ", "==",
+              " ", 
+             RowBox[{"eqV", "[", 
+              RowBox[{
+               RowBox[{"V", "[", "t", "]"}], ",", " ", 
+               RowBox[{"W", "[", "t", "]"}], ",", " ", "Ca"}], "]"}]}], ",", 
+            " ", 
+            RowBox[{
+             RowBox[{"D", "[", 
+              RowBox[{
+               RowBox[{"W", "[", "t", "]"}], ",", " ", "t"}], "]"}], " ", "==",
+              " ", 
+             RowBox[{"eqW", "[", 
+              RowBox[{
+               RowBox[{"V", "[", "t", "]"}], ",", " ", 
+               RowBox[{"W", "[", "t", "]"}]}], "]"}]}]}], "}"}], " ", "/.", 
+          " ", "pars"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"vars", " ", "=", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"V", "[", "t", "]"}], ",", " ", 
+           RowBox[{"W", "[", "t", "]"}]}], "}"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"tEnd", "=", "1000.0"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"trajectories", "=", 
+         RowBox[{
+          RowBox[{"Reap", "[", 
+           RowBox[{"Do", "[", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"init", "=", 
+               RowBox[{"Thread", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"V", "[", "0", "]"}], ",", 
+                   RowBox[{"W", "[", "0", "]"}]}], "}"}], "\[Equal]", 
+                 RowBox[{"initialConditions", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}]}], "]"}]}], " ", ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"solution", " ", "=", " ", 
+               RowBox[{"NDSolve", "[", 
+                RowBox[{
+                 RowBox[{"Join", "[", 
+                  RowBox[{"sys", ",", " ", "init"}], "]"}], ",", " ", "vars", 
+                 ",", " ", 
+                 RowBox[{"{", 
+                  RowBox[{"t", ",", " ", "0", ",", " ", "tEnd"}], "}"}]}], 
+                "]"}]}], ";", "\[IndentingNewLine]", 
+              RowBox[{"Print", "[", 
+               RowBox[{
+               "\"\<Trajectory \>\"", ",", " ", "i", ",", 
+                "\"\< : initial point \>\"", ",", " ", "init", " ", ",", " ", 
+                "\"\<, final point \>\"", ",", " ", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"Thread", "[", 
+                   RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"V", "[", "tEnd", "]"}], ",", 
+                    RowBox[{"W", "[", "tEnd", "]"}]}], "}"}], "\[Equal]", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"V", "[", "t", "]"}], ",", 
+                    RowBox[{"W", "[", "t", "]"}]}], "}"}]}], "]"}], "/.", 
+                  "solution"}], "/.", 
+                 RowBox[{"{", 
+                  RowBox[{"t", "\[Rule]", "tEnd"}], "}"}]}]}], "]"}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"Sow", "[", 
+               RowBox[{"ParametricPlot", "[", 
+                RowBox[{
+                 RowBox[{"vars", " ", "/.", " ", "solution"}], ",", " ", 
+                 RowBox[{"{", 
+                  RowBox[{"t", ",", " ", "0", ",", " ", "tEnd"}], "}"}], ",", 
+                 RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+                 RowBox[{"PlotStyle", "\[Rule]", 
+                  RowBox[{"Darker", "[", "Green", "]"}]}]}], "]"}], "]"}]}], 
+             "\[IndentingNewLine]", ",", 
+             RowBox[{"{", 
+              RowBox[{"i", ",", "1", ",", 
+               RowBox[{"Length", "[", "initialConditions", "]"}]}], "}"}]}], 
+            "]"}], "]"}], "[", 
+          RowBox[{"[", 
+           RowBox[{"2", ",", "1"}], "]"}], "]"}]}], ";", 
+        RowBox[{"Show", "[", 
+         RowBox[{
+         "vectorField", ",", "trajectories", ",", "nullClines", ",", 
+          "fixedPoints"}], "]"}]}], ",", "\[IndentingNewLine]", 
+       RowBox[{"Show", "[", 
+        RowBox[{"vectorField", ",", "nullClines", ",", "fixedPoints"}], 
+        "]"}]}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.6842149602606897`*^9, 3.684214972901458*^9}, {
+   3.684216265890827*^9, 3.684216295942092*^9}, {3.684216429983124*^9, 
+   3.6842164559468727`*^9}, {3.684216487441*^9, 3.684216539215165*^9}, {
+   3.684216717132718*^9, 3.6842167535293713`*^9}, {3.684216792014792*^9, 
+   3.684216948090811*^9}, {3.6842169874704847`*^9, 3.684217123296563*^9}, {
+   3.684217178933083*^9, 3.684217240747828*^9}, {3.684217298951655*^9, 
+   3.684217322754793*^9}, 3.684217523738673*^9, {3.684217882820589*^9, 
+   3.6842179554013977`*^9}, {3.684217986824456*^9, 3.684218076245056*^9}, {
+   3.684218157363532*^9, 3.684218196511654*^9}, {3.684218226710465*^9, 
+   3.684218230059585*^9}, {3.684221223577529*^9, 3.68422134366823*^9}, {
+   3.6842213766738567`*^9, 3.684221423671937*^9}, {3.6842214584550962`*^9, 
+   3.684221539159855*^9}, {3.684221633957801*^9, 3.684221640762398*^9}, {
+   3.684221673871037*^9, 3.684222056698704*^9}, {3.684222119995228*^9, 
+   3.6842222791028013`*^9}, {3.684222310857464*^9, 3.684222368380294*^9}, {
+   3.6842224640274687`*^9, 3.684222478802886*^9}, {3.684222582983652*^9, 
+   3.684222668919992*^9}, {3.684222784582831*^9, 3.68422290735781*^9}, {
+   3.684222941676785*^9, 3.684222960935747*^9}, {3.684466728703023*^9, 
+   3.684466794645322*^9}, {3.684468855611334*^9, 3.684468939707773*^9}, {
+   3.684469007193169*^9, 3.6844692133697166`*^9}, {3.684469247373988*^9, 
+   3.684469370661408*^9}, {3.68446940123172*^9, 3.684469660308744*^9}, {
+   3.6844697115630903`*^9, 3.684469797219705*^9}, {3.6844698791438627`*^9, 
+   3.6844700939087954`*^9}, {3.684470146433529*^9, 3.6844701677645407`*^9}, {
+   3.684470238560404*^9, 3.6844702391137333`*^9}, {3.6844703294704514`*^9, 
+   3.684470359240965*^9}, {3.6844704291467047`*^9, 3.684470536350451*^9}, {
+   3.68447058323136*^9, 3.684470592894072*^9}, {3.6844707744146757`*^9, 
+   3.6844707764781637`*^9}, {3.6844709001794367`*^9, 
+   3.6844709007441597`*^9}, {3.6844709416861153`*^9, 3.684471041904587*^9}, {
+   3.684471086187058*^9, 3.684471088608673*^9}, {3.6844711301715717`*^9, 
+   3.684471140124374*^9}, {3.684471231275481*^9, 3.684471675616062*^9}, {
+   3.6844717515987387`*^9, 3.6844717761471577`*^9}, {3.684471809576696*^9, 
+   3.6844718792985153`*^9}, {3.68447191510767*^9, 3.684471991687014*^9}, {
+   3.684472061846026*^9, 3.684472062544099*^9}, {3.684472180366705*^9, 
+   3.684472187781329*^9}, {3.6844840191485786`*^9, 3.68448402000487*^9}, {
+   3.684484127608417*^9, 3.684484170331066*^9}, {3.6844901599161043`*^9, 
+   3.684490163863453*^9}, {3.684490564570525*^9, 3.6844905650910378`*^9}, {
+   3.844408736209032*^9, 3.844408737028966*^9}},
+ CellLabel->"In[17]:=",ExpressionUUID->"21b02049-e136-4b82-a839-efc96f3ca80f"],
+
+Cell[TextData[{
+ "Here is a phaseportrait at ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Ca", "=", "9.3"}], TraditionalForm]],ExpressionUUID->
+  "f3dc31f4-fe14-4f79-a62e-e5b19a579959"],
+ ", slightly above the Hopf bifurcation point, where the upper equilibrium is \
+unstable"
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJwlxUsogwEAB/C1LZoQF0kZUiub0NLEZVtTnolteXzKpDbSFrZaJNHyiMKB
+zRozjxNKsSxGiMLI0jiw1mo76MvmVYrDku//Ofz65XT0yNVMBoORScG/cvar
+TR+RFnMj7EVqDs+aiA9L/k8w8kUX1P6RU3qyPqaYM0Sk6RZNEyaYn604Npur
+ws1T5i48rRIO4LX19yHMFEWHMS+YNYnVb+V2nOvvW8X9ZUtO7KoSu7F8s/ME
+f/W2eXC888iHKxVpAexvkdEL+10ktmcro/h4WfGBk5mD7HnqF1YcF2/6PAKs
+JZ5F2JESluCHdKIC65R7tXg/EG7AEu+KEh98hJrxaE1xO70gQ4dvNTcm/Ej6
+ZnAdh3+OSWPQbqZe6UvawuOs1B18xft244LS7UtMXJze4ydv44+FemSrMG+B
+uld7p8e7Zq4Bd5vUNlzEEjuwRna2gfPHQvSN1ROTVuprmYP+D8mJ8wE=
+  "],ExpressionUUID->"c774b36b-9ba8-4488-9393-6f4c570f8c09"],
+
+Cell[BoxData[{
+ RowBox[{"Row", "[", 
+  RowBox[{"{", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Show", "[", 
+     RowBox[{
+      RowBox[{"phasePortrait", "[", 
+       RowBox[{"9.3", ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "30.0"}], ",", 
+            RowBox[{"-", "0.1"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "31.0"}], ",", 
+            RowBox[{"-", "0.1"}]}], "}"}]}], "}"}]}], "]"}], ",", " ", 
+      RowBox[{"ImageSize", "->", "250"}]}], "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"Show", "[", 
+     RowBox[{
+      RowBox[{"phasePortrait", "[", 
+       RowBox[{"9.3", ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"8", ",", "0.43"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"8", ",", "0.42"}], "}"}]}], "}"}]}], "]"}], ",", " ", 
+      RowBox[{"ImageSize", "->", "250"}]}], "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"Show", "[", 
+     RowBox[{
+      RowBox[{"phasePortrait", "[", 
+       RowBox[{"9.3", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "0.24"}], ",", "0.28"}], "}"}], "}"}]}], "]"}], ",", 
+      " ", 
+      RowBox[{"ImageSize", "->", "250"}]}], "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"Show", "[", 
+     RowBox[{
+      RowBox[{"phasePortrait", "[", 
+       RowBox[{"9.3", ",", 
+        RowBox[{"{", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "17.653803731772097`"}], ",", 
+           "0.03648783622081585`"}], "}"}], "}"}]}], "]"}], ",", " ", 
+      RowBox[{"ImageSize", "->", "250"}]}], "]"}]}], "\[IndentingNewLine]", 
+   "}"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"(*", "*)"}]}]}], "Input",
+ CellChangeTimes->{{3.684472075817039*^9, 3.684472079171975*^9}, {
+   3.6844814851499157`*^9, 3.6844815373968153`*^9}, {3.6844815678770113`*^9, 
+   3.684481686508717*^9}, {3.684481824439877*^9, 3.6844819163068123`*^9}, {
+   3.684481953602512*^9, 3.684481989381137*^9}, {3.684482037869873*^9, 
+   3.6844820892774563`*^9}, {3.684482131246784*^9, 3.684482223563829*^9}, 
+   3.684484092702743*^9, {3.6844843395606737`*^9, 3.68448435693852*^9}, {
+   3.684484401007099*^9, 3.684484448371023*^9}, {3.844407252708324*^9, 
+   3.844407273446954*^9}, {3.844407316231636*^9, 3.8444073503738728`*^9}, {
+   3.844407924941777*^9, 3.844407987412463*^9}, {3.8444092587631407`*^9, 
+   3.8444092762018642`*^9}, {3.844410633409688*^9, 3.844410657431425*^9}},
+ CellLabel->"In[18]:=",ExpressionUUID->"ec733f0d-46f3-45f7-97d4-fad2cc22cf56"],
+
+Cell["\<\
+As expected, there is a limit cycle (for clarity, the cycle is shown by \
+itself in the panel on the right). The cycle is easy to spot since it is \
+stable; it attracts three of the trajectories. The other two converge on the \
+lower equilibrium, which is stable as well. \
+\>", "Text",
+ CellChangeTimes->{{3.683964776135131*^9, 3.683964967347437*^9}, {
+   3.683965028754643*^9, 3.683965028756803*^9}, {3.684053425326909*^9, 
+   3.684053430015729*^9}, {3.6844735038848763`*^9, 3.684473531205822*^9}, {
+   3.684473567531537*^9, 3.684473593111326*^9}, {3.6844736686731377`*^9, 
+   3.684473801574164*^9}, {3.6844738394887247`*^9, 3.6844738553815928`*^9}, {
+   3.6844739289958677`*^9, 3.684474090154101*^9}, {3.684474123557878*^9, 
+   3.6844742688821373`*^9}, {3.684474321977748*^9, 3.684474363239541*^9}, {
+   3.684474442951288*^9, 3.684474517896854*^9}, {3.684474592697666*^9, 
+   3.684474594104718*^9}, {3.6844746937021723`*^9, 3.684474722628981*^9}, {
+   3.6844747546131277`*^9, 3.684474915844001*^9}, {3.684475120187978*^9, 
+   3.684475230306966*^9}, {3.684475319198538*^9, 3.684475399064529*^9}, {
+   3.684475450815531*^9, 3.684475493666556*^9}, {3.684475535089443*^9, 
+   3.684475557025177*^9}, {3.684475591060635*^9, 3.684475649634218*^9}, {
+   3.684475752817812*^9, 3.684475926356299*^9}, {3.6844760225909233`*^9, 
+   3.684476441313636*^9}, {3.684478190952015*^9, 3.6844782964201202`*^9}, {
+   3.68447834453168*^9, 3.684478423723484*^9}, {3.68447852544448*^9, 
+   3.684478622024213*^9}, {3.68448096271275*^9, 3.684481353489685*^9}, {
+   3.684481942513237*^9, 3.6844819449557734`*^9}, {3.6844822591721697`*^9, 
+   3.684482297969139*^9}, {3.6844823443419037`*^9, 3.684482365602029*^9}, {
+   3.684482401966909*^9, 3.684482422876197*^9}, {3.6844824917358313`*^9, 
+   3.684482555309916*^9}, {3.6844828431032133`*^9, 3.684482910986549*^9}, 
+   3.6844829775411177`*^9, {3.68448305626103*^9, 3.6844830575774603`*^9}, {
+   3.684484459133257*^9, 3.684484477499627*^9}, {3.6844845180417747`*^9, 
+   3.684484553406228*^9}},ExpressionUUID->"3662d5c1-3b20-4d11-9a8e-\
+379bb84a6c44"],
+
+Cell[TextData[{
+ StyleBox["Q7: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["What is the relationship between the two alternative attractors of \
+the model and the different types of behaviours exhibited by a bursting \
+pancreatic \[Beta]-cell?  ",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479277305757*^9}, {3.684479675525605*^9, 3.684479678079468*^9}, {
+   3.684479918032226*^9, 3.684479966844119*^9}, {3.684482964329597*^9, 
+   3.6844830886330967`*^9}, {3.7788200784384127`*^9, 
+   3.778820078525074*^9}},ExpressionUUID->"e4a8dc80-1c25-42bd-bde5-\
+ba8b7944cac1"],
+
+Cell[TextData[StyleBox["",
+ FontWeight->"Bold"]], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479277305757*^9}, {3.684479675525605*^9, 3.684479678079468*^9}, {
+   3.684479918032226*^9, 3.684479966844119*^9}, 
+   3.684482964329597*^9},ExpressionUUID->"90ca4749-14ca-4ce6-a282-\
+45c45681067b"],
+
+Cell[TextData[{
+ "Is the observed cycle the one that emerges from the Hopf bifurcation point? \
+To find out, we also construct a phaseportrait at ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Ca", "=", "9.2"}], TraditionalForm]],ExpressionUUID->
+  "9a4770b0-6579-4bbf-a569-e4a05952139a"],
+ ", slightly below the Hopf bifurcation point, where the upper equilibrium is \
+stable:"
+}], "Text",
+ CellChangeTimes->{{3.68448264835439*^9, 3.684482718702633*^9}, 
+   3.6844831561845713`*^9},ExpressionUUID->"c3c68499-1fbf-4a3d-a93b-\
+62823ba71e20"],
+
+Cell[BoxData[
+ RowBox[{"Row", "[", 
+  RowBox[{"{", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Show", "[", 
+     RowBox[{
+      RowBox[{"phasePortrait", "[", 
+       RowBox[{"8", ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "30.0"}], ",", 
+            RowBox[{"-", "0.1"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "31.0"}], ",", 
+            RowBox[{"-", "0.1"}]}], "}"}]}], "}"}]}], "]"}], ",", " ", 
+      RowBox[{"ImageSize", "->", "250"}]}], "]"}], ",", " ", 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"similar", " ", "for", " ", "Ca"}], "=", "9.2"}], ",", " ", 
+      RowBox[{
+      "but", " ", "this", " ", "is", " ", "easy", " ", "to", " ", "see", " ", 
+       "that", " ", "the", " ", "upper", " ", "equilibrium", " ", "is", " ", 
+       "stable"}]}], "*)"}], "\[IndentingNewLine]", 
+    RowBox[{"Show", "[", 
+     RowBox[{
+      RowBox[{"phasePortrait", "[", 
+       RowBox[{"8", ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"8", ",", "0.43"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"8", ",", "0.42"}], "}"}]}], "}"}]}], "]"}], ",", " ", 
+      RowBox[{"ImageSize", "->", "250"}]}], "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"Show", "[", 
+     RowBox[{
+      RowBox[{"phasePortrait", "[", 
+       RowBox[{"8", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "0.24"}], ",", "0.28"}], "}"}], "}"}]}], "]"}], ",", 
+      " ", 
+      RowBox[{"ImageSize", "->", "250"}]}], "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"Show", "[", 
+     RowBox[{
+      RowBox[{"phasePortrait", "[", 
+       RowBox[{"8", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"{", 
+          RowBox[{"6", ",", "0.3"}], "}"}], "}"}]}], "]"}], ",", " ", 
+      RowBox[{"ImageSize", "->", "250"}]}], "]"}]}], "\[IndentingNewLine]", 
+   "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.684472075817039*^9, 3.684472079171975*^9}, {
+   3.6844814851499157`*^9, 3.6844815373968153`*^9}, {3.6844815678770113`*^9, 
+   3.684481686508717*^9}, {3.684481824439877*^9, 3.6844819163068123`*^9}, {
+   3.684481953602512*^9, 3.6844819541611567`*^9}, 3.6844820001209307`*^9, 
+   3.68448274005202*^9, {3.684484067561472*^9, 3.684484074481875*^9}, {
+   3.844404309855775*^9, 3.84440432985603*^9}, {3.844407852911825*^9, 
+   3.8444078719881163`*^9}, {3.844408118603785*^9, 3.8444082151557293`*^9}, {
+   3.84440825787218*^9, 3.844408308002812*^9}, 3.844408354052006*^9, {
+   3.8444084091565447`*^9, 3.8444084105989122`*^9}, {3.844408602531055*^9, 
+   3.844408604062235*^9}, {3.844408877595428*^9, 3.844408881062971*^9}, {
+   3.84440893932438*^9, 3.844408940225274*^9}, {3.844409007717822*^9, 
+   3.8444090081747303`*^9}, {3.84440906029161*^9, 3.84440910622532*^9}, {
+   3.8444091397026777`*^9, 3.844409154332164*^9}, {3.8444091856596527`*^9, 
+   3.8444092311396503`*^9}, {3.8444106786842833`*^9, 3.84441075180361*^9}, {
+   3.844410812902658*^9, 3.8444108133345013`*^9}},
+ CellLabel->"In[19]:=",ExpressionUUID->"028e9f18-5adc-4911-9f6a-844c9c4d8023"],
+
+Cell["\<\
+As you can see, the phase-portrait has changed very little. In particular, \
+the stable limit cycle is still there, ruling out the hypothesis that it \
+emerged from the Hopf bifurcation. Weirdly enough, there is now a stable \
+equilibrium point inside a stable limit cycle! \
+\>", "Text",
+ CellChangeTimes->{{3.683964776135131*^9, 3.683964967347437*^9}, {
+   3.683965028754643*^9, 3.683965028756803*^9}, {3.684053425326909*^9, 
+   3.684053430015729*^9}, {3.6844735038848763`*^9, 3.684473531205822*^9}, {
+   3.684473567531537*^9, 3.684473593111326*^9}, {3.6844736686731377`*^9, 
+   3.684473801574164*^9}, {3.6844738394887247`*^9, 3.6844738553815928`*^9}, {
+   3.6844739289958677`*^9, 3.684474090154101*^9}, {3.684474123557878*^9, 
+   3.6844742688821373`*^9}, {3.684474321977748*^9, 3.684474363239541*^9}, {
+   3.684474442951288*^9, 3.684474517896854*^9}, {3.684474592697666*^9, 
+   3.684474594104718*^9}, {3.6844746937021723`*^9, 3.684474722628981*^9}, {
+   3.6844747546131277`*^9, 3.684474915844001*^9}, {3.684475120187978*^9, 
+   3.684475230306966*^9}, {3.684475319198538*^9, 3.684475399064529*^9}, {
+   3.684475450815531*^9, 3.684475493666556*^9}, {3.684475535089443*^9, 
+   3.684475557025177*^9}, {3.684475591060635*^9, 3.684475649634218*^9}, {
+   3.684475752817812*^9, 3.684475926356299*^9}, {3.6844760225909233`*^9, 
+   3.684476441313636*^9}, {3.684478190952015*^9, 3.6844782964201202`*^9}, {
+   3.68447834453168*^9, 3.684478423723484*^9}, {3.68447852544448*^9, 
+   3.684478622024213*^9}, {3.68448096271275*^9, 3.684481353489685*^9}, {
+   3.684481942513237*^9, 3.6844819449557734`*^9}, {3.6844822591721697`*^9, 
+   3.684482297969139*^9}, {3.6844823443419037`*^9, 3.684482365602029*^9}, {
+   3.684482401966909*^9, 3.684482422876197*^9}, {3.6844824917358313`*^9, 
+   3.684482555309916*^9}, {3.6844828431032133`*^9, 3.684482910986549*^9}, 
+   3.6844829775411177`*^9, {3.68448305626103*^9, 3.6844830575774603`*^9}, {
+   3.684483190726551*^9, 3.684483270024087*^9}, {3.684483349752879*^9, 
+   3.684483387186635*^9}},ExpressionUUID->"8d31d1c6-878f-42a8-9bd4-\
+7022aef1bd3e"],
+
+Cell[TextData[{
+ StyleBox["Q8: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Verify that the upper equilibrium really is stable at at ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Ca", "=", "9.2"}], TraditionalForm]],
+  FontWeight->"Bold",ExpressionUUID->"da698734-d692-4989-add4-6eb2e88b49b2"],
+ StyleBox[" and attempt to reconcile this fact with the observation that the \
+equilibrium is enclosed by a stable limit cycle.  ",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479277305757*^9}, {3.684479675525605*^9, 3.684479678079468*^9}, {
+   3.684479918032226*^9, 3.684479966844119*^9}, {3.684482964329597*^9, 
+   3.6844830886330967`*^9}, {3.684483390604362*^9, 3.6844834542315683`*^9}, {
+   3.684483542184972*^9, 3.684483603664117*^9}, {3.68448391381952*^9, 
+   3.68448391382358*^9}, {3.684484238316971*^9, 3.684484270380843*^9}, {
+   3.778820081802311*^9, 
+   3.778820081960586*^9}},ExpressionUUID->"2880748b-5b5d-4899-a159-\
+2a2e314d450d"],
+
+Cell[BoxData[
+ RowBox[{"stabilityAnalysis", "[", "9.2", "]"}]], "Input",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479277305757*^9}, {3.684479675525605*^9, 3.684479678079468*^9}, {
+   3.684479918032226*^9, 3.684479966844119*^9}, {3.684482964329597*^9, 
+   3.6844830886330967`*^9}, {3.684483390604362*^9, 3.6844834542315683`*^9}, {
+   3.684483542184972*^9, 3.684483603664117*^9}, 3.68448391381952*^9, {
+   3.844409329653611*^9, 3.844409336608852*^9}},
+ CellLabel->"In[20]:=",ExpressionUUID->"85354f9b-e47d-4d31-a9f1-c6a1f6fdc950"],
+
+Cell["", "Text",ExpressionUUID->"d9ab4468-f303-4504-af7d-85135fc3ce48"],
+
+Cell[TextData[{
+ StyleBox["Q9: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["It can be shown that the Hopf bifurcation is ",
+  FontWeight->"Bold"],
+ StyleBox["sub-critical",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox[". How does this piece of information fit in with your answer to \
+the previous question?",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479277305757*^9}, {3.684479675525605*^9, 3.684479678079468*^9}, {
+   3.684479918032226*^9, 3.684479966844119*^9}, {3.684482964329597*^9, 
+   3.6844830886330967`*^9}, {3.684483390604362*^9, 3.6844834542315683`*^9}, {
+   3.684483542184972*^9, 3.684483603664117*^9}, {3.684483800640478*^9, 
+   3.684483816975622*^9}, {3.6844838603389807`*^9, 3.6844839058361683`*^9}, {
+   3.684484698370085*^9, 3.684484698375082*^9}, {3.778820085485022*^9, 
+   3.7788200858199263`*^9}},ExpressionUUID->"acf87e23-cb23-40c4-9fd8-\
+0ffa7ccdb6b0"],
+
+Cell[TextData[StyleBox["",
+ FontWeight->"Bold"]], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479277305757*^9}, {3.684479675525605*^9, 3.684479678079468*^9}, {
+   3.684479918032226*^9, 3.684479966844119*^9}, {3.684482964329597*^9, 
+   3.6844830886330967`*^9}, {3.684483390604362*^9, 3.6844834542315683`*^9}, {
+   3.684483542184972*^9, 3.684483603664117*^9}, {3.684483800640478*^9, 
+   3.684483816975622*^9}, {3.6844838603389807`*^9, 3.6844839058361683`*^9}, 
+   3.684484698370085*^9},ExpressionUUID->"ef983a9a-89da-4a3d-94aa-\
+20b998c3c5bd"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Following the fate of the limit cycle", "Subsection",
+ CellChangeTimes->{{3.684480939473117*^9, 3.684480944495893*^9}, {
+  3.684491502980364*^9, 
+  3.684491539484096*^9}},ExpressionUUID->"75f186ce-417a-4d16-831e-\
+75483c9501ff"],
+
+Cell[TextData[{
+ "Given that the stable limit cycle does not originate at the Hopf \
+bifurcation point, we will now try to find out what happens to the cycle as \
+the intracellular ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],ExpressionUUID->
+  "9c7fd003-fc0d-4af0-bb95-d17b213d59a6"],
+ "concentration is varied. One way to do this is to run a simulation until it \
+converges on the cycle and then record the lowest and the highest value of \
+the membrane potential observed along the limit cycle. By repeating this \
+procedure for a range of different ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],ExpressionUUID->
+  "e806a4e4-c2f9-4802-b42b-7cd2b2c0b2ec"],
+ "concentrations, we can get a quick impression of how the amplitude of the \
+oscillations changes with the value of the parameter. Below is a procedure \
+that produces the desired data"
+}], "Text",
+ CellChangeTimes->{{3.6844847026517963`*^9, 3.684484728188079*^9}, {
+  3.684484774449*^9, 3.6844847801449833`*^9}, {3.684484827638619*^9, 
+  3.684484998803562*^9}, {3.684485052607584*^9, 3.684485071718067*^9}, {
+  3.6844851307896547`*^9, 
+  3.684485236653305*^9}},ExpressionUUID->"199d6804-71d0-4d2a-bb06-\
+2dde3249244e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"followLimitCycle", "[", 
+    RowBox[{"Ca0_", ",", "Ca1_", ",", " ", "initialCondition_List"}], "]"}], 
+   " ", ":=", " ", 
+   RowBox[{"Module", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"nStep", " ", "=", " ", "40"}], ",", "Ca", ",", "sys", ",", 
+       " ", "vars", ",", " ", "tConverge", ",", "tCycle", ",", " ", "init", 
+       ",", " ", "solution", ",", "pts"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"tConverge", " ", "=", " ", "1000.0"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"tCycle", " ", "=", " ", "1000.0"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"vars", " ", "=", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"V", "[", "t", "]"}], ",", " ", 
+         RowBox[{"W", "[", "t", "]"}]}], "}"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"init", " ", "=", " ", 
+       RowBox[{"Thread", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"V", "[", "0", "]"}], ",", " ", 
+           RowBox[{"W", "[", "0", "]"}]}], "}"}], " ", "==", " ", 
+         "initialCondition"}], "]"}]}], " ", ";", "\[IndentingNewLine]", "\n",
+       "  ", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "do", " ", "for", " ", "a", " ", "range", " ", "of", " ", "calcium", 
+        " ", "concentrations"}], " ", "*)"}], "\n", "  ", 
+      RowBox[{"pts", "=", 
+       RowBox[{
+        RowBox[{"Reap", "[", 
+         RowBox[{"Do", "[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Ca", "=", 
+             RowBox[{"Ca0", "+", 
+              RowBox[{"i", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"Ca1", "-", "Ca0"}], ")"}], "/", "nStep"}]}]}]}], 
+            ";", "\[IndentingNewLine]", 
+            RowBox[{"sys", "=", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"D", "[", 
+                  RowBox[{
+                   RowBox[{"V", "[", "t", "]"}], ",", "t"}], "]"}], 
+                 "\[Equal]", 
+                 RowBox[{"eqV", "[", 
+                  RowBox[{
+                   RowBox[{"V", "[", "t", "]"}], ",", 
+                   RowBox[{"W", "[", "t", "]"}], ",", "Ca"}], "]"}]}], ",", 
+                RowBox[{
+                 RowBox[{"D", "[", 
+                  RowBox[{
+                   RowBox[{"W", "[", "t", "]"}], ",", "t"}], "]"}], 
+                 "\[Equal]", 
+                 RowBox[{"eqW", "[", 
+                  RowBox[{
+                   RowBox[{"V", "[", "t", "]"}], ",", 
+                   RowBox[{"W", "[", "t", "]"}]}], "]"}]}]}], "}"}], "/.", 
+              "pars"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+            RowBox[{"(*", " ", 
+             RowBox[{
+             "allow", " ", "to", " ", "converge", " ", "on", " ", "cycle"}], 
+             " ", "*)"}], "\[IndentingNewLine]", 
+            RowBox[{"solution", "=", 
+             RowBox[{"NDSolve", "[", 
+              RowBox[{
+               RowBox[{"Join", "[", 
+                RowBox[{"sys", ",", "init"}], "]"}], ",", "vars", ",", 
+               RowBox[{"{", 
+                RowBox[{"t", ",", "0", ",", "tConverge"}], "}"}]}], "]"}]}], 
+            ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+            RowBox[{"(*", " ", 
+             RowBox[{
+             "simulate", " ", "dynamics", " ", "along", " ", "cycle"}], " ", 
+             "*)"}], "\[IndentingNewLine]", 
+            RowBox[{"init", " ", "=", " ", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Thread", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"V", "[", "0", "]"}], ",", " ", 
+                   RowBox[{"W", "[", "0", "]"}]}], "}"}], " ", "==", " ", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"V", "[", "t", "]"}], ",", 
+                   RowBox[{"W", "[", "t", "]"}]}], "}"}]}], "]"}], "/.", 
+               "solution"}], "/.", 
+              RowBox[{"{", 
+               RowBox[{"t", "\[Rule]", "tConverge"}], "}"}]}]}], " ", ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"solution", "=", 
+             RowBox[{"NDSolve", "[", 
+              RowBox[{
+               RowBox[{"Join", "[", 
+                RowBox[{"sys", ",", "init"}], "]"}], ",", "vars", ",", 
+               RowBox[{"{", 
+                RowBox[{"t", ",", "0", ",", "tCycle"}], "}"}]}], "]"}]}], ";",
+             "\[IndentingNewLine]", "\[IndentingNewLine]", 
+            RowBox[{"(*", " ", 
+             RowBox[{
+             "locate", " ", "minimum", " ", "and", " ", "maximum", " ", 
+              "value"}], " ", "*)"}], "\[IndentingNewLine]", 
+            RowBox[{"Sow", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"Ca", ",", 
+                RowBox[{"NMinValue", "[", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"V", "[", "t", "]"}], "/.", "solution"}], "//", 
+                    "First"}], ",", 
+                    RowBox[{
+                    "0", "\[LessEqual]", " ", "t", "\[LessEqual]", " ", 
+                    "tCycle"}]}], "}"}], ",", "t"}], "]"}]}], "}"}], ",", 
+              "minval"}], "]"}], ";", "\[IndentingNewLine]", 
+            RowBox[{"Sow", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"Ca", ",", 
+                RowBox[{"NMaxValue", "[", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"V", "[", "t", "]"}], "/.", "solution"}], "//", 
+                    "First"}], ",", 
+                    RowBox[{
+                    "0", "\[LessEqual]", " ", "t", "\[LessEqual]", " ", 
+                    "tCycle"}]}], "}"}], ",", "t"}], "]"}]}], "}"}], ",", 
+              "maxval"}], "]"}], ";", "\[IndentingNewLine]", 
+            "\[IndentingNewLine]", 
+            RowBox[{"(*", " ", 
+             RowBox[{
+             "use", " ", "last", " ", "point", " ", "as", " ", "initial", " ",
+               "point", " ", "for", " ", "next", " ", "simulation"}], "*)"}], 
+            "\[IndentingNewLine]", 
+            RowBox[{"init", " ", "=", "  ", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Thread", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"V", "[", "0", "]"}], ",", " ", 
+                   RowBox[{"W", "[", "0", "]"}]}], "}"}], " ", "==", " ", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"V", "[", "t", "]"}], ",", 
+                   RowBox[{"W", "[", "t", "]"}]}], "}"}]}], "]"}], "/.", 
+               "solution"}], "/.", 
+              RowBox[{"{", 
+               RowBox[{"t", "\[Rule]", "tCycle"}], "}"}]}]}]}], " ", "\n", 
+           "   ", ",", 
+           RowBox[{"{", 
+            RowBox[{"i", ",", "0", ",", "nStep"}], "}"}]}], "]"}], "]"}], "[", 
+        RowBox[{"[", "2", "]"}], "]"}]}]}]}], "\[IndentingNewLine]", "]"}]}], 
+  "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.684485270663686*^9, 3.684485766317037*^9}, {
+   3.684485798986438*^9, 3.6844858359733543`*^9}, {3.684485917114937*^9, 
+   3.684486074618801*^9}, {3.6844861584544697`*^9, 3.684486202236565*^9}, {
+   3.684486242380063*^9, 3.684486245582144*^9}, {3.684486330614003*^9, 
+   3.6844864034060993`*^9}, {3.684486711949752*^9, 3.6844868161927137`*^9}, {
+   3.684486877388987*^9, 3.6844868855989447`*^9}, {3.684486917922636*^9, 
+   3.684486921741789*^9}, {3.684486991980358*^9, 3.6844869929049797`*^9}, {
+   3.684487075268136*^9, 3.684487096238297*^9}, {3.684487146827909*^9, 
+   3.6844871476292953`*^9}, {3.684487232844492*^9, 3.684487237948051*^9}, {
+   3.6844873549897547`*^9, 3.684487360427464*^9}, {3.684487398742757*^9, 
+   3.684487439355172*^9}, {3.6844874943258657`*^9, 3.684487618486868*^9}, 
+   3.6844876671135807`*^9, {3.68448772646224*^9, 3.68448772953872*^9}, {
+   3.684487831911248*^9, 3.684488011346878*^9}, {3.6844880868161697`*^9, 
+   3.68448815692316*^9}, {3.684488191923833*^9, 3.6844881940677643`*^9}, {
+   3.684488233795351*^9, 3.684488279242611*^9}, {3.6844883100285063`*^9, 
+   3.684488511842526*^9}, {3.68448857444762*^9, 3.6844885830291967`*^9}, {
+   3.684488730923706*^9, 3.684488874168385*^9}, {3.684488921827837*^9, 
+   3.684488944105812*^9}, {3.684489231356773*^9, 3.684489249179626*^9}, 
+   3.68448935977155*^9, {3.684489780661532*^9, 3.6844897811008673`*^9}},
+ CellLabel->"In[21]:=",ExpressionUUID->"f53e7179-23c7-4d9a-ae24-18f9581bd522"],
+
+Cell[TextData[{
+ "The figure below indicates the range of the membrane potential (minimum & \
+maximum) as it oscillates along the stable limit cycle. The points are shown \
+for ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],ExpressionUUID->
+  "7378675b-cce1-490e-9957-2de2f05b2322"],
+ "concentrations between 2 and 9.5, and superimposed on the curves that \
+indicate the location of the equilibrium points. The red dot pinpoints the \
+position of the Hopf bifurcation point. "
+}], "Text",
+ CellChangeTimes->{{3.6844847026517963`*^9, 3.684484728188079*^9}, {
+  3.684484774449*^9, 3.6844847801449833`*^9}, {3.684484827638619*^9, 
+  3.684484998803562*^9}, {3.684485052607584*^9, 3.684485071718067*^9}, {
+  3.6844851307896547`*^9, 3.684485236653305*^9}, {3.6844894242435827`*^9, 
+  3.684489435480501*^9}, {3.684489508254097*^9, 3.684489733605801*^9}, {
+  3.684489867084441*^9, 3.684489872500813*^9}, {3.684490597097521*^9, 
+  3.684490617227832*^9}},ExpressionUUID->"c1fc0b45-98db-4416-aa98-\
+3ccffd2b33d7"],
+
+Cell[BoxData[
+ RowBox[{"plLeft", "=", 
+  RowBox[{"Show", "[", 
+   RowBox[{"equilibria", ",", 
+    RowBox[{"ListPlot", "[", 
+     RowBox[{
+      RowBox[{"followLimitCycle", "[", 
+       RowBox[{"9.5", ",", "2.0", ",", 
+        RowBox[{"{", 
+         RowBox[{"4.0", ",", "0.25"}], "}"}]}], "]"}], ",", " ", 
+      RowBox[{"PlotStyle", " ", "\[Rule]", " ", 
+       RowBox[{"{", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Darker", "[", "Blue", "]"}], ",", " ", 
+          RowBox[{"PointSize", "[", "0.01", "]"}]}], "}"}], "}"}]}]}], "]"}], 
+    ",", 
+    RowBox[{"Graphics", "[", 
+     RowBox[{"{", 
+      RowBox[{"Orange", ",", 
+       RowBox[{"PointSize", "[", "0.02", "]"}], ",", 
+       RowBox[{"Point", "[", 
+        RowBox[{"{", 
+         RowBox[{"9.265", ",", "4.250844678619417`"}], "}"}], "]"}]}], "}"}], 
+     "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.684485869251153*^9, 3.684485910878695*^9}, {
+   3.6844871499151793`*^9, 3.684487150738578*^9}, 3.684488563550302*^9, {
+   3.684488641830817*^9, 3.6844886425821*^9}, {3.684488681565935*^9, 
+   3.68448871512144*^9}, {3.6844893413931837`*^9, 3.684489351806611*^9}, {
+   3.684489753942774*^9, 3.684489754659751*^9}, {3.684491563690971*^9, 
+   3.684491572772498*^9}, {3.684493349061562*^9, 3.684493365056026*^9}},
+ CellLabel->"In[22]:=",ExpressionUUID->"762f3e58-6363-4566-b934-6575fc9f5275"],
+
+Cell[TextData[{
+ StyleBox["Q10: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["The amplitude of the stable limit cycle at first decreases \
+gradually with the calcium concentration, but there appears to be a sudden \
+change at ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   StyleBox[
+    RowBox[{"Ca", " ", "\[TildeTilde]", " ", "3.5"}],
+    FontWeight->"Bold"], TraditionalForm]],
+  FontWeight->"Bold",ExpressionUUID->"c89e764a-a5e3-4e8c-b933-c13d127c4426"],
+ StyleBox[". Examine how the phaseportrait changes around this point, and \
+infer what kind of bifurcation occurs, making use of the insights you \
+obtained in the previous two questions.",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479277305757*^9}, {3.684479675525605*^9, 3.684479678079468*^9}, {
+   3.684479918032226*^9, 3.684479966844119*^9}, {3.684482964329597*^9, 
+   3.6844830886330967`*^9}, {3.684483390604362*^9, 3.6844834542315683`*^9}, {
+   3.684483542184972*^9, 3.684483603664117*^9}, {3.684483800640478*^9, 
+   3.684483816975622*^9}, {3.6844838603389807`*^9, 3.6844839058361683`*^9}, {
+   3.684484698370085*^9, 3.684484698375082*^9}, {3.684489912791206*^9, 
+   3.684489991567374*^9}, {3.684490046719942*^9, 3.6844900491910553`*^9}, {
+   3.684490410858032*^9, 3.684490484554871*^9}, {3.6844905238767157`*^9, 
+   3.684490554611904*^9}, {3.684490648395455*^9, 3.684490729142807*^9}, {
+   3.684490811155916*^9, 3.684490874799306*^9}, {3.778820090058679*^9, 
+   3.7788200904747066`*^9}},ExpressionUUID->"29156fa5-cca5-4b87-ab7b-\
+54536a607d80"],
+
+Cell[BoxData[
+ StyleBox[
+  RowBox[{"Row", "[", 
+   RowBox[{"{", "\n", 
+    RowBox[{
+     RowBox[{"Show", "[", 
+      RowBox[{
+       RowBox[{"phasePortrait", "[", 
+        RowBox[{"3.6", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "30.0"}], ",", 
+             RowBox[{"-", "0.1"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "31.0"}], ",", 
+             RowBox[{"-", "0.1"}]}], "}"}]}], "}"}]}], "]"}], ",", " ", 
+       RowBox[{"ImageSize", "->", "250"}]}], "]"}], ",", "\n", 
+     RowBox[{"Show", "[", 
+      RowBox[{
+       RowBox[{"phasePortrait", "[", 
+        RowBox[{"3.6", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"8", ",", "0.43"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"8", ",", "0.42"}], "}"}]}], "}"}]}], "]"}], ",", " ", 
+       RowBox[{"ImageSize", "->", "250"}]}], "]"}], ",", "\n", 
+     RowBox[{"Show", "[", 
+      RowBox[{
+       RowBox[{"phasePortrait", "[", 
+        RowBox[{"3.6", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "4"}], ",", "0.28"}], "}"}], "}"}]}], "]"}], ",", 
+       " ", 
+       RowBox[{"ImageSize", "->", "250"}]}], "]"}], ",", "\n", 
+     RowBox[{"Show", "[", 
+      RowBox[{
+       RowBox[{"phasePortrait", "[", 
+        RowBox[{"3.6", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"{", 
+           RowBox[{"6", ",", "0.3"}], "}"}], "}"}]}], "]"}], ",", " ", 
+       RowBox[{"ImageSize", "->", "250"}]}], "]"}]}], "\n", "}"}], "]"}],
+  FontWeight->"Plain"]], "Input",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479277305757*^9}, {3.684479675525605*^9, 3.684479678079468*^9}, {
+   3.684479918032226*^9, 3.684479966844119*^9}, {3.684482964329597*^9, 
+   3.6844830886330967`*^9}, {3.684483390604362*^9, 3.6844834542315683`*^9}, {
+   3.684483542184972*^9, 3.684483603664117*^9}, {3.684483800640478*^9, 
+   3.684483816975622*^9}, {3.6844838603389807`*^9, 3.6844839058361683`*^9}, {
+   3.684484698370085*^9, 3.684484698375082*^9}, {3.684489912791206*^9, 
+   3.684489991567374*^9}, {3.684490046719942*^9, 3.6844900491910553`*^9}, {
+   3.684490410858032*^9, 3.684490484554871*^9}, {3.6844905238767157`*^9, 
+   3.684490554611904*^9}, {3.684490648395455*^9, 3.684490729142807*^9}, {
+   3.684490811155916*^9, 3.684490876471637*^9}, {3.844409570950939*^9, 
+   3.844409592990376*^9}, {3.844409907954549*^9, 3.84440995248514*^9}, {
+   3.8444100896289177`*^9, 3.844410110682839*^9}, {3.844410153573278*^9, 
+   3.844410163908557*^9}, {3.844410262090292*^9, 3.844410290290559*^9}, {
+   3.844410829510366*^9, 3.844410836947867*^9}},
+ CellLabel->"In[23]:=",ExpressionUUID->"894cfb15-0ddd-4be2-ba9b-3973e8b69ace"],
+
+Cell[BoxData[
+ StyleBox[
+  RowBox[{"Row", "[", 
+   RowBox[{"{", "\n", 
+    RowBox[{
+     RowBox[{"Show", "[", 
+      RowBox[{
+       RowBox[{"phasePortrait", "[", 
+        RowBox[{"3.4", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "30.0"}], ",", 
+             RowBox[{"-", "0.1"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "31.0"}], ",", 
+             RowBox[{"-", "0.1"}]}], "}"}]}], "}"}]}], "]"}], ",", " ", 
+       RowBox[{"ImageSize", "->", "250"}]}], "]"}], ",", "\n", 
+     RowBox[{"Show", "[", 
+      RowBox[{
+       RowBox[{"phasePortrait", "[", 
+        RowBox[{"3.4", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"8", ",", "0.43"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"8", ",", "0.42"}], "}"}]}], "}"}]}], "]"}], ",", " ", 
+       RowBox[{"ImageSize", "->", "250"}]}], "]"}], ",", "\n", 
+     RowBox[{"Show", "[", 
+      RowBox[{
+       RowBox[{"phasePortrait", "[", 
+        RowBox[{"3.4", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "4"}], ",", "0.28"}], "}"}], "}"}]}], "]"}], ",", 
+       " ", 
+       RowBox[{"ImageSize", "->", "250"}]}], "]"}], ",", "\n", 
+     RowBox[{"Show", "[", 
+      RowBox[{
+       RowBox[{"phasePortrait", "[", 
+        RowBox[{"3.4", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"{", 
+           RowBox[{"6", ",", "0.3"}], "}"}], "}"}]}], "]"}], ",", " ", 
+       RowBox[{"ImageSize", "->", "250"}]}], "]"}]}], "\n", "}"}], "]"}],
+  FontWeight->"Plain"]], "Input",
+ CellChangeTimes->{{3.8444097367001543`*^9, 3.844409777013379*^9}, {
+  3.8444098114944363`*^9, 3.8444098146870604`*^9}, {3.8444099715183983`*^9, 
+  3.844409977771092*^9}, {3.8444101801482553`*^9, 3.844410181553204*^9}, {
+  3.8444102280860853`*^9, 3.844410277463346*^9}, {3.844410856250566*^9, 
+  3.844410862118908*^9}},
+ CellLabel->"In[24]:=",ExpressionUUID->"92f7df64-1ec5-4c74-9199-9ec29e93b5a0"],
+
+Cell[BoxData[
+ StyleBox[
+  RowBox[{"Row", "[", 
+   RowBox[{"{", "\n", 
+    RowBox[{
+     RowBox[{"Show", "[", 
+      RowBox[{
+       RowBox[{"phasePortrait", "[", 
+        RowBox[{"3.1", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "30.0"}], ",", 
+             RowBox[{"-", "0.1"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "31.0"}], ",", 
+             RowBox[{"-", "0.1"}]}], "}"}]}], "}"}]}], "]"}], ",", " ", 
+       RowBox[{"ImageSize", "->", "250"}]}], "]"}], ",", "\n", 
+     RowBox[{"Show", "[", 
+      RowBox[{
+       RowBox[{"phasePortrait", "[", 
+        RowBox[{"3.1", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"8", ",", "0.43"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"8", ",", "0.42"}], "}"}]}], "}"}]}], "]"}], ",", " ", 
+       RowBox[{"ImageSize", "->", "250"}]}], "]"}], ",", "\n", 
+     RowBox[{"Show", "[", 
+      RowBox[{
+       RowBox[{"phasePortrait", "[", 
+        RowBox[{"3.1", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "4"}], ",", "0.28"}], "}"}], "}"}]}], "]"}], ",", 
+       " ", 
+       RowBox[{"ImageSize", "->", "250"}]}], "]"}], ",", "\n", 
+     RowBox[{"Show", "[", 
+      RowBox[{
+       RowBox[{"phasePortrait", "[", 
+        RowBox[{"3.1", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"{", 
+           RowBox[{"6", ",", "0.3"}], "}"}], "}"}]}], "]"}], ",", " ", 
+       RowBox[{"ImageSize", "->", "250"}]}], "]"}]}], "\n", "}"}], "]"}],
+  FontWeight->"Plain"]], "Input",
+ CellChangeTimes->{{3.844410337039659*^9, 3.84441034851331*^9}, {
+  3.844410884914008*^9, 3.844410924414872*^9}},
+ CellLabel->"In[25]:=",ExpressionUUID->"28b31109-1adc-4b44-a4fd-485f42400679"],
+
+Cell["\<\
+For Ca2+ < 9.3, decreasing Ca2+ corresponds to decreasing the amplitude of \
+the stable limit cycle and increasing the amplitude of the unstable limit \
+cycle (the unstable limit cycle becomes farther from the stable equilibrium \
+spiral)\
+\>", "Text",
+ CellChangeTimes->{{3.844410957965507*^9, 
+  3.844411073347723*^9}},ExpressionUUID->"c71002bf-a226-47dc-bb9f-\
+4d6f7e796b13"],
+
+Cell["", "Text",ExpressionUUID->"95676a17-851c-4ff0-8ad5-dee6a2e8dfcc"],
+
+Cell[TextData[{
+ StyleBox["Q11: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Return to the bifurcation diagram you sketched in ",
+  FontWeight->"Bold"],
+ StyleBox["Q6",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox[", and add lines to indicate the amplitude of the stable limit \
+cycle. Do the same for the unstable limit cycle that emerges from the Hopf \
+bifurcation point and show how these connect to the maximum and minimum of \
+the stable limit cycle. A qualitative picture is good enough; it is very \
+difficult to locate the exact position of the unstable cycle by simulation.",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479277305757*^9}, {3.684479675525605*^9, 3.684479678079468*^9}, {
+   3.684479918032226*^9, 3.684479966844119*^9}, {3.684482964329597*^9, 
+   3.6844830886330967`*^9}, {3.684483390604362*^9, 3.6844834542315683`*^9}, {
+   3.684483542184972*^9, 3.684483603664117*^9}, {3.684483800640478*^9, 
+   3.684483816975622*^9}, {3.6844838603389807`*^9, 3.6844839058361683`*^9}, {
+   3.684484698370085*^9, 3.684484698375082*^9}, {3.684489912791206*^9, 
+   3.684489991567374*^9}, {3.684490046719942*^9, 3.6844900491910553`*^9}, {
+   3.684490410858032*^9, 3.684490484554871*^9}, {3.6844905238767157`*^9, 
+   3.684490554611904*^9}, {3.684490648395455*^9, 3.684490729142807*^9}, {
+   3.684490811155916*^9, 3.684490927442217*^9}, {3.684490969154413*^9, 
+   3.6844910490303793`*^9}, {3.684491081621364*^9, 3.684491138586075*^9}, {
+   3.68449120049612*^9, 3.6844914140357733`*^9}, {3.684491604192595*^9, 
+   3.6844916041963654`*^9}, {3.778820093958684*^9, 3.7788200943410397`*^9}, 
+   3.778911512224496*^9},ExpressionUUID->"d4d1be32-6c87-41d0-a887-\
+61d7e47de811"],
+
+Cell[TextData[StyleBox["",
+ FontWeight->"Bold"]], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479277305757*^9}, {3.684479675525605*^9, 3.684479678079468*^9}, {
+   3.684479918032226*^9, 3.684479966844119*^9}, {3.684482964329597*^9, 
+   3.6844830886330967`*^9}, {3.684483390604362*^9, 3.6844834542315683`*^9}, {
+   3.684483542184972*^9, 3.684483603664117*^9}, {3.684483800640478*^9, 
+   3.684483816975622*^9}, {3.6844838603389807`*^9, 3.6844839058361683`*^9}, {
+   3.684484698370085*^9, 3.684484698375082*^9}, {3.684489912791206*^9, 
+   3.684489991567374*^9}, {3.684490046719942*^9, 3.6844900491910553`*^9}, {
+   3.684490410858032*^9, 3.684490484554871*^9}, {3.6844905238767157`*^9, 
+   3.684490554611904*^9}, {3.684490648395455*^9, 3.684490729142807*^9}, {
+   3.684490811155916*^9, 3.684490927442217*^9}, {3.684490969154413*^9, 
+   3.6844910490303793`*^9}, {3.684491081621364*^9, 3.684491138586075*^9}, {
+   3.68449120049612*^9, 3.6844914140357733`*^9}, 
+   3.684491604192595*^9},ExpressionUUID->"3f491e35-0f68-446a-9a2e-\
+d7e0432a1029"],
+
+Cell[TextData[{
+ "To complete our analysis, we also follow the stable limit cycle as we \
+gradually increase the ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],ExpressionUUID->
+  "476de973-940e-46f3-95d0-2c5ecdbe0381"],
+ "concentration. The data are added to the previous figure"
+}], "Text",
+ CellChangeTimes->{{3.6844847026517963`*^9, 3.684484728188079*^9}, {
+  3.684484774449*^9, 3.6844847801449833`*^9}, {3.684484827638619*^9, 
+  3.684484998803562*^9}, {3.684485052607584*^9, 3.684485071718067*^9}, {
+  3.6844851307896547`*^9, 3.684485236653305*^9}, {3.6844894242435827`*^9, 
+  3.684489435480501*^9}, {3.684489508254097*^9, 3.684489733605801*^9}, {
+  3.684489867084441*^9, 3.684489872500813*^9}, {3.684490597097521*^9, 
+  3.684490617227832*^9}, {3.6844915997119513`*^9, 
+  3.684491699982644*^9}},ExpressionUUID->"e8930062-2510-4d6f-b390-\
+5707051aa849"],
+
+Cell[BoxData[
+ RowBox[{"plFull", "=", 
+  RowBox[{"Show", "[", 
+   RowBox[{"plLeft", ",", 
+    RowBox[{"ListPlot", "[", 
+     RowBox[{
+      RowBox[{"followLimitCycle", "[", 
+       RowBox[{"9.5", ",", "19.0", ",", 
+        RowBox[{"{", 
+         RowBox[{"4.0", ",", "0.25"}], "}"}]}], "]"}], ",", " ", 
+      RowBox[{"PlotStyle", " ", "\[Rule]", " ", 
+       RowBox[{"{", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Darker", "[", "Blue", "]"}], ",", " ", 
+          RowBox[{"PointSize", "[", "0.01", "]"}]}], "}"}], "}"}]}]}], 
+     "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.684485869251153*^9, 3.684485910878695*^9}, {
+   3.6844871499151793`*^9, 3.684487150738578*^9}, 3.684488563550302*^9, {
+   3.684488641830817*^9, 3.6844886425821*^9}, {3.684488681565935*^9, 
+   3.68448871512144*^9}, {3.6844893413931837`*^9, 3.684489351806611*^9}, {
+   3.684489753942774*^9, 3.684489754659751*^9}, {3.684491563690971*^9, 
+   3.684491572772498*^9}, {3.684491714360281*^9, 3.68449181293864*^9}, {
+   3.684492381199298*^9, 3.6844923828585987`*^9}, {3.6844933779144*^9, 
+   3.6844933810525503`*^9}},
+ CellLabel->"In[26]:=",ExpressionUUID->"f1cac1cf-600b-49ec-b55d-f699193c09ee"],
+
+Cell[TextData[{
+ "Also at a high  ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],ExpressionUUID->
+  "36beec8b-0a6d-4b6a-ae56-6ae3f5c7e2c3"],
+ "concentration the stable limit cycle appears to collapse suddenly. Below is \
+a phase-portrait showing the stable limit cycle at ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Ca", "=", "17.8"}], TraditionalForm]],ExpressionUUID->
+  "a50089a7-7130-4676-959a-265ae30c9ba5"],
+ ", just before it disappears."
+}], "Text",
+ CellChangeTimes->{{3.6844921864882793`*^9, 
+  3.6844923312190647`*^9}},ExpressionUUID->"c47a2205-d1ce-44c9-b805-\
+c36d238da88d"],
+
+Cell[BoxData[
+ RowBox[{"Row", "[", 
+  RowBox[{"{", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Show", "[", 
+     RowBox[{
+      RowBox[{"phasePortrait", "[", 
+       RowBox[{"17.8", ",", 
+        RowBox[{"{", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "18"}], ",", "0.05"}], "}"}], "}"}]}], "]"}], ",", 
+      " ", 
+      RowBox[{"ImageSize", "->", "500"}]}], "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"Show", "[", 
+     RowBox[{
+      RowBox[{"phasePortrait", "[", 
+       RowBox[{"18", ",", 
+        RowBox[{"{", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "18"}], ",", " ", "0.05"}], "}"}], "}"}]}], "]"}], 
+      ",", " ", 
+      RowBox[{"ImageSize", "->", "500"}]}], "]"}]}], "\[IndentingNewLine]", 
+   "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.684491953993863*^9, 3.684492034055214*^9}, {
+  3.684492064303*^9, 3.6844920986328077`*^9}, {3.84441120303435*^9, 
+  3.844411272459749*^9}, {3.844411320504137*^9, 3.844411330771656*^9}, {
+  3.844411385053996*^9, 3.844411418334023*^9}, {3.844411453015789*^9, 
+  3.8444114639637957`*^9}, {3.844411508254796*^9, 3.844411527388095*^9}, {
+  3.844411640761066*^9, 3.844411641124011*^9}, {3.844411671643161*^9, 
+  3.844411743488908*^9}, {3.8444117935455437`*^9, 3.844411856821656*^9}, {
+  3.844411889165319*^9, 3.8444119641929092`*^9}, {3.844412050660687*^9, 
+  3.844412054151692*^9}, {3.844412111301936*^9, 3.844412111705756*^9}, {
+  3.844412175404643*^9, 3.8444122033804893`*^9}},
+ CellLabel->"In[27]:=",ExpressionUUID->"8b552077-950a-4284-9f8a-256fd301c827"],
+
+Cell["\<\
+When the saddle point is a part of the stable limit cycle, the system will be \
+trapped at the saddle point when it reaches there, because the saddle point \
+is also an equilibrium (where the derivatives are zeros).\
+\>", "Text",
+ CellChangeTimes->{{3.844480763554195*^9, 3.844480781440133*^9}, {
+  3.844481169310397*^9, 3.8444812369675817`*^9}, {3.844481613397181*^9, 
+  3.844481639009451*^9}},ExpressionUUID->"c417ad28-ca7b-472c-bc64-\
+42025fff67d2"],
+
+Cell[TextData[{
+ StyleBox["Q12: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["What kind of bifurcation is responsible for the loss of the cycle \
+at high ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],
+  FontWeight->"Bold",ExpressionUUID->"9381baa1-45d5-4cbb-9162-704b7a2722e5"],
+ StyleBox["concentrations? ",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479277305757*^9}, {3.684479675525605*^9, 3.684479678079468*^9}, {
+   3.684479918032226*^9, 3.684479966844119*^9}, {3.684482964329597*^9, 
+   3.6844830886330967`*^9}, {3.684483390604362*^9, 3.6844834542315683`*^9}, {
+   3.684483542184972*^9, 3.684483603664117*^9}, {3.684483800640478*^9, 
+   3.684483816975622*^9}, {3.6844838603389807`*^9, 3.6844839058361683`*^9}, {
+   3.684484698370085*^9, 3.684484698375082*^9}, {3.684489912791206*^9, 
+   3.684489991567374*^9}, {3.684490046719942*^9, 3.6844900491910553`*^9}, {
+   3.684490410858032*^9, 3.684490484554871*^9}, {3.6844905238767157`*^9, 
+   3.684490554611904*^9}, {3.684490648395455*^9, 3.684490729142807*^9}, {
+   3.684490811155916*^9, 3.684490927442217*^9}, {3.684490969154413*^9, 
+   3.6844910490303793`*^9}, {3.684491081621364*^9, 3.684491138586075*^9}, {
+   3.68449120049612*^9, 3.6844914140357733`*^9}, {3.684491604192595*^9, 
+   3.6844916041963654`*^9}, {3.684492345651293*^9, 3.684492368631302*^9}, {
+   3.6844924011716223`*^9, 3.684492435141693*^9}, {3.6844926324553003`*^9, 
+   3.684492632458993*^9}, {3.778820098465849*^9, 
+   3.778820098529664*^9}},ExpressionUUID->"501115b4-1e63-40a8-bc8a-\
+100fcfa3f3cc"],
+
+Cell[TextData[StyleBox["",
+ FontWeight->"Bold"]], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479277305757*^9}, {3.684479675525605*^9, 3.684479678079468*^9}, {
+   3.684479918032226*^9, 3.684479966844119*^9}, {3.684482964329597*^9, 
+   3.6844830886330967`*^9}, {3.684483390604362*^9, 3.6844834542315683`*^9}, {
+   3.684483542184972*^9, 3.684483603664117*^9}, {3.684483800640478*^9, 
+   3.684483816975622*^9}, {3.6844838603389807`*^9, 3.6844839058361683`*^9}, {
+   3.684484698370085*^9, 3.684484698375082*^9}, {3.684489912791206*^9, 
+   3.684489991567374*^9}, {3.684490046719942*^9, 3.6844900491910553`*^9}, {
+   3.684490410858032*^9, 3.684490484554871*^9}, {3.6844905238767157`*^9, 
+   3.684490554611904*^9}, {3.684490648395455*^9, 3.684490729142807*^9}, {
+   3.684490811155916*^9, 3.684490927442217*^9}, {3.684490969154413*^9, 
+   3.6844910490303793`*^9}, {3.684491081621364*^9, 3.684491138586075*^9}, {
+   3.68449120049612*^9, 3.6844914140357733`*^9}, {3.684491604192595*^9, 
+   3.6844916041963654`*^9}, {3.684492345651293*^9, 3.684492368631302*^9}, {
+   3.6844924011716223`*^9, 3.684492435141693*^9}, 
+   3.6844926324553003`*^9},ExpressionUUID->"4b159288-de4d-4c69-9d53-\
+984549adcea2"],
+
+Cell[TextData[{
+ StyleBox["Q13: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Imagine that you would be able to experimentally manipulate the \
+intracellular ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],
+  FontWeight->"Bold",ExpressionUUID->"b9d039f7-a2f0-40ca-b7e4-1b700cc66e9e"],
+ StyleBox["concentration in a pancreatic \[Beta]-cell. How would the \
+electrical activity of the cell change if you would very slowly increase the ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],
+  FontWeight->"Bold",ExpressionUUID->"239f14d2-c0c1-4bfc-9057-bb0c4d8ec7ce"],
+ StyleBox["concentration from 0 to 20? How would it change if you would next \
+decrease the concentration to 0 again?",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 3.6840579003587093`*^9}, {
+   3.6844788371694107`*^9, 3.684478837224614*^9}, {3.684479189043762*^9, 
+   3.684479277305757*^9}, {3.684479675525605*^9, 3.684479678079468*^9}, {
+   3.684479918032226*^9, 3.684479966844119*^9}, {3.684482964329597*^9, 
+   3.6844830886330967`*^9}, {3.684483390604362*^9, 3.6844834542315683`*^9}, {
+   3.684483542184972*^9, 3.684483603664117*^9}, {3.684483800640478*^9, 
+   3.684483816975622*^9}, {3.6844838603389807`*^9, 3.6844839058361683`*^9}, {
+   3.684484698370085*^9, 3.684484698375082*^9}, {3.684489912791206*^9, 
+   3.684489991567374*^9}, {3.684490046719942*^9, 3.6844900491910553`*^9}, {
+   3.684490410858032*^9, 3.684490484554871*^9}, {3.6844905238767157`*^9, 
+   3.684490554611904*^9}, {3.684490648395455*^9, 3.684490729142807*^9}, {
+   3.684490811155916*^9, 3.684490927442217*^9}, {3.684490969154413*^9, 
+   3.6844910490303793`*^9}, {3.684491081621364*^9, 3.684491138586075*^9}, {
+   3.68449120049612*^9, 3.6844914140357733`*^9}, {3.684491604192595*^9, 
+   3.6844916041963654`*^9}, {3.684492345651293*^9, 3.684492368631302*^9}, {
+   3.6844924011716223`*^9, 3.684492435137795*^9}, {3.684492641638691*^9, 
+   3.684492644243245*^9}, {3.684492676485959*^9, 3.684492829260111*^9}, {
+   3.778820101673099*^9, 
+   3.778820101772008*^9}},ExpressionUUID->"2f5c4a07-c1c3-4193-89d7-\
+655664519b97"],
+
+Cell["\<\
+Going forward from low to high Ca2+ concentration: we first have damped \
+oscillations at the equilibrium with positive membrane voltage (the upper \
+equilibrium), then we have stable oscillations of membrane voltage at higher \
+Ca2+ level, until when Ca2+ is too high, we reach another stable equilibrium \
+with negative membrane voltage - the cell resting state.\
+\>", "Text",
+ CellChangeTimes->{{3.844414742493685*^9, 3.844414758504403*^9}, {
+  3.8444147900339203`*^9, 3.844414801556344*^9}, {3.8444150077950373`*^9, 
+  3.8444151714406357`*^9}},ExpressionUUID->"37974dc6-3625-442d-b71e-\
+ba3287982c6e"],
+
+Cell["\<\
+When we are at very high Ca2+ level - cell is stable at resting state and we \
+go backward by decreasing the Ca2+ concentration: first the resting state \
+changes but the cell is not stimulated (because new resting states are still \
+stable and the membrane voltage is already very close to it, so it keeps \
+being attracted to the new resting states), then at lower Ca2+, the resting \
+state equilibrium point collide with the saddle point and they annihilate \
+each other and there, the system is attracted to the stable limit cycle and \
+trapped there. As Ca2+ becomes lower and lower, the limit cycle disappears \
+and the system is attracted to the stable equilibrium with positive V.\
+\>", "Text",
+ CellChangeTimes->{{3.844414742493685*^9, 3.844414758504403*^9}, {
+  3.8444147900339203`*^9, 3.844414801556344*^9}, {3.8444150077950373`*^9, 
+  3.844415499368497*^9}, {3.844417861669335*^9, 
+  3.844417929698642*^9}},ExpressionUUID->"e3c7a5f0-209a-4ce5-93cd-\
+ac48675f781b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Modelling the bursting behaviour", "Subsection",
+ CellChangeTimes->{{3.684480939473117*^9, 3.684480944495893*^9}, {
+  3.684491502980364*^9, 3.68449150830857*^9}, {3.684492596632599*^9, 
+  3.684492604633017*^9}},ExpressionUUID->"85d6e74d-38ed-4a9d-b3e1-\
+fe846af09b84"],
+
+Cell[TextData[{
+ "Now that we understand how ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{" ", 
+    SuperscriptBox["Ca", 
+     RowBox[{"2", "+"}]]}], TraditionalForm]],
+  FontWeight->"Plain",ExpressionUUID->"ad63ff5b-ca0e-4062-b8eb-cc70d422ffc9"],
+ "controls the transition between the oscillatory and resting phase, we are \
+ready to model the spontaneous bursting observed in pancreatic \[Beta]-cells. \
+For this purpose, we extend the model with an additional equation that \
+describes the change of the intracellular ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{" ", 
+    SuperscriptBox["Ca", 
+     RowBox[{"2", "+"}]]}], TraditionalForm]],
+  FontWeight->"Plain",ExpressionUUID->"2596b625-93eb-4692-8b7d-3dc918a67595"],
+ "concentration."
+}], "Text",
+ CellChangeTimes->{{3.6844921864882793`*^9, 3.6844923312190647`*^9}, {
+  3.684492863740909*^9, 3.684492900125483*^9}, {3.6844929315682907`*^9, 
+  3.684493119737151*^9}},ExpressionUUID->"f594e8c3-f01c-472f-82ee-\
+cf80a3ca57eb"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"eqCa", "[", 
+   RowBox[{"V_", ",", "Ca_"}], "]"}], ":=", 
+  RowBox[{"0.002", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "0.2"}], 
+      SubscriptBox["g", "ca"], 
+      RowBox[{
+       SubscriptBox["m", "\[Infinity]"], "[", "V", "]"}], 
+      RowBox[{"(", 
+       RowBox[{"V", "-", 
+        SubscriptBox["v", "ca"]}], ")"}]}], "-", "Ca"}], ")"}]}]}]], "Input",
+ CellChangeTimes->{{3.684466528064533*^9, 3.684466580752808*^9}, {
+   3.68446666045063*^9, 3.6844666761674767`*^9}, 3.684467216793598*^9, {
+   3.684467248073182*^9, 3.684467249617568*^9}, {3.684468116494741*^9, 
+   3.684468126644281*^9}, {3.684468163007204*^9, 3.684468163082959*^9}},
+ CellLabel->"In[28]:=",ExpressionUUID->"1388c93b-e89f-43f2-b533-b474f935648a"],
+
+Cell[TextData[{
+ "A simulation of the extended model nicely shows the bursting behaviour, \
+triggered by a slow decrease of ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],
+  FontWeight->"Plain",ExpressionUUID->"0af9fa4d-d7e9-48d8-a288-8963872dc831"],
+ "during the resting phase and an increase of ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],
+  FontWeight->"Plain",ExpressionUUID->"34d14a79-1508-4f91-b7f1-34d58bdeef2b"],
+ "during the oscillatory phase. "
+}], "Text",
+ CellChangeTimes->{{3.6844935354663363`*^9, 
+  3.6844936745570507`*^9}},ExpressionUUID->"62bf656e-da03-4ff7-91f9-\
+adeb821f63c2"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"tEnd", " ", "=", " ", "4000.0"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"sys", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"V", "[", "t", "]"}], ",", "t"}], "]"}], "\[Equal]", 
+       RowBox[{"eqV", "[", 
+        RowBox[{
+         RowBox[{"V", "[", "t", "]"}], ",", 
+         RowBox[{"W", "[", "t", "]"}], ",", 
+         RowBox[{"Ca", "[", "t", "]"}]}], "]"}]}], ",", 
+      RowBox[{
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"W", "[", "t", "]"}], ",", "t"}], "]"}], "\[Equal]", 
+       RowBox[{"eqW", "[", 
+        RowBox[{
+         RowBox[{"V", "[", "t", "]"}], ",", 
+         RowBox[{"W", "[", "t", "]"}]}], "]"}]}], ",", 
+      RowBox[{
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"Ca", "[", "t", "]"}], ",", "t"}], "]"}], "\[Equal]", 
+       RowBox[{"eqCa", "[", 
+        RowBox[{
+         RowBox[{"V", "[", "t", "]"}], ",", 
+         RowBox[{"Ca", "[", "t", "]"}]}], "]"}]}]}], "}"}], "/.", "pars"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"vars", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"V", "[", "t", "]"}], ",", 
+     RowBox[{"W", "[", "t", "]"}], ",", 
+     RowBox[{"Ca", "[", "t", "]"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"init", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"V", "[", "0", "]"}], "\[Equal]", 
+      RowBox[{"-", "32.53787782518964`"}]}], ",", 
+     RowBox[{
+      RowBox[{"W", "[", "0", "]"}], "\[Equal]", "0.00593584822774111`"}], ",", 
+     RowBox[{
+      RowBox[{"Ca", "[", "0", "]"}], "\[Equal]", "7.995453830994973`"}]}], 
+    "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"solution", "=", 
+   RowBox[{"NDSolve", "[", 
+    RowBox[{
+     RowBox[{"Join", "[", 
+      RowBox[{"sys", ",", "init"}], "]"}], ",", "vars", ",", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", "0", ",", "tEnd"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Plot", "[", 
+  RowBox[{
+   RowBox[{"Evaluate", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"V", "[", "t", "]"}], ",", 
+       RowBox[{"Ca", "[", "t", "]"}]}], "}"}], "/.", "solution"}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"t", ",", "0", ",", "tEnd"}], "}"}], ",", 
+   RowBox[{"PlotStyle", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Darker", "[", "Red", "]"}], ",", "Gray"}], "}"}]}], ",", 
+   RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+   RowBox[{"FrameLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"\"\<time\>\"", ",", "\"\<V,Ca\>\""}], "}"}]}], ",", 
+   RowBox[{"AspectRatio", "\[Rule]", "1"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.6842149602606897`*^9, 3.684214972901458*^9}, {
+   3.684216265890827*^9, 3.684216295942092*^9}, {3.684216429983124*^9, 
+   3.6842164559468727`*^9}, {3.684216487441*^9, 3.684216539215165*^9}, {
+   3.684216717132718*^9, 3.6842167535293713`*^9}, {3.684216792014792*^9, 
+   3.684216948090811*^9}, {3.6842169874704847`*^9, 3.684217123296563*^9}, {
+   3.684217178933083*^9, 3.684217240747828*^9}, {3.684217298951655*^9, 
+   3.684217322754793*^9}, 3.684217523738673*^9, {3.684217882820589*^9, 
+   3.6842179554013977`*^9}, {3.684217986824456*^9, 3.684218076245056*^9}, {
+   3.684218157363532*^9, 3.684218196511654*^9}, {3.684218226710465*^9, 
+   3.684218230059585*^9}, {3.684221223577529*^9, 3.68422134366823*^9}, {
+   3.6842213766738567`*^9, 3.684221423671937*^9}, {3.6842214584550962`*^9, 
+   3.684221539159855*^9}, {3.684221633957801*^9, 3.684221640762398*^9}, {
+   3.684221673871037*^9, 3.684222056698704*^9}, {3.684222119995228*^9, 
+   3.6842222791028013`*^9}, {3.684222310857464*^9, 3.684222368380294*^9}, {
+   3.6842224640274687`*^9, 3.684222478802886*^9}, {3.684222582983652*^9, 
+   3.684222668919992*^9}, {3.684222784582831*^9, 3.68422290735781*^9}, {
+   3.684222941676785*^9, 3.684222960935747*^9}, {3.684466728703023*^9, 
+   3.6844669265079937`*^9}, {3.68446726392416*^9, 3.684467267347474*^9}, {
+   3.684467704476424*^9, 3.6844677941593237`*^9}, {3.6844681366769943`*^9, 
+   3.6844681367724447`*^9}, {3.684468172553526*^9, 3.6844682757255917`*^9}, {
+   3.684493189899439*^9, 3.684493336070671*^9}, {3.684493401112731*^9, 
+   3.684493503984009*^9}, {3.684493685581457*^9, 3.6844936938411818`*^9}},
+ CellLabel->"In[29]:=",ExpressionUUID->"c6ab87f1-d8e3-43bc-8cf8-a67a649f97a4"],
+
+Cell[TextData[{
+ "When the trajectory is superimposed on the bifurcation diagram (shown below \
+with orange dots indicating the different bifurcation points), it becomes \
+clear that the slow change of the ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Ca", 
+    RowBox[{"2", "+"}]], TraditionalForm]],
+  FontWeight->"Plain",ExpressionUUID->"e27e41d2-28e3-4c89-b97e-fe9e8e198187"],
+ " concentration pushes the system through the homoclinic and the fold \
+bifurcation, inducing a repetitive switch from the stable fixed point to the \
+periodic attractor and back."
+}], "Text",
+ CellChangeTimes->{{3.684494307297949*^9, 3.684494548867352*^9}, {
+  3.6844945865170403`*^9, 
+  3.684494634800802*^9}},ExpressionUUID->"230138b9-14f7-4d07-988f-\
+085c86687bd1"],
+
+Cell[BoxData[
+ RowBox[{"Show", "[", "\[IndentingNewLine]", 
+  RowBox[{"plFull", ",", "\[IndentingNewLine]", 
+   RowBox[{"ParametricPlot", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Ca", "[", "t", "]"}], ",", " ", 
+        RowBox[{"V", "[", "t", "]"}]}], "}"}], " ", "/.", " ", "solution"}], 
+     ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", " ", "0", ",", " ", "tEnd"}], "}"}], ",", " ", 
+     RowBox[{"PlotStyle", "\[Rule]", " ", 
+      RowBox[{"Darker", "[", "Red", "]"}]}], ",", 
+     RowBox[{"PlotRange", " ", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", " ", "20"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "40"}], ",", " ", "20"}], "}"}]}], "}"}]}], ",", " ", 
+     RowBox[{"Frame", " ", "\[Rule]", " ", "True"}], " ", ",", " ", 
+     RowBox[{"AspectRatio", " ", "\[Rule]", " ", "1"}]}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Graphics", "[", 
+    RowBox[{"{", 
+     RowBox[{"Orange", ",", 
+      RowBox[{"PointSize", "[", "0.02", "]"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"Point", "[", 
+       RowBox[{"{", 
+        RowBox[{"5.802", ",", 
+         RowBox[{"-", "28.83"}]}], "}"}], "]"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"Point", "[", 
+       RowBox[{"{", 
+        RowBox[{"17.8", ",", 
+         RowBox[{"-", "22.41"}]}], "}"}], "]"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"Point", "[", 
+       RowBox[{"{", 
+        RowBox[{"3.5", ",", 
+         RowBox[{"-", "9.0"}]}], "}"}], "]"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"Point", "[", 
+       RowBox[{"{", 
+        RowBox[{"3.5", ",", "13.6"}], "}"}], "]"}]}], "}"}], "]"}]}], 
+  "\[IndentingNewLine]", "]"}]], "Input",
+ CellChangeTimes->{{3.6844936973955793`*^9, 3.6844937819646463`*^9}, {
+  3.684493847479123*^9, 3.684493896011599*^9}, {3.6844939317157373`*^9, 
+  3.684493966833123*^9}, {3.684493997089306*^9, 3.684494006107258*^9}, {
+  3.684494045054364*^9, 3.684494061769129*^9}, {3.684494130542295*^9, 
+  3.684494256097706*^9}},
+ CellLabel->"In[35]:=",ExpressionUUID->"0a05ef19-0a65-46a0-b9f5-e0871400447e"],
+
+Cell[TextData[{
+ StyleBox["Q14: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["A characteristic feature of the bursting of pancreatic \
+\[Beta]-cells is that the interval between spikes grows as the cell comes \
+closer to the end of the bursting period. Do you also observe this feature in \
+the model? Can you give a mathematical explanation for why the slowing down \
+occurs?",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGCQAGIQfawn1H120WvH+nYBTxD9VuedL4ieVnalBET/Pq1Y
+BaIZ3MSaQPQcmYedIJpnXUM3iE6yZA8+BqR1jkvFgGglz0c7QHTY07d3QHQt
+q+BrEF0m8/QNiP6778gHsLzipS8gesnrTT9BdOOUnZzHQfTBBH4Q7bnrnACI
+PruwXBREvwhbB6a7jl6SAdF8aVfB9KSmgxogOsLGxhpEH3sTYg+iM1p2uIHo
+kj+t3iD6x5biBBB9NHXWdxDNs8RI8ASQdpn1XwJEl61aZASit0S/TwXRLPkf
+wfSb30kb5ha/dlzh2rkVRN8QzNwLonX+3QTTF1T+XQHRUlFKb0H0Auk1wvOA
+tIU9hP6xi7FiPpDuO7+8EkRLcF5nbFd/42glchNMAwBM4dBn
+  "],ExpressionUUID->"6647cd4d-571b-4c2e-8b16-a242d6dc012c"],
+
+Cell["\<\
+Interval between spikes grows = slow down of electrical spiking = longer time \
+it takes to complete 1 cycle trajectory => This is because as the cell comes \
+closer to the homoclinic, the amplitude of the limit cycle is growing.\
+\>", "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGCQAGIQfawn1H120WvH+nYBTxD9VuedL4ieVnalBET/Pq1Y
+BaIZ3MSaQPQcmYedIJpnXUM3iE6yZA8+BqR1jkvFgGglz0c7QHTY07d3QHQt
+q+BrEF0m8/QNiP6778gHsLzipS8gesnrTT9BdOOUnZzHQfTBBH4Q7bnrnACI
+PruwXBREvwhbB6a7jl6SAdF8aVfB9KSmgxogOsLGxhpEH3sTYg+iM1p2uIHo
+kj+t3iD6x5biBBB9NHXWdxDNs8RI8ASQdpn1XwJEl61aZASit0S/TwXRLPkf
+wfSb30kb5ha/dlzh2rkVRN8QzNwLonX+3QTTF1T+XQHRUlFKb0H0Auk1wvOA
+9GnvT2Bazk43fcmSN47Las5Xgegvv+49PQykDf5BaACOVdZg
+  "],ExpressionUUID->"7d30c132-f4f5-409e-ad9d-72eacd1c7e0f"],
+
+Cell["\<\
+The slow down also because whenever a system gets close to a saddle point, \
+which is also an equilibrium.\
+\>", "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGCQBGIQfawn1H120WvH+nYBTxD9VuedL4ieVnalBET/Pq1Y
+BaIZ3MSaQPQcmYedIJpnXUM3iE6yZA8+BqR1jkvFgGglz0c7QHTY07d3QHQt
+q+BrEF0m8/QNiP6778gHsLzipS8gesnrTT9BdOOUnZzHQfTBBH4Q7bnrnACI
+PruwXBREvwhbB6a7jl6SAdF8aVfB9KSmgxogOsLGxhpEH3sTYg+iM1p2uIHo
+kj+t3iD6x5biBBB9NHXWdxDNs8RI8ASQdpn1XwJEl61aZASit0S/TwXRLPkf
+wfSb30kb5ha/dlzh2rkVRN8QzNwLonX+3QTTF1T+XQHRUlFKb0H0Auk1wvOA
+9GnvT2Bazk43fcmSN47Las5XgejW+N9PDwNpD9GoFyA64mgs1xEgbeR5mw9E
+AwD+Fdw0
+  "],ExpressionUUID->"728970c6-48d8-49a8-b23f-8d26412e564d"],
+
+Cell["", "Text",ExpressionUUID->"f4d7665e-8717-43f4-b765-a07b6522ba59"],
+
+Cell[TextData[{
+ StyleBox["Q15: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Bursting can be generated by different mechanisms. Which other \
+mechanism is suggested by the bifurcation diagram of the pancreatic \
+\[Beta]-cell? Will this type of bursting also show a slowing down of the \
+electrical spiking toward the end of the oscillatory phase?",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGCQAGIQfawn1H120WvH+nYBTxD9VuedL4ieVnalBET/Pq1Y
+BaIZ3MSaQPQcmYedIJpnXUM3iE6yZA8+BqR1jkvFgGglz0c7QHTY07d3QHQt
+q+BrEF0m8/QNiP6778gHsLzipS8gesnrTT9BdOOUnZzHQfTBBH4Q7bnrnACI
+PruwXBREvwhbB6a7jl6SAdF8aVfB9KSmgxogOsLGxhpEH3sTYg+iM1p2uIHo
+kj+t3iD6x5biBBB9NHXWdxDNs8RI8ASQdpn1XwJEl61aZASit0S/TwXRLPkf
+wfSb30kb5ha/dlzh2rkVRN8QzNwLonX+3QTTF1T+XQHRUlFKb0H0Auk1wvOA
+dMDc1zIg+o94ucF8kH6b3bEg+k6ZEVO7+hvHqCtWYBoAXOXRAg==
+  "],ExpressionUUID->"b5b0d364-0f7b-4283-a6c0-f9d5a0395405"],
+
+Cell["\<\
+(1) The cell starts at being stabilize at a positive membrane voltage and \
+intracellular Ca2+ concentration increases by an in flow of the ions. The \
+system moves from the stable spiral and until the Hopf bifurcation is \
+reached, the positive voltage equilibrium becomes unstable and the system is \
+attracted to the stable limit cycle. Bursting occurs there and Ca2+ keeps \
+increase. Until the homoclinic orbit is reached, the cell falls down to the \
+resting state and Ca2+ starts decreasing. Now the loop of resting and \
+bursting begins. Under this scenario, electrical spiking still slows down \
+towards the end of the oscillatory phase.\
+\>", "Text",
+ CellChangeTimes->{{3.844416526633204*^9, 3.844416658596458*^9}, {
+  3.844416769155552*^9, 3.8444168627689667`*^9}, {3.844418273348557*^9, 
+  3.844418354334004*^9}, {3.844418393502358*^9, 3.844418490641226*^9}, {
+  3.844418584892664*^9, 3.844418586468585*^9}, {3.8444187642658863`*^9, 
+  3.844418767808071*^9}, {3.8444191246710253`*^9, 
+  3.844419158763297*^9}},ExpressionUUID->"108cf7b4-775a-4ac6-971a-\
+6dda5b9ce5ec"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Time-scale separation in a population-genetic model of sexual selection\
+\>", "Section",
+ CellChangeTimes->{{3.6829992928352165`*^9, 3.6829992962185545`*^9}, {
+  3.684053399255887*^9, 3.6840534106583014`*^9}, {3.684654781552939*^9, 
+  3.6846548024536753`*^9}, {3.6846563835799923`*^9, 3.6846564374703617`*^9}, {
+  3.684656484067334*^9, 3.6846564900882063`*^9}, {3.684682206313883*^9, 
+  3.684682228737471*^9}},ExpressionUUID->"7348bd1b-8d55-48bf-b3a0-\
+be4a465c85ac"],
+
+Cell[TextData[{
+ "First, we define the frequencies of genotypes ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{
+     SubscriptBox["P", "0"], 
+     SubscriptBox["T", "0"]}]}], TraditionalForm]],ExpressionUUID->
+  "aa74e56c-b966-4b56-a5df-57ef5c56a4e6"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["P", "0"], 
+    SubscriptBox["T", "1"]}], TraditionalForm]],ExpressionUUID->
+  "859622d5-8b98-48c7-8cfe-76a11201ec1c"],
+ StyleBox[", ",
+  FontSlant->"Italic"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["P", "1"], 
+    SubscriptBox["T", "0"]}], TraditionalForm]],ExpressionUUID->
+  "d9cee236-87aa-41af-9611-80eb5d3ee6c4"],
+ StyleBox[", ",
+  FontSlant->"Italic"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["P", "1"], 
+    SubscriptBox["T", "1"]}], TraditionalForm]],ExpressionUUID->
+  "d91d6017-39d9-4a68-82b9-f67a990dac36"],
+ ") in zygotes, depending on the allele frequencies ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"p", " "}], TraditionalForm]],ExpressionUUID->
+  "52ea0a2c-8237-4fbf-a36a-0498e7f68006"],
+ "and ",
+ Cell[BoxData[
+  FormBox["t", TraditionalForm]],ExpressionUUID->
+  "c8da349b-dc44-42d8-960a-70f8bc74cd2e"],
+ " of the alleles ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["P", "1"], TraditionalForm]],ExpressionUUID->
+  "f39dcd7f-7314-4d98-8a4d-1446b5dc7504"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["T", "1"], TraditionalForm]],ExpressionUUID->
+  "2fec18ae-0abb-4f70-a28a-8439602502e9"],
+ " and the linkage disequilibrium \[GothicCapitalD] between them."
+}], "Text",
+ CellChangeTimes->{{3.6846822531148777`*^9, 
+  3.684682500588231*^9}},ExpressionUUID->"a5773df7-824b-4401-902f-\
+677b081c3dd2"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   SubscriptBox["z", "0"], "[", 
+   RowBox[{"p_", ",", "t_", ",", "\[GothicCapitalD]_"}], "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"1", "-", "p"}], ")"}], 
+      RowBox[{"(", 
+       RowBox[{"1", "-", "t"}], ")"}]}], "+", "\[GothicCapitalD]"}], ",", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"1", "-", "p"}], ")"}], "t"}], "-", "\[GothicCapitalD]"}], ",", 
+    RowBox[{
+     RowBox[{"p", 
+      RowBox[{"(", 
+       RowBox[{"1", "-", "t"}], ")"}]}], "-", "\[GothicCapitalD]"}], ",", 
+    RowBox[{
+     RowBox[{"p", " ", "t"}], "+", "\[GothicCapitalD]"}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.684658103873087*^9, 3.6846581141624203`*^9}, {
+  3.684664016134945*^9, 3.684664099968852*^9}, {3.684664288568405*^9, 
+  3.684664290220051*^9}, {3.6846682733440437`*^9, 3.684668274967464*^9}, {
+  3.6846683376244926`*^9, 3.684668348137796*^9}, {3.684669435298964*^9, 
+  3.684669436186659*^9}},
+ CellLabel->"In[36]:=",ExpressionUUID->"6be69c75-73d1-4ff8-8d6d-aba2579a61b6"],
+
+Cell[TextData[{
+ "Males carrying allele ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["T", "1"], " "}], TraditionalForm]],ExpressionUUID->
+  "eb829978-277d-40d5-adbf-33e8fcda8854"],
+ "suffer from a reduced viability ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", "-", "s"}], TraditionalForm]],ExpressionUUID->
+  "b2bc2854-b4fb-487e-99b0-40f04450ceec"],
+ ". The frequencies after selection are given by ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["m", "0"], TraditionalForm]],ExpressionUUID->
+  "672484f9-377a-431f-b02d-1f5fbd24dc08"],
+ " "
+}], "Text",
+ CellChangeTimes->{{3.684682515034914*^9, 
+  3.68468256970888*^9}},ExpressionUUID->"60391891-4a8b-4d20-8156-\
+07a39558605e"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"S", "=", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", 
+     RowBox[{"1", "-", 
+      RowBox[{"\[Epsilon]", " ", "s"}]}], ",", "1", ",", 
+     RowBox[{"1", "-", 
+      RowBox[{"\[Epsilon]", " ", "s"}]}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   SubscriptBox["m", "0"], "[", 
+   RowBox[{"p_", ",", "t_", ",", "\[GothicCapitalD]_"}], "]"}], ":=", 
+  FractionBox[
+   RowBox[{
+    RowBox[{
+     SubscriptBox["z", "0"], "[", 
+     RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "]"}], "S"}], 
+   RowBox[{
+    RowBox[{
+     SubscriptBox["z", "0"], "[", 
+     RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "]"}], ".", 
+    "S"}]]}]}], "Input",
+ CellChangeTimes->{{3.684658026166243*^9, 3.6846580383995447`*^9}, {
+   3.684658126346505*^9, 3.684658132067712*^9}, {3.684658248997179*^9, 
+   3.684658349175232*^9}, {3.684664155483684*^9, 3.684664163670374*^9}, {
+   3.684664214357778*^9, 3.684664311061357*^9}, {3.684665078246965*^9, 
+   3.684665085522275*^9}, {3.684668293092205*^9, 3.684668301085964*^9}, {
+   3.684668381555723*^9, 3.6846684176506042`*^9}, {3.68466847574339*^9, 
+   3.684668476742484*^9}, {3.68466944871327*^9, 3.6846694516638193`*^9}, {
+   3.6846698769093103`*^9, 3.684669894375718*^9}, 3.6846776087438717`*^9},
+ CellLabel->"In[37]:=",ExpressionUUID->"c727cf76-dc8b-460c-a2bc-b01649b443eb"],
+
+Cell[TextData[{
+ "Females carrying allele ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["P", "1"], " "}], TraditionalForm]],ExpressionUUID->
+  "2ff06dc5-d97f-4659-8580-af9dfea3bcd8"],
+ "are more likely to choose a  ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["T", "1"], " "}], TraditionalForm]],ExpressionUUID->
+  "86a94733-96b1-43df-9d6f-cdee348904f2"],
+ "male. The frequencies of these males in mating pairs with a  ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["P", "1"], " "}], TraditionalForm]],ExpressionUUID->
+  "73c93a4b-c10c-493d-a1ee-29827dbf96f1"],
+ "female are given by ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["m", "1"], TraditionalForm]],ExpressionUUID->
+  "321aacfd-631b-44d1-8d96-bbc52e0c07eb"]
+}], "Text",
+ CellChangeTimes->{{3.684682588429669*^9, 
+  3.684682650690618*^9}},ExpressionUUID->"0277e52c-7453-4797-8dc0-\
+a930bf7357b1"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"A", "=", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", 
+     RowBox[{"1", "+", 
+      RowBox[{"\[Epsilon]", " ", "a"}]}], ",", "1", ",", 
+     RowBox[{"1", "+", 
+      RowBox[{"\[Epsilon]", " ", "a"}]}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   SubscriptBox["m", "1"], "[", 
+   RowBox[{"p_", ",", "t_", ",", "\[GothicCapitalD]_"}], "]"}], ":=", 
+  FractionBox[
+   RowBox[{
+    RowBox[{
+     SubscriptBox["m", "0"], "[", 
+     RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "]"}], "A"}], 
+   RowBox[{
+    RowBox[{
+     SubscriptBox["m", "0"], "[", 
+     RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "]"}], ".", 
+    "A"}]]}]}], "Input",
+ CellChangeTimes->{{3.684668484355467*^9, 3.684668573007622*^9}, {
+   3.6846699020087442`*^9, 3.6846699052320642`*^9}, 3.6846776124442997`*^9},
+ CellLabel->"In[39]:=",ExpressionUUID->"1aaf0e43-c0b0-4a36-852f-47e278c75cbd"],
+
+Cell[TextData[{
+ "The next step is that we need to construct all possible mating pairs, and \
+determine the genotype distribution among their offspring. The probabilities \
+that a pair ",
+ Cell[BoxData[
+  FormBox["j", TraditionalForm]],ExpressionUUID->
+  "a2489d26-79bc-4804-aa9b-bb90114de15d"],
+ " produces an offspring ",
+ Cell[BoxData[
+  FormBox["i", TraditionalForm]],ExpressionUUID->
+  "25e5a713-592f-4299-b55d-1d1aca016bff"],
+ " are collected in a recombination matrix ",
+ Cell[BoxData[
+  FormBox["R", TraditionalForm]],ExpressionUUID->
+  "6edf3195-29ef-4ccf-bfa6-393fa6ebefa0"]
+}], "Text",
+ CellChangeTimes->{{3.684682657700721*^9, 
+  3.684682799627221*^9}},ExpressionUUID->"e1449d88-a91b-45d7-94b5-\
+a8355d817feb"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Pr", "[", 
+   RowBox[{"i_", ",", "j_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"k", "=", 
+       RowBox[{"Quotient", "[", 
+        RowBox[{"j", ",", "4"}], "]"}]}], ",", "\[IndentingNewLine]", 
+      RowBox[{"l", "=", 
+       RowBox[{"Mod", "[", 
+        RowBox[{"j", ",", "4"}], "]"}]}], ",", "\[IndentingNewLine]", 
+      RowBox[{"pi", "=", 
+       RowBox[{"Quotient", "[", 
+        RowBox[{"i", ",", "2"}], "]"}]}], ",", "\[IndentingNewLine]", 
+      RowBox[{"ti", "=", 
+       RowBox[{"Mod", "[", 
+        RowBox[{"i", ",", "2"}], "]"}]}], ",", "\[IndentingNewLine]", "pk", 
+      ",", "pl", ",", "tk", ",", "tl"}], "\[IndentingNewLine]", "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"pk", "=", 
+      RowBox[{"Quotient", "[", 
+       RowBox[{"k", ",", "2"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"tk", "=", 
+      RowBox[{"Mod", "[", 
+       RowBox[{"k", ",", "2"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"pl", "=", 
+      RowBox[{"Quotient", "[", 
+       RowBox[{"l", ",", "2"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"tl", "=", 
+      RowBox[{"Mod", "[", 
+       RowBox[{"l", ",", "2"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       FractionBox[
+        RowBox[{"1", "-", "r"}], "2"], 
+       RowBox[{"(", " ", 
+        RowBox[{
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"pi", "\[Equal]", "pk"}], "&&", 
+            RowBox[{"ti", "\[Equal]", "tk"}]}], ",", "1", ",", "0"}], "]"}], 
+         "+", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"pi", "\[Equal]", "pl"}], "&&", 
+            RowBox[{"ti", "\[Equal]", "tl"}]}], ",", "1", ",", "0"}], "]"}]}],
+         ")"}]}], "+", 
+      RowBox[{
+       FractionBox["r", "2"], 
+       RowBox[{"(", " ", 
+        RowBox[{
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"pi", "\[Equal]", "pk"}], "&&", 
+            RowBox[{"ti", "\[Equal]", "tl"}]}], ",", "1", ",", "0"}], "]"}], 
+         "+", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"pi", "\[Equal]", "pl"}], "&&", 
+            RowBox[{"ti", "\[Equal]", "tk"}]}], ",", "1", ",", "0"}], "]"}]}],
+         ")"}]}]}]}]}], "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{"R", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"Pr", "[", 
+       RowBox[{"i", ",", "j"}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", "0", ",", "3"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"j", ",", "0", ",", "15"}], "}"}]}], "]"}]}], ")"}], "//", 
+  "MatrixForm"}]}], "Input",
+ CellChangeTimes->{{3.684677621907366*^9, 3.6846778681777067`*^9}, {
+  3.684677927833005*^9, 3.68467803877564*^9}, {3.684678190319631*^9, 
+  3.684678498795581*^9}, {3.684678608347262*^9, 3.684678799559292*^9}},
+ CellLabel->"In[41]:=",ExpressionUUID->"491536c2-8bc1-4934-b52e-77c6dbfc6707"],
+
+Cell[TextData[{
+ "Finally, we model mutation bias acting on the male ornamentation trait; \
+mutations occur at rate \[Mu] and change allele ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["T", "1"], " ", "into", " ", 
+    SubscriptBox["T", "0"]}], TraditionalForm]],ExpressionUUID->
+  "9caee7af-010b-468c-90c8-12ed344a8702"]
+}], "Text",
+ CellChangeTimes->{{3.684682808148045*^9, 
+  3.6846828850056543`*^9}},ExpressionUUID->"c88523f0-cd22-4781-ac8d-\
+bd2f839008ab"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{"M", " ", "=", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1", ",", 
+        RowBox[{"\[Epsilon]", " ", "\[Mu]"}], ",", "0", ",", "0"}], "}"}], 
+      ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", 
+        RowBox[{"1", "-", 
+         RowBox[{"\[Epsilon]", " ", "\[Mu]"}]}], ",", "0", ",", "0"}], "}"}], 
+      ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0", ",", "1", ",", 
+        RowBox[{"\[Epsilon]", " ", "\[Mu]"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0", ",", "0", ",", 
+        RowBox[{"1", "-", 
+         RowBox[{"\[Epsilon]", " ", "\[Mu]"}]}]}], "}"}]}], "}"}]}], ")"}], 
+  " ", "//", " ", "MatrixForm"}]], "Input",
+ CellChangeTimes->{{3.684679206919113*^9, 3.6846793072669363`*^9}},
+ CellLabel->"In[43]:=",ExpressionUUID->"f3a4a611-3171-41a8-b4a4-3906da77dffa"],
+
+Cell["\<\
+We now calculate the genotype frequencies in the next generation...\
+\>", "Text",
+ CellChangeTimes->{{3.684682895942787*^9, 
+  3.684682920367535*^9}},ExpressionUUID->"44684abe-6a61-468e-8818-\
+660b43fb96d0"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   SubscriptBox["z", "1"], "[", 
+   RowBox[{"p_", ",", "t_", ",", "\[GothicCapitalD]_"}], "]"}], ":=", 
+  RowBox[{"M", ".", "R", ".", 
+   RowBox[{"Flatten", "[", 
+    RowBox[{"Join", "[", 
+     RowBox[{
+      RowBox[{"Outer", "[", 
+       RowBox[{"Times", ",", 
+        RowBox[{
+         RowBox[{
+          SubscriptBox["z", "0"], "[", 
+          RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"1", ";;", "2"}], "]"}], "]"}], ",", 
+        RowBox[{
+         SubscriptBox["m", "0"], "[", 
+         RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "]"}]}], "]"}], 
+      ",", 
+      RowBox[{"Outer", "[", 
+       RowBox[{"Times", ",", 
+        RowBox[{
+         RowBox[{
+          SubscriptBox["z", "0"], "[", 
+          RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"3", ";;", "4"}], "]"}], "]"}], ",", 
+        RowBox[{
+         SubscriptBox["m", "1"], "[", 
+         RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "]"}]}], "]"}]}], 
+     "]"}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.68466868433389*^9, 3.684668716489526*^9}, {
+   3.6846688644450417`*^9, 3.684668899926817*^9}, {3.684668965129881*^9, 
+   3.684669149679543*^9}, {3.684669251138932*^9, 3.684669300596395*^9}, {
+   3.6846693328314734`*^9, 3.6846694205216837`*^9}, {3.6846694553784847`*^9, 
+   3.684669475144047*^9}, {3.684669959862844*^9, 3.6846700129078217`*^9}, {
+   3.684670084753374*^9, 3.6846700996039457`*^9}, {3.68467020420627*^9, 
+   3.684670228420594*^9}, {3.684670350663341*^9, 3.68467049146362*^9}, {
+   3.6846705699151773`*^9, 3.684670573833787*^9}, {3.684670641004079*^9, 
+   3.6846706816504908`*^9}, 3.684678741467244*^9, {3.684678806751911*^9, 
+   3.684678837462576*^9}, {3.684679324857596*^9, 3.68467932515311*^9}},
+ CellLabel->"In[44]:=",ExpressionUUID->"2eda9ed9-08a3-4bd1-b686-0dac913b1675"],
+
+Cell["\<\
+...and compute the change in the allele frequencies and linkage \
+disequilibrium from there. \
+\>", "Text",
+ CellChangeTimes->{{3.684682924166314*^9, 
+  3.684682947716196*^9}},ExpressionUUID->"6fc94ab2-88ba-4ab1-a69f-\
+71ba445a5b80"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"\[CapitalDelta]p", "[", 
+   RowBox[{"p_", ",", "t_", ",", "\[GothicCapitalD]_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"0", ",", "0", ",", "1", ",", "1"}], "}"}], ".", 
+    RowBox[{
+     SubscriptBox["z", "1"], "[", 
+     RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "]"}]}], "-", 
+   "p"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[CapitalDelta]t", "[", 
+   RowBox[{"p_", ",", "t_", ",", "\[GothicCapitalD]_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"0", ",", "1", ",", "0", ",", "1"}], "}"}], ".", 
+    RowBox[{
+     SubscriptBox["z", "1"], "[", 
+     RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "]"}]}], "-", 
+   "t"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[CapitalDelta]\[GothicCapitalD]", "[", 
+   RowBox[{"p_", ",", "t_", ",", "\[GothicCapitalD]_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      SubscriptBox["z", "1"], "[", 
+      RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "]"}], "[", 
+     RowBox[{"[", "1", "]"}], "]"}], 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["z", "1"], "[", 
+      RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "]"}], "[", 
+     RowBox[{"[", "4", "]"}], "]"}]}], "-", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      SubscriptBox["z", "1"], "[", 
+      RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "]"}], "[", 
+     RowBox[{"[", "2", "]"}], "]"}], 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["z", "1"], "[", 
+      RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "]"}], "[", 
+     RowBox[{"[", "3", "]"}], "]"}]}], "-", "\[GothicCapitalD]"}]}]}], "Input",
+ CellChangeTimes->{{3.684664522716529*^9, 3.684664523225268*^9}, {
+  3.684664688065393*^9, 3.684664808511058*^9}, {3.684664871131624*^9, 
+  3.684664901790378*^9}, {3.684665027366169*^9, 3.6846650511643763`*^9}, {
+  3.684669488453656*^9, 3.6846694991357613`*^9}, {3.684669733621567*^9, 
+  3.684669751559197*^9}, {3.684678899656299*^9, 3.684678905137815*^9}, {
+  3.684681567182272*^9, 3.684681567284957*^9}},
+ CellLabel->"In[45]:=",ExpressionUUID->"55191f0a-809c-4104-a3c8-e66e7ecb95b5"],
+
+Cell["\<\
+The following is to check the equations for the case that there is no \
+selection or mutation. As expected, the allele frequencies do not change, and \
+the linkage disequilibrium decays at a rate proportional to the recombination \
+rate.\
+\>", "Text",
+ CellChangeTimes->{{3.684682953325289*^9, 
+  3.684683048516773*^9}},ExpressionUUID->"22a84c22-44a0-4869-b257-\
+ac581a468d0b"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[CapitalDelta]p", "[", 
+    RowBox[{"p", ",", " ", "t", ",", " ", "\[GothicCapitalD]"}], "]"}], "/.", 
+   RowBox[{"{", 
+    RowBox[{"\[Epsilon]", "\[Rule]", "0"}], "}"}]}], "//", 
+  "FullSimplify"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[CapitalDelta]t", "[", 
+    RowBox[{"p", ",", " ", "t", ",", " ", "\[GothicCapitalD]"}], "]"}], "/.", 
+   RowBox[{"{", 
+    RowBox[{"\[Epsilon]", "\[Rule]", "0"}], "}"}]}], "//", 
+  "FullSimplify"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[CapitalDelta]\[GothicCapitalD]", "[", 
+    RowBox[{"p", ",", " ", "t", ",", " ", "\[GothicCapitalD]"}], "]"}], "/.", 
+   RowBox[{"{", 
+    RowBox[{"\[Epsilon]", "\[Rule]", "0"}], "}"}]}], "//", 
+  "FullSimplify"}]}], "Input",
+ CellChangeTimes->{{3.684664908729513*^9, 3.684664932817474*^9}, {
+  3.6846649866377163`*^9, 3.684665013270904*^9}, {3.6846651180847282`*^9, 
+  3.684665123278357*^9}, {3.684669543221682*^9, 3.684669582715213*^9}, {
+  3.684669699032344*^9, 3.684669711876292*^9}, {3.684669776840755*^9, 
+  3.6846697781630697`*^9}, {3.6846788471026697`*^9, 3.6846788533272963`*^9}, {
+  3.684681571449787*^9, 3.684681571521596*^9}},
+ CellLabel->"In[48]:=",ExpressionUUID->"e9285b14-64c4-4adc-8622-c3b4978a8aa4"],
+
+Cell["The recurrence equations of the model are quite complicated:", "Text",
+ CellChangeTimes->{{3.684682991620306*^9, 3.684682999736205*^9}, {
+  3.684683055118847*^9, 
+  3.684683075171451*^9}},ExpressionUUID->"dec52262-d44b-45d7-b68c-\
+0510d02e9093"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[CapitalDelta]p", "[", 
+    RowBox[{"p", ",", " ", "t", ",", " ", "\[GothicCapitalD]"}], "]"}], " ", "/.",
+    " ", 
+   RowBox[{"{", 
+    RowBox[{"\[Epsilon]", " ", "\[Rule]", " ", "1"}], "}"}]}], " ", "//", " ",
+   "FullSimplify"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[CapitalDelta]t", "[", 
+    RowBox[{"p", ",", " ", "t", ",", " ", "\[GothicCapitalD]"}], "]"}], " ", "/.",
+    " ", 
+   RowBox[{"{", 
+    RowBox[{"\[Epsilon]", " ", "\[Rule]", " ", "1"}], "}"}]}], " ", "//", " ",
+   "FullSimplify"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[CapitalDelta]\[GothicCapitalD]", "[", 
+    RowBox[{"p", ",", " ", "t", ",", " ", "\[GothicCapitalD]"}], "]"}], " ", "/.",
+    " ", 
+   RowBox[{"{", 
+    RowBox[{"\[Epsilon]", " ", "\[Rule]", " ", "1"}], "}"}]}], " ", "//", " ",
+   "Simplify"}]}], "Input",
+ CellChangeTimes->{{3.68466796631833*^9, 3.684667986288912*^9}, {
+  3.684678930127976*^9, 3.684678937393252*^9}, {3.68467934208738*^9, 
+  3.6846793425472803`*^9}, {3.684681394265572*^9, 3.6846813958159437`*^9}, {
+  3.684681574196601*^9, 3.68468157428334*^9}},
+ CellLabel->"In[51]:=",ExpressionUUID->"726e62f0-56a2-4df2-afa6-50ca97ec611e"],
+
+Cell["But, we can iterate them numerically of course", "Text",
+ CellChangeTimes->{{3.684683080963306*^9, 
+  3.6846831011410503`*^9}},ExpressionUUID->"7dbd3ab8-1b0a-4444-b975-\
+1d9c72e4c534"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"simulateExactRecursions", "[", 
+   RowBox[{"p0_", ",", "t0_", ",", "D0_", ",", "tEnd_", ",", "pars_List"}], 
+   "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"p", "=", "p0"}], ",", 
+      RowBox[{"t", "=", "t0"}], ",", 
+      RowBox[{"\[GothicCapitalD]", "=", "D0"}], ",", "\[Delta]p", ",", 
+      "\[Delta]t", ",", "\[Delta]\[GothicCapitalD]"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Reap", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"Sow", "[", 
+         RowBox[{"{", 
+          RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "}"}], "]"}], 
+        ";", "\[IndentingNewLine]", 
+        RowBox[{"Do", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"\[Delta]p", "=", 
+            RowBox[{
+             RowBox[{"\[CapitalDelta]p", "[", 
+              RowBox[{"p", ",", " ", "t", ",", " ", "\[GothicCapitalD]"}], 
+              "]"}], "/.", "pars"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{"\[Delta]t", "=", 
+            RowBox[{
+             RowBox[{"\[CapitalDelta]t", "[", 
+              RowBox[{"p", ",", " ", "t", ",", " ", "\[GothicCapitalD]"}], 
+              "]"}], "/.", "pars"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{"\[Delta]\[GothicCapitalD]", "=", 
+            RowBox[{
+             RowBox[{"\[CapitalDelta]\[GothicCapitalD]", "[", 
+              RowBox[{"p", ",", " ", "t", ",", " ", "\[GothicCapitalD]"}], 
+              "]"}], "/.", "pars"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{"p", "+=", " ", "\[Delta]p"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"t", "+=", " ", "\[Delta]t"}], ";", "\[IndentingNewLine]", 
+           RowBox[{
+           "\[GothicCapitalD]", "+=", " ", "\[Delta]\[GothicCapitalD]"}], ";",
+            "\[IndentingNewLine]", 
+           RowBox[{"Sow", "[", 
+            RowBox[{"{", 
+             RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "}"}], "]"}], 
+           ";"}], "\[IndentingNewLine]", ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "1", ",", "tEnd"}], "}"}]}], "]"}]}], "]"}], "[", 
+      RowBox[{"[", 
+       RowBox[{"2", ",", "1"}], "]"}], "]"}], "//", "Transpose"}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.684666208299514*^9, 3.684666543712412*^9}, {
+   3.684666741842663*^9, 3.684666759515193*^9}, {3.684666874163436*^9, 
+   3.6846669720506496`*^9}, {3.684679560520295*^9, 3.6846796414508543`*^9}, {
+   3.684679725960309*^9, 3.684679728778064*^9}, {3.684679771550799*^9, 
+   3.684679819806808*^9}, {3.684679854937374*^9, 3.684679895714869*^9}, 
+   3.684679930914028*^9, {3.684680379803997*^9, 3.684680402744594*^9}, {
+   3.684681406859694*^9, 3.684681428618751*^9}, {3.6846815778433647`*^9, 
+   3.684681577919108*^9}},
+ CellLabel->"In[54]:=",ExpressionUUID->"763cb527-8646-45ac-a99a-7caaed491e6d"],
+
+Cell["\<\
+Here are some results: the frequencies of the male ornamentation trait and \
+female choosiness increase slowly over the course of 5000 generations\
+\>", "Text",
+ CellChangeTimes->{{3.6846831126099157`*^9, 
+  3.684683177955166*^9}},ExpressionUUID->"a5102c94-9ea8-4813-968f-\
+9ff344c574b6"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"dataExact", "=", 
+   RowBox[{"simulateExactRecursions", "[", 
+    RowBox[{"0.2", ",", "0.2", ",", "0.0", ",", "5000", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"s", "\[Rule]", "0.01"}], ",", 
+       RowBox[{"a", "\[Rule]", "0.2"}], ",", 
+       RowBox[{"\[Mu]", "\[Rule]", "0.005"}], ",", 
+       RowBox[{"\[Epsilon]", "\[Rule]", "1"}], ",", 
+       RowBox[{"r", "\[Rule]", "0.2"}]}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"GraphicsColumn", "[", 
+  RowBox[{"{", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"ListPlot", "[", 
+     RowBox[{
+      RowBox[{"dataExact", "[", 
+       RowBox[{"[", 
+        RowBox[{"1", ";;", "2"}], "]"}], "]"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"Orange", ",", 
+         RowBox[{"Darker", "[", "Red", "]"}]}], "}"}]}], ",", 
+      RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+      RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+      RowBox[{"FrameLabel", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"\"\<generation\>\"", ",", "\"\<allele frequency\>\""}], 
+        "}"}]}]}], "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListPlot", "[", 
+     RowBox[{
+      RowBox[{"dataExact", "[", 
+       RowBox[{"[", "3", "]"}], "]"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"Darker", "[", "Blue", "]"}], "}"}]}], ",", 
+      RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+      RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+      RowBox[{"FrameLabel", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"\"\<generation\>\"", ",", "\"\<linkage disequilibrium\>\""}],
+         "}"}]}]}], "]"}]}], "}"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.684666552611364*^9, 3.684666565795759*^9}, {
+  3.684666596336494*^9, 3.684666726462476*^9}, {3.6846667662850447`*^9, 
+  3.6846668655347147`*^9}, {3.6846669921419153`*^9, 3.684666993045595*^9}, {
+  3.684667511853664*^9, 3.684667522461624*^9}, {3.684678954181919*^9, 
+  3.684679150215177*^9}, {3.684679359535082*^9, 3.6846794973760853`*^9}, {
+  3.684680388253417*^9, 3.684680442664012*^9}, {3.684681903362268*^9, 
+  3.68468190758994*^9}, {3.684681976875016*^9, 3.684681985332326*^9}, {
+  3.6846820628000183`*^9, 3.68468207306581*^9}, {3.684683793756444*^9, 
+  3.684683794260371*^9}},
+ CellLabel->"In[55]:=",ExpressionUUID->"ca21b5b7-6b8e-4eef-bc80-b6332e3a0546"],
+
+Cell["\<\
+Note that the linkage disequilibrium remains small and that it changes on a \
+fast time-scale (recombination is much stronger than selection). Derive the \
+model of change of linkage disequilibrium  with \[Epsilon]=0 (no mutation) \
+because selection happens much much slower.\
+\>", "Text",
+ CellChangeTimes->{{3.684683195070166*^9, 3.684683265072543*^9}, {
+   3.8444205191002073`*^9, 3.844420556526683*^9}, {3.844420867510581*^9, 
+   3.8444208819884357`*^9}, 
+   3.844420919185356*^9},ExpressionUUID->"4543bded-e3c7-439e-83b9-\
+e14949938652"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"eq\[CapitalDelta]\[GothicCapitalD]QLE", "[", 
+   RowBox[{"p_", ",", "t_"}], "]"}], "=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Series", "[", 
+     RowBox[{
+      RowBox[{"\[CapitalDelta]\[GothicCapitalD]", "[", 
+       RowBox[{"p", ",", " ", "t", ",", " ", 
+        RowBox[{"\[Epsilon]", " ", "\[GothicCapitalD]"}]}], "]"}], ",", " ", 
+      RowBox[{"{", 
+       RowBox[{"\[Epsilon]", ",", " ", "0", ",", " ", "1"}], "}"}]}], "]"}], 
+    " ", "//", " ", "Normal"}], " ", "//", " ", "FullSimplify"}]}]], "Input",
+ CellChangeTimes->{{3.684667615479189*^9, 3.684667630586474*^9}, {
+  3.68468143862728*^9, 3.684681441204114*^9}, {3.684681490263842*^9, 
+  3.684681501443852*^9}},
+ CellLabel->"In[57]:=",ExpressionUUID->"6a2aa1e7-18bd-4b3e-9e5c-58eb2df59078"],
+
+Cell["\<\
+Using the fact that the linkage disequilibrium is small, we can solve for its \
+Quasi-Steady-State equilibrium value: (We assume that there could be change \
+in linkage disequilibrium, the dynamic of this change is very fast and the \
+values are also very small such that zero is easily reached before any effect \
+of selection occurs)\
+\>", "Text",
+ CellChangeTimes->{{3.684683307630558*^9, 3.684683364444202*^9}, {
+  3.844420911980961*^9, 
+  3.8444210944424477`*^9}},ExpressionUUID->"aebfcc26-d9cc-4c6d-85a3-\
+b4f9c756e46d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[GothicCapitalD]QLE", "[", 
+   RowBox[{"p_", ",", "t_"}], "]"}], "=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"\[GothicCapitalD]", "/.", 
+     RowBox[{"Solve", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"eq\[CapitalDelta]\[GothicCapitalD]QLE", "[", 
+         RowBox[{"p", ",", "t"}], "]"}], "\[Equal]", "0"}], ",", 
+       "\[GothicCapitalD]"}], "]"}]}], "//", "First"}], "//", 
+   "Simplify"}]}]], "Input",
+ CellChangeTimes->{{3.684667633525655*^9, 3.6846676799369717`*^9}, {
+  3.684668034896803*^9, 3.684668039435405*^9}, {3.684680096955147*^9, 
+  3.684680100155435*^9}, {3.684680623553355*^9, 3.684680636050356*^9}, {
+  3.684681461259935*^9, 3.684681461688867*^9}, {3.684681529731566*^9, 
+  3.684681531415421*^9}},
+ CellLabel->"In[58]:=",ExpressionUUID->"046ae47e-46ae-4d15-924f-7655ff86f75d"],
+
+Cell[TextData[{
+ "The linkage equilibrium is proportional to the genetic variance in trait \
+and choosiness, and to the parameter ",
+ Cell[BoxData[
+  FormBox["a", TraditionalForm]],ExpressionUUID->
+  "1e1bea4a-eca3-49c0-8a20-b728df5d3d2c"],
+ " which determines the degree of non-random mating"
+}], "Text",
+ CellChangeTimes->{{3.684683375719247*^9, 3.684683391962461*^9}, {
+  3.684683472928749*^9, 
+  3.68468351543285*^9}},ExpressionUUID->"c0267ff2-5558-434a-ae21-\
+223b36af0cf9"],
+
+Cell["\<\
+The equations for the change in allele frequency simplify as well, if we \
+assume weak selection and mutation; in fact, choosiness appears to be neutral \
+up to first order approximation\
+\>", "Text",
+ CellChangeTimes->{{3.684683528889223*^9, 
+  3.6846835918636703`*^9}},ExpressionUUID->"5bfdbf74-4b23-41fe-807f-\
+f1f474d19795"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Series", "[", 
+    RowBox[{
+     RowBox[{"\[CapitalDelta]p", "[", 
+      RowBox[{"p", ",", " ", "t", ",", 
+       RowBox[{"\[Epsilon]", " ", "\[GothicCapitalD]"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\[Epsilon]", ",", "0", ",", "1"}], "}"}]}], "]"}], "//", 
+   "Normal"}], "//", "FullSimplify"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Series", "[", 
+    RowBox[{
+     RowBox[{"\[CapitalDelta]t", "[", 
+      RowBox[{"p", ",", " ", "t", ",", " ", 
+       RowBox[{"\[Epsilon]", " ", "\[GothicCapitalD]"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\[Epsilon]", ",", "0", ",", "1"}], "}"}]}], "]"}], "//", 
+   "Normal"}], "//", "FullSimplify"}]}], "Input",
+ CellChangeTimes->{{3.6846651327717323`*^9, 3.68466518393075*^9}, {
+   3.684665254950871*^9, 3.684665309994647*^9}, {3.684665532807605*^9, 
+   3.6846655403518133`*^9}, {3.6846670484621058`*^9, 3.684667052321782*^9}, {
+   3.684667089693532*^9, 3.68466714750208*^9}, {3.684667200757255*^9, 
+   3.684667210039247*^9}, {3.684667285892815*^9, 3.684667293588299*^9}, {
+   3.684667378063704*^9, 3.684667380069929*^9}, {3.684667438188273*^9, 
+   3.684667438633834*^9}, {3.684667604493875*^9, 3.684667613953719*^9}, {
+   3.684668045755178*^9, 3.684668106418755*^9}, {3.684680108720212*^9, 
+   3.684680110872858*^9}, {3.6846801592051497`*^9, 3.684680162407852*^9}, {
+   3.684681485693407*^9, 3.684681486480178*^9}, 3.684683560211433*^9, {
+   3.84442398924254*^9, 3.844423990114355*^9}},
+ CellLabel->"In[59]:=",ExpressionUUID->"fd06d39e-42f4-46d1-9cc7-594e7e3f4bd6"],
+
+Cell["\<\
+If we look at the second order approximation, we see that choosiness evolves \
+as a consequence of indirect selection: the selection response is \
+proportional to the strength of selection on the male trait and to the \
+linkage disequilibrium between trait and choosiness\
+\>", "Text",
+ CellChangeTimes->{{3.6846835988424883`*^9, 
+  3.6846836737524652`*^9}},ExpressionUUID->"632d3edd-7016-4f9e-a1fe-\
+2244815d2d7a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Series", "[", 
+    RowBox[{
+     RowBox[{"\[CapitalDelta]p", "[", 
+      RowBox[{"p", ",", " ", "t", ",", " ", 
+       RowBox[{"\[Epsilon]", " ", "\[GothicCapitalD]"}]}], "]"}], " ", ",", 
+     " ", 
+     RowBox[{"{", 
+      RowBox[{"\[Epsilon]", ",", " ", "0", ",", " ", "2"}], "}"}]}], "]"}], 
+   " ", "//", " ", "Normal"}], " ", "//", " ", "FullSimplify"}]], "Input",
+ CellChangeTimes->{{3.684680010705312*^9, 3.684680019888549*^9}, 
+   3.684680148926806*^9, {3.6846815384762907`*^9, 3.684681538706002*^9}},
+ CellLabel->"In[61]:=",ExpressionUUID->"e148ef13-57fc-4303-b249-9a366f8fbba3"],
+
+Cell["\<\
+We now end up with a much simpler system: (that only measures changes in \
+frequency of male & female traits)\
+\>", "Text",
+ CellChangeTimes->{{3.684683677595393*^9, 3.684683688218439*^9}, {
+  3.8444211734787607`*^9, 
+  3.8444212014979467`*^9}},ExpressionUUID->"c82d1743-830f-4dc8-a2c7-\
+bd9038987cc6"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[CapitalDelta]tQLE", "[", 
+    RowBox[{"p_", ",", "t_", ",", "\[GothicCapitalD]_"}], "]"}], ":=", 
+   RowBox[{"\[Epsilon]", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       FractionBox["1", "2"], " ", "t", " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "-", "t"}], ")"}], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"a", " ", "p"}], "-", "s"}], ")"}]}], "-", " ", 
+      RowBox[{"\[Mu]", " ", "t"}]}], ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[CapitalDelta]pQLE", " ", "[", 
+    RowBox[{"p_", ",", "t_", ",", "\[GothicCapitalD]_"}], "]"}], ":=", 
+   RowBox[{
+    SuperscriptBox["\[Epsilon]", "2"], 
+    FractionBox["1", "2"], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"a", " ", "p"}], "-", "s"}], ")"}], " ", 
+    "\[GothicCapitalD]"}]}], " ", ";"}]}], "Input",
+ CellChangeTimes->{{3.6846653580290728`*^9, 3.684665465771737*^9}, {
+  3.684665570800392*^9, 3.68466563900113*^9}, {3.684665669736697*^9, 
+  3.684665769537939*^9}, {3.684665800818556*^9, 3.684665862874728*^9}, {
+  3.6846659214084463`*^9, 3.684665928671117*^9}, {3.684667016040751*^9, 
+  3.68466703973939*^9}, {3.684667077476923*^9, 3.68466708539359*^9}, {
+  3.6846800743256073`*^9, 3.684680084507008*^9}, {3.684680136421164*^9, 
+  3.684680138542021*^9}, {3.684680198078788*^9, 3.684680366925683*^9}, {
+  3.684680518013199*^9, 3.684680521343822*^9}, {3.684681544256488*^9, 
+  3.684681553990967*^9}, {3.6846815893865547`*^9, 3.684681589477292*^9}},
+ CellLabel->"In[62]:=",ExpressionUUID->"0d952baf-9eda-4244-861a-b40422de594c"],
+
+Cell["\<\
+The simplified system can be analysed analytically, or by simulation\
+\>", "Text",
+ CellChangeTimes->{{3.6846837068100758`*^9, 
+  3.684683724094829*^9}},ExpressionUUID->"1bec5438-09eb-4a93-84b7-\
+aa5bb2e0921c"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"simulateQLERecursions", "[", 
+   RowBox[{"p0_", ",", "t0_", ",", "tEnd_", ",", "pars_List"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"p", "=", "p0"}], ",", 
+      RowBox[{"t", "=", "t0"}], ",", "\[GothicCapitalD]", ",", "\[Delta]p", 
+      ",", "\[Delta]q", ",", "\[Delta]\[GothicCapitalD]"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Reap", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"Do", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"\[GothicCapitalD]", "=", 
+            RowBox[{
+             RowBox[{"\[GothicCapitalD]QLE", "[", 
+              RowBox[{"p", ",", "t"}], "]"}], "/.", "pars"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Sow", "[", 
+            RowBox[{"{", 
+             RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "}"}], "]"}], 
+           ";", "\[IndentingNewLine]", 
+           RowBox[{"\[Delta]p", "=", 
+            RowBox[{
+             RowBox[{"\[CapitalDelta]pQLE", "[", 
+              RowBox[{"p", ",", " ", "t", ",", " ", "\[GothicCapitalD]"}], 
+              "]"}], "/.", "pars"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{"\[Delta]t", "=", 
+            RowBox[{
+             RowBox[{"\[CapitalDelta]tQLE", "[", 
+              RowBox[{"p", ",", " ", "t", ",", " ", "\[GothicCapitalD]"}], 
+              "]"}], "/.", "pars"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{"p", "+=", " ", "\[Delta]p"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"t", "+=", " ", "\[Delta]t"}], ";"}], 
+          "\[IndentingNewLine]", ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "1", ",", "tEnd"}], "}"}]}], "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"\[GothicCapitalD]", "=", 
+         RowBox[{"\[GothicCapitalD]QLE", "[", 
+          RowBox[{"p", ",", "t"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"Sow", "[", 
+         RowBox[{"{", 
+          RowBox[{"p", ",", "t", ",", "\[GothicCapitalD]"}], "}"}], "]"}]}], 
+       "\[IndentingNewLine]", "]"}], "[", 
+      RowBox[{"[", 
+       RowBox[{"2", ",", "1"}], "]"}], "]"}], "//", "Transpose"}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.684666208299514*^9, 3.684666543712412*^9}, {
+   3.684666741842663*^9, 3.684666759515193*^9}, {3.684666874163436*^9, 
+   3.6846669720506496`*^9}, {3.684679560520295*^9, 3.6846796414508543`*^9}, {
+   3.684679725960309*^9, 3.684679728778064*^9}, {3.684679771550799*^9, 
+   3.684679819806808*^9}, {3.684679854937374*^9, 3.684679895714869*^9}, 
+   3.684679930914028*^9, {3.684680379803997*^9, 3.684680402744594*^9}, {
+   3.684680486969377*^9, 3.684680488315196*^9}, {3.684680570496992*^9, 
+   3.6846806026270437`*^9}, {3.684680669969089*^9, 3.684680750995768*^9}, {
+   3.684680957640546*^9, 3.684680973474587*^9}, {3.684681060428227*^9, 
+   3.68468106127568*^9}, {3.684681094607522*^9, 3.68468109636117*^9}, {
+   3.684681260699836*^9, 3.684681262081909*^9}, {3.684681359108666*^9, 
+   3.684681376525016*^9}, {3.6846815958500233`*^9, 3.684681652038801*^9}},
+ CellLabel->"In[64]:=",ExpressionUUID->"1b3b638d-6a3d-4728-ab9b-d6d86b2fb309"],
+
+Cell["\<\
+The figure below compares the exact simulations with the approximation for \
+weak selection and fast recombination\
+\>", "Text",
+ CellChangeTimes->{{3.684683746355564*^9, 
+  3.6846837837429934`*^9}},ExpressionUUID->"e2d1d1ea-d423-41ca-ae54-\
+11bef6f134a6"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"dataQLE", "=", 
+   RowBox[{"simulateQLERecursions", "[", 
+    RowBox[{"0.2", ",", "0.2", ",", "5000", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"s", "\[Rule]", "0.01"}], ",", 
+       RowBox[{"a", "\[Rule]", "0.2"}], ",", 
+       RowBox[{"\[Mu]", "\[Rule]", "0.005"}], ",", 
+       RowBox[{"\[Epsilon]", "\[Rule]", "1"}], ",", 
+       RowBox[{"r", "\[Rule]", "0.2"}]}], "}"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.684666552611364*^9, 3.684666565795759*^9}, {
+   3.684666596336494*^9, 3.684666726462476*^9}, {3.6846667662850447`*^9, 
+   3.6846668655347147`*^9}, {3.6846669921419153`*^9, 3.684666993045595*^9}, {
+   3.684667511853664*^9, 3.684667522461624*^9}, {3.684678954181919*^9, 
+   3.684679150215177*^9}, {3.684679359535082*^9, 3.6846794973760853`*^9}, {
+   3.684680388253417*^9, 3.684680442664012*^9}, {3.684680774226125*^9, 
+   3.6846807864841423`*^9}, {3.684680838178547*^9, 3.68468088953791*^9}, {
+   3.684681013340743*^9, 3.6846810242609243`*^9}, {3.684681133782136*^9, 
+   3.6846811466894712`*^9}, {3.6846811806253567`*^9, 3.684681190984314*^9}, {
+   3.6846813367076473`*^9, 3.684681338468938*^9}, {3.684681629440825*^9, 
+   3.6846816570730963`*^9}, {3.684682147972603*^9, 3.6846821718235683`*^9}, 
+   3.684683855028009*^9},
+ CellLabel->"In[65]:=",ExpressionUUID->"10c87a57-a6d5-4bec-9d07-186b07371074"],
+
+Cell[BoxData[
+ RowBox[{"GraphicsColumn", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"Show", "[", "\n", "   ", 
+     RowBox[{
+      RowBox[{"ListPlot", "[", 
+       RowBox[{
+        RowBox[{"dataExact", "[", 
+         RowBox[{"[", 
+          RowBox[{"1", " ", ";;", " ", "2"}], "]"}], "]"}], ",", " ", 
+        RowBox[{"PlotStyle", " ", "->", " ", 
+         RowBox[{"{", 
+          RowBox[{"Orange", ",", " ", 
+           RowBox[{"Darker", "[", "Red", "]"}]}], "}"}]}], ",", " ", 
+        RowBox[{"Joined", " ", "\[Rule]", " ", "True"}], ",", " ", 
+        RowBox[{"Frame", " ", "->", " ", "True"}], ",", " ", 
+        RowBox[{"FrameLabel", " ", "->", " ", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<generation\>\"", ",", " ", "\"\<allele frequency\>\""}], 
+          "}"}]}]}], "]"}], ",", "\n", "   ", 
+      RowBox[{"ListPlot", "[", 
+       RowBox[{
+        RowBox[{"dataQLE", "[", 
+         RowBox[{"[", 
+          RowBox[{"1", " ", ";;", " ", "2"}], "]"}], "]"}], ",", " ", 
+        RowBox[{"PlotStyle", " ", "->", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"Dashed", ",", "Orange"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"Dashed", ",", 
+             RowBox[{"Darker", "[", "Red", "]"}]}], "}"}]}], "}"}]}], ",", 
+        " ", 
+        RowBox[{"Joined", " ", "\[Rule]", " ", "True"}], ",", " ", 
+        RowBox[{"Frame", " ", "->", " ", "True"}], ",", " ", 
+        RowBox[{"FrameLabel", " ", "->", " ", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<generation\>\"", ",", " ", "\"\<allele frequency\>\""}], 
+          "}"}]}]}], "]"}]}], "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"Show", "[", "\n", "  ", 
+     RowBox[{
+      RowBox[{"ListPlot", "[", 
+       RowBox[{
+        RowBox[{"dataExact", "[", 
+         RowBox[{"[", "3", "]"}], "]"}], ",", " ", 
+        RowBox[{"PlotStyle", " ", "->", " ", 
+         RowBox[{"{", 
+          RowBox[{"Darker", "[", "Blue", "]"}], "}"}]}], ",", " ", 
+        RowBox[{"Joined", " ", "->", " ", "True"}], ",", " ", 
+        RowBox[{"Frame", " ", "->", " ", "True"}], ",", " ", 
+        RowBox[{"FrameLabel", " ", "->", " ", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<generation\>\"", ",", " ", "\"\<linkage disequilibrium\>\""}], 
+          "}"}]}]}], "]"}], ",", 
+      RowBox[{"ListPlot", "[", 
+       RowBox[{
+        RowBox[{"dataQLE", "[", 
+         RowBox[{"[", "3", "]"}], "]"}], ",", " ", 
+        RowBox[{"PlotStyle", " ", "->", " ", 
+         RowBox[{"{", 
+          RowBox[{"Dashed", ",", 
+           RowBox[{"Darker", "[", "Blue", "]"}]}], "}"}]}], ",", " ", 
+        RowBox[{"Joined", " ", "->", " ", "True"}], ",", " ", 
+        RowBox[{"Frame", " ", "->", " ", "True"}], ",", " ", 
+        RowBox[{"FrameLabel", " ", "->", " ", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<generation\>\"", ",", " ", "\"\<linkage disequilibrium\>\""}], 
+          "}"}]}]}], "]"}]}], "\[IndentingNewLine]", "]"}]}], "}"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.6846811375766993`*^9, 3.684681156817833*^9}, {
+  3.6846816772861147`*^9, 3.684681786707076*^9}, {3.6846818702171087`*^9, 
+  3.6846818820473022`*^9}},
+ CellLabel->"In[66]:=",ExpressionUUID->"6dcfb97e-6b40-4efd-93cd-408fe3ec1f5b"]
+}, Open  ]]
+}, Open  ]]
+},
+NotebookEventActions->{"WindowClose" :> FrontEndExecute[
+    FrontEndToken["DeleteGeneratedCells"]]},
+WindowSize->{1440., 765.75},
+WindowMargins->{{0, Automatic}, {0, Automatic}},
+PrintingCopies->1,
+PrintingPageRange->{32000, 32000},
+PrintingOptions->{"Magnification"->1.,
+"PaperOrientation"->"Portrait",
+"PaperSize"->{595.1999999999999, 841.68}},
+Magnification->1.25,
+FrontEndVersion->"12.3 for Linux x86 (64-bit) (July 9, 2021)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[
+    StyleDefinitions -> 
+     FrontEnd`FileName[{"Book"}, "Monograph.nb", CharacterEncoding -> 
+       "WindowsANSI"]]]}, Visible -> False, FrontEndVersion -> 
+  "12.3 for Linux x86 (64-bit) (July 9, 2021)", StyleDefinitions -> 
+  "PrivateStylesheetFormatting.nb"],
+ExpressionUUID->"238e1062-c61b-4107-8371-b8ee2b2c5679"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 449, 6, 115, "BookChapterLabel",ExpressionUUID->"a23dd455-0523-477c-ae46-7944a0e56dd3"],
+Cell[1032, 30, 363, 6, 178, "BookChapterTitle",ExpressionUUID->"d6c93ce4-b311-400b-89c1-64e549cf53f5"],
+Cell[CellGroupData[{
+Cell[1420, 40, 230, 4, 54, "Author",ExpressionUUID->"bd960820-3a55-44a2-a2c5-d1ce64e5f56a"],
+Cell[1653, 46, 203, 3, 19, "Institution",ExpressionUUID->"ad187f7f-fb39-4c06-b65e-64acd62302c1"],
+Cell[1859, 51, 169, 3, 18, "Department",ExpressionUUID->"5c7aefa1-0f0a-4f66-bbf1-6c39e003ee87"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2065, 59, 341, 5, 88, "Section",ExpressionUUID->"da32e5f4-da1d-48b2-9492-eb4961d607c9"],
+Cell[2409, 66, 658, 15, 20, "Text",ExpressionUUID->"958e58dc-0e60-4904-9ed3-6013983abf3f"],
+Cell[3070, 83, 700, 20, 102, "Input",ExpressionUUID->"d68d0eb6-e483-436b-830e-b787e7633ee1"],
+Cell[3773, 105, 228, 4, 20, "Text",ExpressionUUID->"adb1c4de-28f1-41a9-ac46-4e3fd1c779e3"],
+Cell[4004, 111, 410, 10, 20, "Text",ExpressionUUID->"1a8a7a41-1c1c-4454-b066-e13dbe58394d"],
+Cell[4417, 123, 449, 11, 20, "Text",ExpressionUUID->"65614f9f-d9ba-408e-85d8-8ebc6dd8da03"],
+Cell[4869, 136, 430, 10, 20, "Text",ExpressionUUID->"35077b58-2466-463b-adc3-8707ec80d3cd"],
+Cell[5302, 148, 429, 10, 20, "Text",ExpressionUUID->"3a857580-8629-4ce2-9d9a-2d4e9f8601ea"],
+Cell[5734, 160, 497, 11, 21, "Text",ExpressionUUID->"25b18b9e-98c9-48e1-b8a6-f28ac78e01cc"],
+Cell[6234, 173, 290, 5, 20, "Text",ExpressionUUID->"ceb73622-1b67-424b-b9b7-794ce0716403"],
+Cell[6527, 180, 542, 13, 21, "Text",ExpressionUUID->"48ed2ecb-e8ad-45b9-b81f-d9e9928d6168"],
+Cell[7072, 195, 71, 0, 20, "Text",ExpressionUUID->"24ae78da-e67a-45e1-8fa7-8958ff1834aa"],
+Cell[7146, 197, 695, 14, 44, "Text",ExpressionUUID->"d06305e9-9fd5-4e96-af99-e4dd980c1378"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7878, 216, 340, 9, 88, "Section",ExpressionUUID->"7316a506-e24a-4ba7-95c6-3aa614574f9c"],
+Cell[CellGroupData[{
+Cell[8243, 229, 213, 4, 47, "Subsection",ExpressionUUID->"b5b81bd7-03f4-4d6d-8b28-deed0d97a0ca"],
+Cell[8459, 235, 1599, 31, 86, "Text",ExpressionUUID->"1fcb480f-5ee0-477e-b9a6-c3e22c92861a"],
+Cell[10061, 268, 2400, 58, 63, "Input",ExpressionUUID->"68e474df-f17b-432a-8d63-b6851e922947"],
+Cell[12464, 328, 1364, 38, 193, "Input",ExpressionUUID->"7c67c848-fc28-4c11-83d4-43e5fb4d45e2"],
+Cell[13831, 368, 1103, 27, 38, "Input",ExpressionUUID->"bf5f048c-ea4e-407a-bb98-4402f302e295"],
+Cell[14937, 397, 4388, 126, 132, "Text",ExpressionUUID->"33138530-d05a-4648-8358-4133ed038356"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19362, 528, 271, 3, 47, "Subsection",ExpressionUUID->"8111d1dc-6ba4-4351-bba6-50d685f4d9bf"],
+Cell[19636, 533, 813, 17, 20, "Text",ExpressionUUID->"5ea504a5-4d33-4619-8e5c-ce3aa146b55f"],
+Cell[20452, 552, 770, 16, 38, "Input",ExpressionUUID->"b4083939-aa2b-4ea4-9857-e4e7700c838a"],
+Cell[21225, 570, 909, 21, 21, "Text",ExpressionUUID->"63acbaab-d4d6-4c35-b707-d4435d1772ce"],
+Cell[22137, 593, 1248, 28, 63, "Input",ExpressionUUID->"c74d64a7-fc34-47f5-9391-7fd71cf783f9"],
+Cell[23388, 623, 988, 23, 21, "Text",ExpressionUUID->"384be966-d462-4ab4-b3ce-39b735903274"],
+Cell[24379, 648, 623, 12, 20, "Text",ExpressionUUID->"b2b85124-6838-4c99-87c6-3c952b8dd156"],
+Cell[25005, 662, 2744, 72, 307, "Input",ExpressionUUID->"58de45c7-2b99-4198-b62e-3b05928ff067"],
+Cell[27752, 736, 412, 6, 38, "Input",ExpressionUUID->"0147f1bd-d1a6-4adf-bb5c-b7844092dc9b"],
+Cell[28167, 744, 1606, 30, 21, "Text",ExpressionUUID->"4c40c494-8358-46cf-bfa6-b73994d4ecb8"],
+Cell[29776, 776, 1101, 16, 21, "Text",ExpressionUUID->"e4225c8b-7a36-4744-90bd-147050fc6e07"],
+Cell[30880, 794, 2021, 41, 22, "Text",ExpressionUUID->"d67b7a4e-6902-4440-9d8a-7424792a5e86"],
+Cell[32904, 837, 1238, 17, 38, "Input",ExpressionUUID->"7fb65bfc-15b2-4822-a58a-89c8a5c17731"],
+Cell[34145, 856, 347, 5, 38, "Input",ExpressionUUID->"fc0ed8fc-5ff8-4bd8-9eff-d810dc140cb0"],
+Cell[34495, 863, 477, 9, 42, "Text",ExpressionUUID->"16ef102d-bb69-4393-a002-43445ec5e6ed"],
+Cell[34975, 874, 71, 0, 20, "Text",ExpressionUUID->"e4e2bab6-e242-4337-a484-0867277f1e0f"],
+Cell[35049, 876, 1713, 28, 21, "Text",ExpressionUUID->"f9f90d76-0546-4c3e-b7a1-50b17689af9f"],
+Cell[36765, 906, 361, 5, 38, "Input",ExpressionUUID->"214808cc-5c11-49a0-be61-8e597a03fc84"],
+Cell[37129, 913, 374, 7, 20, "Text",ExpressionUUID->"29f21c19-9df9-4191-8ee6-3633ef5a582c"],
+Cell[37506, 922, 71, 0, 20, "Text",ExpressionUUID->"957d1024-7103-41ba-a5f5-0c092d65adf3"],
+Cell[37580, 924, 1939, 31, 44, "Text",ExpressionUUID->"b7b7e802-afbf-4e51-adb5-027b3c972efe"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[39556, 960, 222, 4, 47, "Subsection",ExpressionUUID->"d671aa80-4776-484e-a1c5-2532c9579b72"],
+Cell[39781, 966, 805, 15, 42, "Text",ExpressionUUID->"9b87b7b8-42b7-4747-a61f-c6002b4a3304"],
+Cell[40589, 983, 12882, 288, 673, "Input",ExpressionUUID->"21b02049-e136-4b82-a839-efc96f3ca80f"],
+Cell[53474, 1273, 866, 18, 20, "Text",ExpressionUUID->"c774b36b-9ba8-4488-9393-6f4c570f8c09"],
+Cell[54343, 1293, 2625, 63, 191, "Input",ExpressionUUID->"ec733f0d-46f3-45f7-97d4-fad2cc22cf56"],
+Cell[56971, 1358, 2083, 30, 42, "Text",ExpressionUUID->"3662d5c1-3b20-4d11-9a8e-379bb84a6c44"],
+Cell[59057, 1390, 1540, 26, 21, "Text",ExpressionUUID->"e4a8dc80-1c25-42bd-bde5-ba8b7944cac1"],
+Cell[60600, 1418, 1223, 18, 21, "Text",ExpressionUUID->"90ca4749-14ca-4ce6-a282-45c45681067b"],
+Cell[61826, 1438, 534, 12, 42, "Text",ExpressionUUID->"c3c68499-1fbf-4a3d-a93b-62823ba71e20"],
+Cell[62363, 1452, 3165, 72, 185, "Input",ExpressionUUID->"028e9f18-5adc-4911-9f6a-844c9c4d8023"],
+Cell[65531, 1526, 2083, 30, 42, "Text",ExpressionUUID->"8d31d1c6-878f-42a8-9bd4-7022aef1bd3e"],
+Cell[67617, 1558, 1931, 34, 21, "Text",ExpressionUUID->"2880748b-5b5d-4899-a159-2a2e314d450d"],
+Cell[69551, 1594, 1455, 20, 38, "Input",ExpressionUUID->"85354f9b-e47d-4d31-a9f1-c6a1f6fdc950"],
+Cell[71009, 1616, 71, 0, 20, "Text",ExpressionUUID->"d9ab4468-f303-4504-af7d-85135fc3ce48"],
+Cell[71083, 1618, 1861, 33, 21, "Text",ExpressionUUID->"acf87e23-cb23-40c4-9fd8-0ffa7ccdb6b0"],
+Cell[72947, 1653, 1473, 21, 21, "Text",ExpressionUUID->"ef983a9a-89da-4a3d-94aa-20b998c3c5bd"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[74457, 1679, 234, 4, 47, "Subsection",ExpressionUUID->"75f186ce-417a-4d16-831e-75483c9501ff"],
+Cell[74694, 1685, 1282, 27, 87, "Text",ExpressionUUID->"199d6804-71d0-4d2a-bb06-2dde3249244e"],
+Cell[75979, 1714, 8799, 194, 697, "Input",ExpressionUUID->"f53e7179-23c7-4d9a-ae24-18f9581bd522"],
+Cell[84781, 1910, 1052, 20, 43, "Text",ExpressionUUID->"c1fc0b45-98db-4416-aa98-3ccffd2b33d7"],
+Cell[85836, 1932, 1370, 31, 67, "Input",ExpressionUUID->"762f3e58-6363-4566-b934-6575fc9f5275"],
+Cell[87209, 1965, 2492, 43, 44, "Text",ExpressionUUID->"29156fa5-cca5-4b87-ab7b-54536a607d80"],
+Cell[89704, 2010, 3717, 77, 161, "Input",ExpressionUUID->"894cfb15-0ddd-4be2-ba9b-3973e8b69ace"],
+Cell[93424, 2089, 2065, 55, 161, "Input",ExpressionUUID->"92f7df64-1ec5-4c74-9199-9ec29e93b5a0"],
+Cell[95492, 2146, 1859, 52, 161, "Input",ExpressionUUID->"28b31109-1adc-4b44-a4fd-485f42400679"],
+Cell[97354, 2200, 388, 8, 42, "Text",ExpressionUUID->"c71002bf-a226-47dc-bb9f-4d6f7e796b13"],
+Cell[97745, 2210, 71, 0, 20, "Text",ExpressionUUID->"95676a17-851c-4ff0-8ad5-dee6a2e8dfcc"],
+Cell[97819, 2212, 2656, 43, 67, "Text",ExpressionUUID->"d4d1be32-6c87-41d0-a887-61d7e47de811"],
+Cell[100478, 2257, 1968, 28, 21, "Text",ExpressionUUID->"3f491e35-0f68-446a-9a2e-d7e0432a1029"],
+Cell[102449, 2287, 906, 18, 21, "Text",ExpressionUUID->"e8930062-2510-4d6f-b390-5707051aa849"],
+Cell[103358, 2307, 1187, 25, 38, "Input",ExpressionUUID->"f1cac1cf-600b-49ec-b55d-f699193c09ee"],
+Cell[104548, 2334, 634, 17, 21, "Text",ExpressionUUID->"c47a2205-d1ce-44c9-b805-c36d238da88d"],
+Cell[105185, 2353, 1565, 35, 112, "Input",ExpressionUUID->"8b552077-950a-4284-9f8a-256fd301c827"],
+Cell[106753, 2390, 462, 8, 42, "Text",ExpressionUUID->"c417ad28-ca7b-472c-bc64-42025fff67d2"],
+Cell[107218, 2400, 2567, 44, 21, "Text",ExpressionUUID->"501115b4-1e63-40a8-bc8a-100fcfa3f3cc"],
+Cell[109788, 2446, 2120, 30, 21, "Text",ExpressionUUID->"4b159288-de4d-4c69-9d53-984549adcea2"],
+Cell[111911, 2478, 3056, 54, 44, "Text",ExpressionUUID->"2f5c4a07-c1c3-4193-89d7-655664519b97"],
+Cell[114970, 2534, 615, 10, 42, "Text",ExpressionUUID->"37974dc6-3625-442d-b71e-ba3287982c6e"],
+Cell[115588, 2546, 986, 15, 85, "Text",ExpressionUUID->"e3c7a5f0-209a-4ce5-93cd-ac48675f781b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[116611, 2566, 274, 4, 47, "Subsection",ExpressionUUID->"85d6e74d-38ed-4a9d-b3e1-fe846af09b84"],
+Cell[116888, 2572, 970, 23, 44, "Text",ExpressionUUID->"f594e8c3-f01c-472f-82ee-cf80a3ca57eb"],
+Cell[117861, 2597, 779, 19, 38, "Input",ExpressionUUID->"1388c93b-e89f-43f2-b533-b474f935648a"],
+Cell[118643, 2618, 699, 18, 21, "Text",ExpressionUUID->"62bf656e-da03-4ff7-91f9-adeb821f63c2"],
+Cell[119345, 2638, 4399, 103, 187, "Input",ExpressionUUID->"c6ab87f1-d8e3-43bc-8cf8-a67a649f97a4"],
+Cell[123747, 2743, 753, 16, 43, "Text",ExpressionUUID->"230138b9-14f7-4d07-988f-085c86687bd1"],
+Cell[124503, 2761, 2159, 51, 258, "Input",ExpressionUUID->"0a05ef19-0a65-46a0-b9f5-e0871400447e"],
+Cell[126665, 2814, 939, 19, 44, "Text",ExpressionUUID->"6647cd4d-571b-4c2e-8b16-a242d6dc012c"],
+Cell[127607, 2835, 766, 13, 42, "Text",ExpressionUUID->"7d30c132-f4f5-409e-ad9d-72eacd1c7e0f"],
+Cell[128376, 2850, 664, 13, 20, "Text",ExpressionUUID->"728970c6-48d8-49a8-b23f-8d26412e564d"],
+Cell[129043, 2865, 71, 0, 20, "Text",ExpressionUUID->"f4d7665e-8717-43f4-b765-a07b6522ba59"],
+Cell[129117, 2867, 914, 18, 44, "Text",ExpressionUUID->"b5b0d364-0f7b-4283-a6c0-f9d5a0395405"],
+Cell[130034, 2887, 1090, 17, 85, "Text",ExpressionUUID->"108cf7b4-775a-4ac6-971a-6dda5b9ce5ec"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[131173, 2910, 477, 8, 88, "Section",ExpressionUUID->"7348bd1b-8d55-48bf-b3a0-be4a465c85ac"],
+Cell[131653, 2920, 1674, 55, 21, "Text",ExpressionUUID->"a5773df7-824b-4401-902f-677b081c3dd2"],
+Cell[133330, 2977, 1087, 28, 38, "Input",ExpressionUUID->"6be69c75-73d1-4ff8-8d6d-aba2579a61b6"],
+Cell[134420, 3007, 687, 21, 20, "Text",ExpressionUUID->"60391891-4a8b-4d20-8156-07a39558605e"],
+Cell[135110, 3030, 1366, 32, 85, "Input",ExpressionUUID->"c727cf76-dc8b-460c-a2bc-b01649b443eb"],
+Cell[136479, 3064, 890, 27, 20, "Text",ExpressionUUID->"0277e52c-7453-4797-8dc0-a930bf7357b1"],
+Cell[137372, 3093, 926, 26, 85, "Input",ExpressionUUID->"1aaf0e43-c0b0-4a36-852f-47e278c75cbd"],
+Cell[138301, 3121, 722, 18, 43, "Text",ExpressionUUID->"e1449d88-a91b-45d7-94b5-a8355d817feb"],
+Cell[139026, 3141, 3115, 84, 390, "Input",ExpressionUUID->"491536c2-8bc1-4934-b52e-77c6dbfc6707"],
+Cell[142144, 3227, 474, 12, 20, "Text",ExpressionUUID->"c88523f0-cd22-4781-ac8d-bd2f839008ab"],
+Cell[142621, 3241, 889, 24, 38, "Input",ExpressionUUID->"f3a4a611-3171-41a8-b4a4-3906da77dffa"],
+Cell[143513, 3267, 217, 5, 20, "Text",ExpressionUUID->"44684abe-6a61-468e-8818-660b43fb96d0"],
+Cell[143733, 3274, 1937, 43, 38, "Input",ExpressionUUID->"2eda9ed9-08a3-4bd1-b686-0dac913b1675"],
+Cell[145673, 3319, 243, 6, 20, "Text",ExpressionUUID->"6fc94ab2-88ba-4ab1-a69f-71ba445a5b80"],
+Cell[145919, 3327, 2153, 55, 88, "Input",ExpressionUUID->"55191f0a-809c-4104-a3c8-e66e7ecb95b5"],
+Cell[148075, 3384, 387, 8, 42, "Text",ExpressionUUID->"22a84c22-44a0-4869-b257-ac581a468d0b"],
+Cell[148465, 3394, 1283, 28, 88, "Input",ExpressionUUID->"e9285b14-64c4-4adc-8622-c3b4978a8aa4"],
+Cell[149751, 3424, 251, 4, 20, "Text",ExpressionUUID->"dec52262-d44b-45d7-b68c-0510d02e9093"],
+Cell[150005, 3430, 1194, 29, 88, "Input",ExpressionUUID->"726e62f0-56a2-4df2-afa6-50ca97ec611e"],
+Cell[151202, 3461, 190, 3, 20, "Text",ExpressionUUID->"7dbd3ab8-1b0a-4444-b975-1d9c72e4c534"],
+Cell[151395, 3466, 2934, 62, 331, "Input",ExpressionUUID->"763cb527-8646-45ac-a99a-7caaed491e6d"],
+Cell[154332, 3530, 298, 6, 20, "Text",ExpressionUUID->"a5102c94-9ea8-4813-968f-9ff344c574b6"],
+Cell[154633, 3538, 2388, 53, 112, "Input",ExpressionUUID->"ca21b5b7-6b8e-4eef-bc80-b6332e3a0546"],
+Cell[157024, 3593, 553, 10, 42, "Text",ExpressionUUID->"4543bded-e3c7-439e-83b9-e14949938652"],
+Cell[157580, 3605, 786, 17, 38, "Input",ExpressionUUID->"6a2aa1e7-18bd-4b3e-9e5c-58eb2df59078"],
+Cell[158369, 3624, 536, 10, 42, "Text",ExpressionUUID->"aebfcc26-d9cc-4c6d-85a3-b4f9c756e46d"],
+Cell[158908, 3636, 838, 19, 38, "Input",ExpressionUUID->"046ae47e-46ae-4d15-924f-7655ff86f75d"],
+Cell[159749, 3657, 479, 11, 20, "Text",ExpressionUUID->"c0267ff2-5558-434a-ae21-223b36af0cf9"],
+Cell[160231, 3670, 338, 7, 20, "Text",ExpressionUUID->"5bfdbf74-4b23-41fe-807f-f1f474d19795"],
+Cell[160572, 3679, 1596, 32, 63, "Input",ExpressionUUID->"fd06d39e-42f4-46d1-9cc7-594e7e3f4bd6"],
+Cell[162171, 3713, 425, 8, 42, "Text",ExpressionUUID->"632d3edd-7016-4f9e-a1fe-2244815d2d7a"],
+Cell[162599, 3723, 636, 14, 38, "Input",ExpressionUUID->"e148ef13-57fc-4303-b249-9a366f8fbba3"],
+Cell[163238, 3739, 312, 7, 20, "Text",ExpressionUUID->"c82d1743-830f-4dc8-a2c7-bd9038987cc6"],
+Cell[163553, 3748, 1600, 36, 100, "Input",ExpressionUUID->"0d952baf-9eda-4244-861a-b40422de594c"],
+Cell[165156, 3786, 220, 5, 20, "Text",ExpressionUUID->"1bec5438-09eb-4a93-84b7-aa5bb2e0921c"],
+Cell[165379, 3793, 3243, 66, 356, "Input",ExpressionUUID->"1b3b638d-6a3d-4728-ab9b-d6d86b2fb309"],
+Cell[168625, 3861, 266, 6, 20, "Text",ExpressionUUID->"e2d1d1ea-d423-41ca-ae54-11bef6f134a6"],
+Cell[168894, 3869, 1373, 24, 38, "Input",ExpressionUUID->"10c87a57-a6d5-4bec-9d07-186b07371074"],
+Cell[170270, 3895, 3269, 78, 209, "Input",ExpressionUUID->"6dcfb97e-6b40-4efd-93cd-408fe3ec1f5b"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

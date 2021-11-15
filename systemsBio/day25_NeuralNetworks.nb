@@ -1,0 +1,580 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     24406,        572]
+NotebookOptionsPosition[     20355,        505]
+NotebookOutlinePosition[     21330,        536]
+CellTagsIndexPosition[     21287,        533]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Biological Modelling and Model Analysis - day VIII", "BookChapterLabel",
+ CellChangeTimes->{{3.6829991255094852`*^9, 3.68299914575751*^9}, 
+   3.682999421015033*^9, {3.683964417430398*^9, 3.6839644182337*^9}, {
+   3.778922596919531*^9, 
+   3.778922598697316*^9}},ExpressionUUID->"eb75f8c3-9f99-4e51-8f01-\
+143fbf937064"],
+
+Cell["Neural networks", "BookChapterTitle",
+ CellChangeTimes->{{3.682998874641573*^9, 3.682998895360573*^9}, {
+   3.683964426788683*^9, 3.683964434866899*^9}, 
+   3.778922601668819*^9},ExpressionUUID->"368a0919-e487-450f-b47d-\
+9e31a44b522f"],
+
+Cell[CellGroupData[{
+
+Cell["Sander van Doorn", "Author",
+ CellChangeTimes->{{3.68299919036697*^9, 
+  3.6829991932712607`*^9}},ExpressionUUID->"d21abb9c-0705-4c0e-99d5-\
+0d512cb49683"],
+
+Cell["Groningen Institute for Evolutionary Life Sciences", "Institution",
+ CellChangeTimes->{{3.6829992274406776`*^9, 
+  3.6829992458415174`*^9}},ExpressionUUID->"0955da1e-ca4a-46b1-a89d-\
+194e7dffe93a"],
+
+Cell["g.s.van.doorn@rug.nl", "Department",
+ CellChangeTimes->{{3.68299926217015*^9, 
+  3.6829992690098343`*^9}},ExpressionUUID->"09771244-7921-445c-ad65-\
+9c14816b4be1"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Hopfield networks", "Section",
+ CellChangeTimes->{{3.6829992928352165`*^9, 3.6829992962185545`*^9}, {
+  3.684053399255887*^9, 3.6840534106583014`*^9}, {3.6840579290559673`*^9, 
+  3.6840579330620537`*^9}},ExpressionUUID->"2b19fe92-6ec5-4364-bb08-\
+057d7f2eb31a"],
+
+Cell["\<\
+Make sure the path points to the directory on your diskdrive where you stored \
+the images\
+\>", "Text",
+ CellChangeTimes->{{3.6840794893212748`*^9, 
+  3.684079530297009*^9}},ExpressionUUID->"095d23d1-365d-41b6-a3e7-\
+628794821d20"],
+
+Cell[BoxData[
+ RowBox[{"path", "=", "\"\<./images/\>\""}]], "Input",
+ CellChangeTimes->{{3.684059941684885*^9, 3.684059969026726*^9}, {
+  3.7789226587291527`*^9, 3.77892267555399*^9}, {3.844483509324559*^9, 
+  3.844483511082481*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"48e807d6-1b9b-4957-8a82-8a679b421386"],
+
+Cell["\<\
+First, we load the images and convert them to black-and-white bitmaps\
+\>", "Text",
+ CellChangeTimes->{{3.684079547820032*^9, 
+  3.68407956752386*^9}},ExpressionUUID->"30c2c174-d9ab-48c2-911d-\
+5f37d69d5621"],
+
+Cell[BoxData[{
+ RowBox[{"nefertiti", " ", "=", "  ", 
+  RowBox[{
+   RowBox[{"Import", "[", 
+    RowBox[{"path", " ", "<>", " ", "\"\<nefertiti.png\>\""}], "]"}], "//", 
+   "Binarize"}]}], "\[IndentingNewLine]", 
+ RowBox[{"arnold", " ", "=", "  ", 
+  RowBox[{
+   RowBox[{"Import", "[", 
+    RowBox[{"path", " ", "<>", " ", "\"\<schwarzenegger.png\>\""}], "]"}], "//",
+    "Binarize"}]}], "\[IndentingNewLine]", 
+ RowBox[{"et", " ", "=", "  ", 
+  RowBox[{
+   RowBox[{"Import", "[", 
+    RowBox[{"path", " ", "<>", " ", "\"\<et.png\>\""}], "]"}], "//", 
+   "Binarize"}]}], "\[IndentingNewLine]", 
+ RowBox[{"kermit", " ", "=", "  ", 
+  RowBox[{
+   RowBox[{"Import", "[", 
+    RowBox[{"path", " ", "<>", " ", "\"\<kermit.png\>\""}], "]"}], "//", 
+   "Binarize"}]}], "\[IndentingNewLine]", 
+ RowBox[{"yoda", " ", "=", "  ", 
+  RowBox[{
+   RowBox[{"Import", "[", 
+    RowBox[{"path", " ", "<>", " ", "\"\<yoda.png\>\""}], "]"}], "//", 
+   "Binarize"}]}]}], "Input",
+ CellChangeTimes->{{3.684058046025263*^9, 3.684058046026649*^9}, {
+  3.6840589812732162`*^9, 3.684059011915309*^9}, {3.684059095747786*^9, 
+  3.684059099152479*^9}, {3.684059918253848*^9, 3.684059933692737*^9}, {
+  3.6840599718563957`*^9, 3.684059985728443*^9}, {3.684060023525765*^9, 
+  3.6840601474359207`*^9}, {3.684063327101473*^9, 3.68406332780273*^9}, {
+  3.684074324662572*^9, 3.684074405532197*^9}, {3.6840778705595493`*^9, 
+  3.684077874429891*^9}, {3.684078072022635*^9, 3.6840780753420553`*^9}, {
+  3.684079226035698*^9, 3.6840792319272823`*^9}},
+ CellLabel->"In[2]:=",ExpressionUUID->"5c23739b-84bf-4d4f-874a-3f9a46a63da8"],
+
+Cell["\<\
+Here, you can verify that all images have the same size (50 by 50 pixels)\
+\>", "Text",
+ CellChangeTimes->{{3.684079574033338*^9, 
+  3.684079617662711*^9}},ExpressionUUID->"0c210d3e-7c70-4908-8e8f-\
+472756bc9b6d"],
+
+Cell[BoxData[{
+ RowBox[{"ImageDimensions", "/@", 
+  RowBox[{"{", 
+   RowBox[{
+   "nefertiti", ",", "arnold", ",", "et", ",", "kermit", ",", "yoda"}], 
+   "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"n", "=", 
+   RowBox[{
+    RowBox[{"ImageDimensions", "[", "nefertiti", "]"}], "//", "First"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"nn", "=", 
+   SuperscriptBox["n", "2"]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.6840622337167273`*^9, 3.68406225242553*^9}, {
+  3.684063332522622*^9, 3.684063334783862*^9}, {3.6840635935563097`*^9, 
+  3.6840636751601877`*^9}, {3.684074208384615*^9, 3.684074217986105*^9}, {
+  3.684074441901598*^9, 3.684074466459111*^9}, {3.684079208449861*^9, 
+  3.684079249079097*^9}},
+ CellLabel->"In[7]:=",ExpressionUUID->"dc63d42b-e1c5-4fa7-89af-dcbdad53e894"],
+
+Cell["\<\
+The following functions are used to convert between images and neuronal \
+activity patterns of the cells in the Hopfield network\
+\>", "Text",
+ CellChangeTimes->{{3.684079623840036*^9, 
+  3.684079665841276*^9}},ExpressionUUID->"a39e5533-813e-41c1-8bbb-\
+32d72f8e5c59"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"convertImageToPattern", "[", "image_", "]"}], ":=", 
+  RowBox[{"SparseArray", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Flatten", "[", 
+      RowBox[{"ImageData", "[", "image", "]"}], "]"}], "/.", 
+     RowBox[{"{", 
+      RowBox[{"0", "\[Rule]", 
+       RowBox[{"-", "1"}]}], "}"}]}], ",", "nn", ",", "1"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.684063314983831*^9, 3.6840633904897957`*^9}, {
+  3.684063493089493*^9, 3.684063497830845*^9}, {3.684063770931168*^9, 
+  3.6840637730304813`*^9}, {3.684074188640506*^9, 3.684074200878069*^9}, {
+  3.6840742312841063`*^9, 3.684074234269911*^9}, {3.684074268873186*^9, 
+  3.6840742776774387`*^9}, {3.6840744732506237`*^9, 3.684074499235693*^9}},
+ CellLabel->"In[10]:=",ExpressionUUID->"36aa96c1-afb4-4c67-a001-751c8a328105"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"convertPatternToImage", "[", "pattern_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Partition", "[", 
+     RowBox[{
+      RowBox[{"pattern", "/.", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "1"}], "\[Rule]", "0"}], "}"}]}], ",", "n"}], "]"}], "//",
+     "Image"}], "//", "Binarize"}]}]], "Input",
+ CellChangeTimes->{{3.684063314983831*^9, 3.6840633904897957`*^9}, {
+   3.684063432025593*^9, 3.6840634418033323`*^9}, {3.684063552697188*^9, 
+   3.6840635724673033`*^9}, 3.68406367906505*^9, {3.68406375092028*^9, 
+   3.684063752548497*^9}, {3.684067033242202*^9, 3.684067035274912*^9}},
+ CellLabel->"In[11]:=",ExpressionUUID->"20e19509-d5ef-4f20-8907-b97374d58b7d"],
+
+Cell["\<\
+Now, we need to train the Hopfield network to recognise the different images. \
+This is done by creating activating connections between cells that fire \
+together, and inhibitory connections between cells that have different states.\
+\>", "Text",
+ CellChangeTimes->{{3.684079705131463*^9, 3.684079730738677*^9}, {
+  3.6840797635863237`*^9, 
+  3.684079847951857*^9}},ExpressionUUID->"c6ea9aaf-6fad-4480-a755-\
+2e9d1767111e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"getWeights", "[", "image_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"v", "=", 
+      RowBox[{"convertImageToPattern", "[", "image", "]"}]}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"v", "=", 
+     RowBox[{"SparseArray", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Outer", "[", 
+         RowBox[{"Times", ",", "v", ",", "v"}], "]"}], "-", 
+        RowBox[{"IdentityMatrix", "[", "nn", "]"}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{"nn", ",", "nn"}], "}"}], ",", "1"}], "]"}]}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.684060254339128*^9, 3.684060303645002*^9}, {
+   3.68406044513527*^9, 3.684060461337934*^9}, {3.68406075231254*^9, 
+   3.684060785910088*^9}, {3.684060932730063*^9, 3.684060937653317*^9}, {
+   3.6840609731711073`*^9, 3.6840609771459637`*^9}, {3.6840610619764433`*^9, 
+   3.684061066151946*^9}, {3.684061205914487*^9, 3.6840612143523808`*^9}, {
+   3.684061578717062*^9, 3.68406161387971*^9}, {3.684061861424859*^9, 
+   3.684061870834347*^9}, 3.684062146778912*^9, {3.684062388715931*^9, 
+   3.684062414155963*^9}, 3.684062867681569*^9, {3.684063046290669*^9, 
+   3.684063053697172*^9}, {3.684063090943389*^9, 3.684063102343299*^9}, {
+   3.684063802749221*^9, 3.684063810824047*^9}, {3.68407469589325*^9, 
+   3.684074732732189*^9}},
+ CellLabel->"In[12]:=",ExpressionUUID->"e7fc0d7e-6bb6-47c9-af38-6c133e241618"],
+
+Cell["\<\
+The network is trained to recognize four of the five patterns\
+\>", "Text",
+ CellChangeTimes->{{3.684079858032791*^9, 
+  3.684079906978157*^9}},ExpressionUUID->"7962a96e-9790-469e-bfd6-\
+13eb06d9112d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"weights", "=", 
+   RowBox[{
+    RowBox[{"getWeights", "/@", 
+     RowBox[{"{", 
+      RowBox[{"nefertiti", ",", "arnold", ",", "et", ",", "kermit"}], "}"}]}],
+     "//", "Mean"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.684061224154743*^9, 3.684061236047991*^9}, {
+  3.684062115182686*^9, 3.684062123502211*^9}, {3.6840624231051607`*^9, 
+  3.684062465810671*^9}, {3.684062571300486*^9, 3.684062572207963*^9}, {
+  3.6840667070366287`*^9, 3.684066707726568*^9}, {3.684074748175735*^9, 
+  3.684074787845628*^9}, {3.6840778606318827`*^9, 3.684077864589636*^9}, {
+  3.684078088715105*^9, 3.6840780889788733`*^9}, {3.6840790959219847`*^9, 
+  3.684079096222889*^9}, {3.684079264932187*^9, 3.6840792711726513`*^9}},
+ CellLabel->"In[13]:=",ExpressionUUID->"0164dea0-9680-4ee8-aaba-73195d538f5d"],
+
+Cell["\<\
+Last, but not least, we need a function to update the state of the network\
+\>", "Text",
+ CellChangeTimes->{{3.6840799129114428`*^9, 
+  3.6840799577472963`*^9}},ExpressionUUID->"b7e85c30-1816-4719-92e2-\
+7e191fecaca4"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"updatePattern", "[", "pattern_", "]"}], ":=", 
+  RowBox[{"SparseArray", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"2", 
+         RowBox[{"HeavisideTheta", "[", "#", "]"}]}], "-", "1"}], ")"}], 
+      "&"}], "/@", 
+     RowBox[{"(", 
+      RowBox[{"weights", ".", "pattern"}], ")"}]}], ",", "nn", ",", "1"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.684064283328776*^9, 3.684064303150043*^9}, {
+  3.6840643376922493`*^9, 3.6840643621252737`*^9}, {3.6840644101413727`*^9, 
+  3.6840644377535257`*^9}, {3.684064860389311*^9, 3.684064864784981*^9}, {
+  3.684065030500512*^9, 3.684065034073369*^9}, {3.6840651892309723`*^9, 
+  3.684065212328743*^9}, {3.68406524784378*^9, 3.684065256239749*^9}, {
+  3.684066726259882*^9, 3.6840667536092377`*^9}, {3.684074799434263*^9, 
+  3.6840748007980413`*^9}, {3.6840749459497232`*^9, 3.6840749527366867`*^9}},
+ CellLabel->"In[14]:=",ExpressionUUID->"229e016a-43d6-4d7b-b228-a7521152b171"],
+
+Cell["\<\
+First, let\[CloseCurlyQuote]s feed the network a noisy version of one of the \
+patterns it has learned to recognise\
+\>", "Text",
+ CellChangeTimes->{{3.684079976048715*^9, 
+  3.6840800106085043`*^9}},ExpressionUUID->"d89df6eb-8e1a-410f-94e9-\
+dda4e55d16c2"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"addNoiseToPattern", "[", 
+   RowBox[{"pattern_", ",", "noiseLevel_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"noise", "=", 
+      RowBox[{"RandomChoice", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"noiseLevel", ",", 
+           RowBox[{"1", "-", "noiseLevel"}]}], "}"}], " ", "\[Rule]", " ", 
+         RowBox[{"{", 
+          RowBox[{"True", ",", " ", "False"}], "}"}]}], ",", " ", 
+        RowBox[{"{", "nn", "}"}]}], "]"}]}], "}"}], ",", 
+    RowBox[{"SparseArray", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Thread", "[", 
+        RowBox[{"Xor", "[", 
+         RowBox[{"noise", ",", 
+          RowBox[{
+           RowBox[{"Normal", "[", "pattern", "]"}], "/.", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "1"}], "\[Rule]", "False"}], ",", 
+             RowBox[{"1", "\[Rule]", "True"}]}], "}"}]}]}], "]"}], "]"}], "/.", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"False", "\[Rule]", 
+          RowBox[{"-", "1"}]}], ",", 
+         RowBox[{"True", "\[Rule]", "1"}]}], "}"}]}], ",", "nn", ",", "1"}], 
+     "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.684063963755373*^9, 3.684064000085634*^9}, {
+  3.684064489774521*^9, 3.68406474979543*^9}, {3.684064781113562*^9, 
+  3.684064810518721*^9}, {3.684065046635075*^9, 3.684065072506219*^9}, {
+  3.684065109075535*^9, 3.684065110700041*^9}, {3.6840745712155933`*^9, 
+  3.684074590495606*^9}, {3.6840746605163107`*^9, 3.684074681701158*^9}},
+ CellLabel->"In[15]:=",ExpressionUUID->"9dc22185-ea8f-415f-9255-2edad3ca0dc1"],
+
+Cell[BoxData[
+ RowBox[{"noisyArnold", "=", 
+  RowBox[{"convertPatternToImage", "[", 
+   RowBox[{"addNoiseToPattern", "[", 
+    RowBox[{
+     RowBox[{"convertImageToPattern", "[", "arnold", "]"}], ",", "0.2"}], 
+    "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.6840651144949102`*^9, 3.6840651387768393`*^9}, {
+  3.684066693822523*^9, 3.6840666945288067`*^9}, {3.684067077687574*^9, 
+  3.684067078724207*^9}, {3.6840761909853563`*^9, 3.6840761915845537`*^9}, {
+  3.684076491327148*^9, 3.684076491930737*^9}, {3.684078604634961*^9, 
+  3.684078605681299*^9}, {3.684078635836378*^9, 3.684078638594708*^9}},
+ CellLabel->"In[16]:=",ExpressionUUID->"f900f156-04ce-4885-8593-491b5bf8e711"],
+
+Cell["\<\
+You can see that almost all of the noise is removed in a single update step\
+\>", "Text",
+ CellChangeTimes->{{3.68408001779666*^9, 
+  3.6840800396923113`*^9}},ExpressionUUID->"18b68af9-0711-4824-8418-\
+d2a7be43581e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"updatePattern", "[", 
+   RowBox[{"convertImageToPattern", "[", "noisyArnold", "]"}], "]"}], "//", 
+  "convertPatternToImage"}]], "Input",
+ CellChangeTimes->{{3.684065263898789*^9, 3.6840652871623487`*^9}, {
+   3.6840667686600513`*^9, 3.68406677387084*^9}, 3.684074833313884*^9, {
+   3.684075124259179*^9, 3.6840751272261868`*^9}, 3.684078645588274*^9},
+ CellLabel->"In[17]:=",ExpressionUUID->"ed20c044-00af-4231-88a6-8283b924d4f5"],
+
+Cell["\<\
+The network is also capable of reconstructing an image when it sees only a \
+part of it\
+\>", "Text",
+ CellChangeTimes->{{3.68408006055514*^9, 
+  3.68408012130359*^9}},ExpressionUUID->"891aa36b-7022-4044-a5d5-\
+e0519703c459"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"a", "=", 
+   RowBox[{"Quotient", "[", 
+    RowBox[{
+     RowBox[{"2", "n"}], ",", "3"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"b", "=", 
+   RowBox[{"n", "-", "a"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"A", "=", 
+   RowBox[{"Transpose", "[", 
+    RowBox[{
+     RowBox[{"Transpose", "[", 
+      RowBox[{
+       RowBox[{"ImageData", "[", "nefertiti", "]"}], "[", 
+       RowBox[{"[", 
+        RowBox[{"1", ";;", "a"}], "]"}], "]"}], "]"}], "[", 
+     RowBox[{"[", 
+      RowBox[{"1", ";;", "a"}], "]"}], "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"F", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{"1", ",", "a", ",", "b"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"B", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{"1", ",", "b", ",", "b"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"partOfNefertiti", "=", 
+  RowBox[{
+   RowBox[{"ArrayFlatten", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"A", ",", " ", "F"}], "}"}], ",", " ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Transpose", "[", "F", "]"}], ",", " ", "B"}], "}"}]}], "}"}],
+     "]"}], " ", "//", " ", "Image"}]}]}], "Input",
+ CellChangeTimes->{{3.6840753450867*^9, 3.684075481395297*^9}, {
+  3.6840755446691933`*^9, 3.684075679958036*^9}, {3.684075716368393*^9, 
+  3.684075764769533*^9}, {3.6840758243121157`*^9, 3.6840758282906713`*^9}, {
+  3.684075876065509*^9, 3.6840758795970507`*^9}, {3.684075923047263*^9, 
+  3.6840759347310057`*^9}, {3.684076100279216*^9, 3.6840761710704613`*^9}, {
+  3.684076288209876*^9, 3.684076363912669*^9}, {3.684076447355483*^9, 
+  3.684076448742803*^9}, {3.684076637054603*^9, 3.684076654015378*^9}, {
+  3.684076688472248*^9, 3.684076892970584*^9}, {3.684076925655714*^9, 
+  3.684076936947077*^9}, {3.6840769813529463`*^9, 3.684077162811363*^9}, {
+  3.6840784742915792`*^9, 3.6840785032602882`*^9}, {3.684078544889248*^9, 
+  3.6840785464550047`*^9}, {3.684078582383224*^9, 3.684078590017394*^9}, {
+  3.684079143771042*^9, 3.684079173700992*^9}, {3.684079314684957*^9, 
+  3.684079360598755*^9}},
+ CellLabel->"In[18]:=",ExpressionUUID->"06ef94d9-19ec-42be-9d71-f86cd8f0c2d9"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"updatePattern", "[", 
+   RowBox[{"convertImageToPattern", "[", "partOfNefertiti", "]"}], "]"}], "//",
+   "convertPatternToImage"}]], "Input",
+ CellChangeTimes->{{3.684076715309102*^9, 3.684076719435684*^9}, 
+   3.684076780628141*^9, {3.684076896417411*^9, 3.684076898991569*^9}, {
+   3.6840769436072273`*^9, 3.684076948702293*^9}, {3.6840787179531937`*^9, 
+   3.68407872525042*^9}},
+ CellLabel->"In[24]:=",ExpressionUUID->"06259424-658f-4b6b-9d1b-aa29ea5323ca"],
+
+Cell["\<\
+When the network is presented with a pattern that it has not learnt, it will \
+converge to whichever of the learned patterns is most similar. Apparently, \
+our Hopfield network \[OpenCurlyQuote]thinks\[CloseCurlyQuote] that Yoda \
+looks like ET.\
+\>", "Text",
+ CellChangeTimes->{{3.6840801351031637`*^9, 
+  3.6840802301443253`*^9}},ExpressionUUID->"31275432-5745-4e9f-b56b-\
+b6780bb68405"],
+
+Cell[BoxData[{"yoda", "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"updatePattern", "[", 
+   RowBox[{"convertImageToPattern", "[", "yoda", "]"}], "]"}], "//", 
+  "convertPatternToImage"}]}], "Input",
+ CellChangeTimes->{{3.6840678240027857`*^9, 3.6840678301776047`*^9}, {
+  3.684067877185483*^9, 3.68406787775168*^9}, {3.684076527490389*^9, 
+  3.684076528225677*^9}, {3.6840779633565702`*^9, 3.684077965197159*^9}, {
+  3.684078093599598*^9, 3.684078095469825*^9}, {3.6840787575906897`*^9, 
+  3.684078762329756*^9}, {3.684078795177793*^9, 3.684078827542671*^9}, {
+  3.6840788580950937`*^9, 3.684078869135562*^9}, {3.684079407398685*^9, 
+  3.6840794138473797`*^9}},
+ CellLabel->"In[25]:=",ExpressionUUID->"5a90d523-9ab0-4479-bdb5-085bbe6c26a0"],
+
+Cell["\<\
+The network will also do its best to interpret random images: a random image \
+with a low percentage of black pixels is typically recognized as Kermit the \
+Frog.\
+\>", "Text",
+ CellChangeTimes->{{3.6840802455047607`*^9, 
+  3.684080327193109*^9}},ExpressionUUID->"18c50981-a0a1-4b27-84f6-\
+4f9c8776ad1d"],
+
+Cell[BoxData[{
+ RowBox[{"randomImage", "=", 
+  RowBox[{
+   RowBox[{"RandomChoice", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0.1", ",", "0.9"}], "}"}], " ", "\[Rule]", " ", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", " ", "1"}], "}"}]}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"n", ",", "n"}], "}"}]}], "]"}], "//", 
+   "Image"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"updatePattern", "[", 
+   RowBox[{"convertImageToPattern", "[", "randomImage", "]"}], "]"}], "//", 
+  "convertPatternToImage"}]}], "Input",
+ CellChangeTimes->{{3.68407732295945*^9, 3.684077334260601*^9}, {
+  3.6840773723977222`*^9, 3.684077435931096*^9}, {3.684077508202455*^9, 
+  3.684077510378845*^9}, {3.684077541295179*^9, 3.684077543933839*^9}, {
+  3.6840775890998783`*^9, 3.684077591645681*^9}, {3.684078046563367*^9, 
+  3.684078049054966*^9}, {3.684078101504303*^9, 3.684078106387035*^9}, {
+  3.684078889874757*^9, 3.684078913126007*^9}, {3.684079000915002*^9, 
+  3.684079073529737*^9}, {3.684079447406006*^9, 3.6840794486662416`*^9}},
+ CellLabel->"In[27]:=",ExpressionUUID->"2b6ad4db-7308-416f-959c-bff21c1ada37"]
+}, Open  ]]
+}, Open  ]]
+},
+NotebookEventActions->{"WindowClose" :> FrontEndExecute[
+    FrontEndToken["DeleteGeneratedCells"]]},
+WindowSize->{1029., 740.25},
+WindowMargins->{{Automatic, 7.5}, {Automatic, 19.5}},
+PrintingCopies->1,
+PrintingPageRange->{32000, 32000},
+PrintingOptions->{"Magnification"->1.,
+"PaperOrientation"->"Portrait",
+"PaperSize"->{595.1999999999999, 841.68}},
+Magnification->1.25,
+FrontEndVersion->"12.3 for Linux x86 (64-bit) (July 9, 2021)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[
+    StyleDefinitions -> 
+     FrontEnd`FileName[{"Book"}, "Monograph.nb", CharacterEncoding -> 
+       "WindowsANSI"]]]}, Visible -> False, FrontEndVersion -> 
+  "12.3 for Linux x86 (64-bit) (July 9, 2021)", StyleDefinitions -> 
+  "PrivateStylesheetFormatting.nb"],
+ExpressionUUID->"47161d24-6cbe-480a-9c4f-8bf16e58b3cd"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 326, 5, 115, "BookChapterLabel",ExpressionUUID->"eb75f8c3-9f99-4e51-8f01-143fbf937064"],
+Cell[909, 29, 242, 4, 178, "BookChapterTitle",ExpressionUUID->"368a0919-e487-450f-b47d-9e31a44b522f"],
+Cell[CellGroupData[{
+Cell[1176, 37, 161, 3, 54, "Author",ExpressionUUID->"d21abb9c-0705-4c0e-99d5-0d512cb49683"],
+Cell[1340, 42, 203, 3, 19, "Institution",ExpressionUUID->"0955da1e-ca4a-46b1-a89d-194e7dffe93a"],
+Cell[1546, 47, 169, 3, 18, "Department",ExpressionUUID->"09771244-7921-445c-ad65-9c14816b4be1"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1752, 55, 267, 4, 88, "Section",ExpressionUUID->"2b19fe92-6ec5-4364-bb08-057d7f2eb31a"],
+Cell[2022, 61, 242, 6, 20, "Text",ExpressionUUID->"095d23d1-365d-41b6-a3e7-628794821d20"],
+Cell[2267, 69, 311, 5, 38, "Input",ExpressionUUID->"48e807d6-1b9b-4957-8a82-8a679b421386"],
+Cell[2581, 76, 218, 5, 20, "Text",ExpressionUUID->"30c2c174-d9ab-48c2-911d-5f37d69d5621"],
+Cell[2802, 83, 1594, 34, 136, "Input",ExpressionUUID->"5c23739b-84bf-4d4f-874a-3f9a46a63da8"],
+Cell[4399, 119, 223, 5, 20, "Text",ExpressionUUID->"0c210d3e-7c70-4908-8e8f-472756bc9b6d"],
+Cell[4625, 126, 810, 19, 88, "Input",ExpressionUUID->"dc63d42b-e1c5-4fa7-89af-dcbdad53e894"],
+Cell[5438, 147, 278, 6, 20, "Text",ExpressionUUID->"a39e5533-813e-41c1-8bbb-32d72f8e5c59"],
+Cell[5719, 155, 808, 16, 38, "Input",ExpressionUUID->"36aa96c1-afb4-4c67-a001-751c8a328105"],
+Cell[6530, 173, 723, 16, 38, "Input",ExpressionUUID->"20e19509-d5ef-4f20-8907-b97374d58b7d"],
+Cell[7256, 191, 433, 8, 42, "Text",ExpressionUUID->"c6ea9aaf-6fad-4480-a755-2e9d1767111e"],
+Cell[7692, 201, 1462, 30, 88, "Input",ExpressionUUID->"e7fc0d7e-6bb6-47c9-af38-6c133e241618"],
+Cell[9157, 233, 211, 5, 20, "Text",ExpressionUUID->"7962a96e-9790-469e-bfd6-13eb06d9112d"],
+Cell[9371, 240, 822, 15, 38, "Input",ExpressionUUID->"0164dea0-9680-4ee8-aaba-73195d538f5d"],
+Cell[10196, 257, 228, 5, 20, "Text",ExpressionUUID->"b7e85c30-1816-4719-92e2-7e191fecaca4"],
+Cell[10427, 264, 1014, 22, 38, "Input",ExpressionUUID->"229e016a-43d6-4d7b-b228-a7521152b171"],
+Cell[11444, 288, 267, 6, 20, "Text",ExpressionUUID->"d89df6eb-8e1a-410f-94e9-dda4e55d16c2"],
+Cell[11714, 296, 1661, 41, 112, "Input",ExpressionUUID->"9dc22185-ea8f-415f-9255-2edad3ca0dc1"],
+Cell[13378, 339, 683, 12, 38, "Input",ExpressionUUID->"f900f156-04ce-4885-8593-491b5bf8e711"],
+Cell[14064, 353, 226, 5, 20, "Text",ExpressionUUID->"18b68af9-0711-4824-8418-d2a7be43581e"],
+Cell[14293, 360, 466, 8, 38, "Input",ExpressionUUID->"ed20c044-00af-4231-88a6-8283b924d4f5"],
+Cell[14762, 370, 235, 6, 20, "Text",ExpressionUUID->"891aa36b-7022-4044-a5d5-e0519703c459"],
+Cell[15000, 378, 2231, 53, 161, "Input",ExpressionUUID->"06ef94d9-19ec-42be-9d71-f86cd8f0c2d9"],
+Cell[17234, 433, 496, 9, 38, "Input",ExpressionUUID->"06259424-658f-4b6b-9d1b-aa29ea5323ca"],
+Cell[17733, 444, 399, 8, 42, "Text",ExpressionUUID->"31275432-5745-4e9f-b56b-b6780bb68405"],
+Cell[18135, 454, 740, 12, 63, "Input",ExpressionUUID->"5a90d523-9ab0-4479-bdb5-085bbe6c26a0"],
+Cell[18878, 468, 314, 7, 42, "Text",ExpressionUUID->"18c50981-a0a1-4b27-84f6-4f9c8776ad1d"],
+Cell[19195, 477, 1132, 24, 63, "Input",ExpressionUUID->"2b6ad4db-7308-416f-959c-bff21c1ada37"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

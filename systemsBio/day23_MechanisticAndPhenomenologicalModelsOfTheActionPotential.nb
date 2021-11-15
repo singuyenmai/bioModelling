@@ -1,0 +1,2487 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    101089,       2479]
+NotebookOptionsPosition[     94392,       2381]
+NotebookOutlinePosition[     95410,       2413]
+CellTagsIndexPosition[     95367,       2410]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Biological Modelling and Model Analysis - day XXIII", "BookChapterLabel",
+ CellChangeTimes->{{3.6829991255094852`*^9, 3.68299914575751*^9}, 
+   3.682999421015033*^9, {3.683964417430398*^9, 3.6839644182337*^9}, {
+   3.684654757959724*^9, 3.684654759005673*^9}, 3.747971739143053*^9, {
+   3.778735279899466*^9, 3.778735283664885*^9}, {3.84430603802004*^9, 
+   3.844306042241909*^9}},ExpressionUUID->"ac1a8ae5-549a-47ee-b8f3-\
+731ccb4cf90c"],
+
+Cell["\<\
+Mechanistic and phenomenological models of the action potential\
+\>", "BookChapterTitle",
+ CellChangeTimes->{{3.682998874641573*^9, 3.682998895360573*^9}, {
+  3.683964426788683*^9, 3.683964434866899*^9}, {3.684654763386012*^9, 
+  3.68465476916544*^9}, {3.7787353461555758`*^9, 
+  3.7787353637713842`*^9}},ExpressionUUID->"2c4b54dc-161f-49c6-b974-\
+51f703a2ebc5"],
+
+Cell[CellGroupData[{
+
+Cell["Sander van Doorn", "Author",
+ CellChangeTimes->{{3.68299919036697*^9, 
+  3.6829991932712607`*^9}},ExpressionUUID->"cc1a0af8-a0d3-4818-9a63-\
+45f7648b8f81"],
+
+Cell["Groningen Institute for Evolutionary Life Sciences", "Institution",
+ CellChangeTimes->{{3.6829992274406776`*^9, 
+  3.6829992458415174`*^9}},ExpressionUUID->"ccdf730c-e421-405b-a283-\
+cd41e68a3cb8"],
+
+Cell["g.s.van.doorn@rug.nl", "Department",
+ CellChangeTimes->{{3.68299926217015*^9, 
+  3.6829992690098343`*^9}},ExpressionUUID->"faf78349-c108-4a22-a772-\
+4bbe13bea055"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["The Hodgkin-Huxley model of the action potential", "Section",
+ CellChangeTimes->{{3.6829992928352165`*^9, 3.6829992962185545`*^9}, {
+  3.684053399255887*^9, 3.6840534106583014`*^9}, {3.778735576269487*^9, 
+  3.778735594005937*^9}},ExpressionUUID->"5fb5a7d7-ae6a-435c-855e-\
+6ad11004cb7f"],
+
+Cell["\<\
+A classic model of the initiation and propagation of action potentials by \
+nerve cells was proposed by Alan Lloyd Hodgkin and Andrew Fielding Huxley in \
+1952, based on their electrophysiological measurements in the squid giant \
+axon. Hodgkin & Huxley received the 1963 Nobel Prize in Physiology/Medicine \
+for this work.\
+\>", "Text",
+ CellChangeTimes->{{3.683964776135131*^9, 3.683964967347437*^9}, {
+  3.683965028754643*^9, 3.683965028756803*^9}, {3.684053425326909*^9, 
+  3.684053430015729*^9}},ExpressionUUID->"55bda558-86e7-4179-86be-\
+28928a5b8f82"],
+
+Cell[TextData[{
+ "The core component of the Hodgkin-Huxley model is an equation that \
+describes the change of the membrane potential as a function of three ionic \
+currents, a ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Na", "+"], TraditionalForm]],ExpressionUUID->
+  "b8786fba-77e6-48a5-b64e-c4c8dbcd5b20"],
+ "current that depolarises the cell, a ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox[
+    StyleBox["K",
+     FontSlant->"Plain"], "+"], TraditionalForm]],ExpressionUUID->
+  "a224d336-a480-459a-82d6-7f9ca73767a8"],
+ "current that repolarises the cell, and a group of unspecified other \
+currents that help to restore the resting state. The equation for the \
+membrane potential is "
+}], "Text",
+ CellChangeTimes->{{3.683964776135131*^9, 3.683964967347437*^9}, {
+   3.683965028754643*^9, 3.683965276291059*^9}, {3.683965306676963*^9, 
+   3.6839653716315928`*^9}, 
+   3.683971102298107*^9},ExpressionUUID->"6bb003e3-c4a6-40af-a52e-\
+de12f2688671"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"eqV", "[", 
+   RowBox[{"V_", ",", "m_", ",", "h_", ",", "n_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"-", 
+    FractionBox["1", "C"]}], 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"120.0", 
+      SuperscriptBox["m", "3"], "h", 
+      RowBox[{"(", 
+       RowBox[{"V", "+", "115.0"}], ")"}]}], "+", 
+     RowBox[{"36.0", " ", 
+      SuperscriptBox["n", "4"], 
+      RowBox[{"(", 
+       RowBox[{"V", "-", "12.0"}], ")"}]}], "+", 
+     RowBox[{"0.3", 
+      RowBox[{"(", 
+       RowBox[{"V", "+", "10.5989"}], ")"}]}]}], ")"}]}]}]], "Input",
+ CellChangeTimes->{{3.683964484161379*^9, 3.683964490258279*^9}, {
+   3.6839653752745037`*^9, 3.683965476662602*^9}, {3.683969983081421*^9, 
+   3.6839699835452633`*^9}, {3.6839711053905287`*^9, 3.683971108712481*^9}, {
+   3.6839713270067787`*^9, 3.683971357182889*^9}, 3.684049099658181*^9},
+ CellLabel->"In[41]:=",ExpressionUUID->"503877eb-d9d2-4441-9437-735ee32e824d"],
+
+Cell[TextData[{
+ "where ",
+ Cell[BoxData[
+  FormBox["C", TraditionalForm]],ExpressionUUID->
+  "8cf678cf-e1ed-431e-803e-c208560e6b31"],
+ " is the capacity of the membrane. The variable ",
+ Cell[BoxData[
+  FormBox["m", TraditionalForm]],ExpressionUUID->
+  "aa42a230-c7a8-445f-8dd5-31b23a3dcced"],
+ ", ",
+ Cell[BoxData[
+  FormBox["h", TraditionalForm]],ExpressionUUID->
+  "fc617f0e-ecaa-48a8-b6a3-aed6171980c7"],
+ " and ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "79d7a4c4-1699-4a09-a01b-ffa066873c23"],
+ " represent the state of the voltage sensitive sodium and potassium channels \
+in the membrane. The dependence of these variables on the voltage was \
+measured by Hodgkin and Huxley in clever patch-clamp experiments, in which \
+they systematically blocked specific channels in order to measure the \
+currents through each channel separately. Based on fits of logistic curves to \
+the patch-clamp data, Hodgkin and Huxley proposed the following equations for \
+the gating variables ",
+ Cell[BoxData[
+  FormBox["m", TraditionalForm]],ExpressionUUID->
+  "3976c44c-90cf-4534-994b-5da54c41312d"],
+ ", ",
+ Cell[BoxData[
+  FormBox["h", TraditionalForm]],ExpressionUUID->
+  "dc2deade-1463-4444-8a33-6364fc8e9c57"],
+ " and ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "bd956ec5-8b3a-4f41-bc58-fef780f099cd"],
+ " "
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+  3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+  3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+  3.6840536562257547`*^9, 
+  3.684053679433024*^9}},ExpressionUUID->"707a657b-535b-45b6-af84-\
+f84b8be59779"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"eqm", "[", 
+   RowBox[{"V_", ",", "m_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"0.1", 
+    RowBox[{"(", 
+     RowBox[{"1.0", "-", "m"}], ")"}], 
+    FractionBox[
+     RowBox[{"V", "+", "25.0"}], 
+     RowBox[{
+      RowBox[{"Exp", "[", 
+       RowBox[{
+        RowBox[{"0.1", "V"}], "+", "2.5"}], "]"}], "-", "1"}]]}], "-", 
+   RowBox[{"4.", "m", " ", 
+    RowBox[{"Exp", "[", 
+     RowBox[{"V", "/", "18.0"}], "]"}]}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"eqh", "[", 
+    RowBox[{"V_", ",", "h_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"0.07", 
+     RowBox[{"(", 
+      RowBox[{"1.0", "-", "h"}], ")"}], 
+     RowBox[{"Exp", "[", 
+      RowBox[{"V", "/", "20.0"}], "]"}]}], "-", 
+    FractionBox["h", 
+     RowBox[{
+      RowBox[{"Exp", "[", 
+       RowBox[{
+        RowBox[{"0.1", "V"}], "+", "3.0"}], "]"}], "+", "1"}]]}]}], 
+  " "}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"eqn", "[", 
+   RowBox[{"V_", ",", "n_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"0.01", 
+    RowBox[{"(", 
+     RowBox[{"1.0", "-", "n"}], ")"}], 
+    FractionBox[
+     RowBox[{"V", "+", "10.0"}], 
+     RowBox[{
+      RowBox[{"Exp", "[", 
+       RowBox[{
+        RowBox[{"0.1", "V"}], "+", "1.0"}], "]"}], "-", "1"}]]}], "-", 
+   RowBox[{"0.125", "n", " ", 
+    RowBox[{"Exp", "[", 
+     RowBox[{"V", "/", "80.0"}], "]"}]}]}]}]}], "Input",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+  3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+  3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966102356365*^9}, {
+  3.683966258537586*^9, 3.6839664345431643`*^9}},
+ CellLabel->"In[42]:=",ExpressionUUID->"5588f7fe-ad00-4a2e-9c79-6b19e92a862d"],
+
+Cell[TextData[{
+ "The following simulation mimicks an experiment in which a nerve cell is \
+stimulated with a stepwise stimulus current ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"S", "(", "t", ")"}], TraditionalForm]],ExpressionUUID->
+  "9d948a57-3b02-4a4c-8750-4bd4fb3af182"],
+ " administered by an electrode. The stimulus current is added as an \
+additional term to the equation for the membrane potential. The parameters ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["T", "on"], TraditionalForm]],ExpressionUUID->
+  "14eacba2-35b9-4b9c-8ab5-30b0a005a2d6"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["T", "off"], TraditionalForm]],ExpressionUUID->
+  "0896e474-c4ba-4782-8bb3-df0f93565ef1"],
+ "define the start and end time of the step current, and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["i", "on"], TraditionalForm]],ExpressionUUID->
+  "740aed4d-367d-4348-b8a8-93b59693a00c"],
+ " represents the stimulus intensity."
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+  3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+  3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+  3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+  3.684054759434245*^9}},ExpressionUUID->"a08fc8f3-fcf3-4a69-927b-\
+6ccfe787da54"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"pars", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"C", "\[Rule]", "1.0"}], ",", 
+     RowBox[{
+      SubscriptBox["T", "on"], "\[Rule]", "50"}], ",", 
+     RowBox[{
+      SubscriptBox["T", "off"], "\[Rule]", "100"}], ",", 
+     RowBox[{
+      SubscriptBox["i", "on"], "\[Rule]", "10.0"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"vars", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"V", "[", "t", "]"}], ",", 
+     RowBox[{"m", "[", "t", "]"}], ",", 
+     RowBox[{"h", "[", "t", "]"}], ",", 
+     RowBox[{"n", "[", "t", "]"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"sys", "=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"V", "[", "t", "]"}], ",", "t"}], "]"}], "==", 
+      RowBox[{
+       RowBox[{"eqV", "[", 
+        RowBox[{
+         RowBox[{"V", "[", "t", "]"}], ",", 
+         RowBox[{"m", "[", "t", "]"}], ",", 
+         RowBox[{"h", "[", "t", "]"}], ",", 
+         RowBox[{"n", "[", "t", "]"}]}], "]"}], "-", 
+       FractionBox[
+        RowBox[{"S", "[", "t", "]"}], "C"]}]}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"m", "[", "t", "]"}], ",", "t"}], "]"}], "==", 
+      RowBox[{"eqm", "[", 
+       RowBox[{
+        RowBox[{"V", "[", "t", "]"}], ",", 
+        RowBox[{"m", "[", "t", "]"}]}], "]"}]}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"h", "[", "t", "]"}], ",", "t"}], "]"}], "==", 
+      RowBox[{"eqh", "[", 
+       RowBox[{
+        RowBox[{"V", "[", "t", "]"}], ",", 
+        RowBox[{"h", "[", "t", "]"}]}], "]"}]}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"n", "[", "t", "]"}], ",", "t"}], "]"}], "==", 
+      RowBox[{"eqn", "[", 
+       RowBox[{
+        RowBox[{"V", "[", "t", "]"}], ",", 
+        RowBox[{"n", "[", "t", "]"}]}], "]"}]}]}], "\[IndentingNewLine]", " ",
+     "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"init", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"V", "[", "0", "]"}], "\[Equal]", "0.0"}], ",", " ", 
+     RowBox[{
+      RowBox[{"m", "[", "0", "]"}], "\[Equal]", "0.05"}], ",", " ", 
+     RowBox[{
+      RowBox[{"h", "[", "0", "]"}], "\[Equal]", "0.59"}], ",", 
+     RowBox[{
+      RowBox[{"n", "[", "0", "]"}], "\[Equal]", "0.32"}], ",", 
+     RowBox[{
+      RowBox[{"S", "[", "0", "]"}], "\[Equal]", "0.0"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"stimulus", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"WhenEvent", "[", 
+      RowBox[{
+       RowBox[{"t", "\[Equal]", 
+        SubscriptBox["T", "on"]}], ",", 
+       RowBox[{
+        RowBox[{"S", "[", "t", "]"}], "\[Rule]", 
+        SubscriptBox["i", "on"]}]}], "]"}], ",", 
+     RowBox[{"WhenEvent", "[", 
+      RowBox[{
+       RowBox[{"t", "\[Equal]", 
+        SubscriptBox["T", "off"]}], ",", 
+       RowBox[{
+        RowBox[{"S", "[", "t", "]"}], "\[Rule]", "0.0"}]}], "]"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"solution", "=", 
+   RowBox[{"NDSolve", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Join", "[", 
+       RowBox[{"sys", ",", "init", ",", "stimulus"}], "]"}], "/.", "pars"}], 
+     ",", "vars", ",", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", "0", ",", "150"}], "}"}], ",", 
+     RowBox[{"DiscreteVariables", "\[Rule]", "S"}]}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.683967138903687*^9, 3.683967314511642*^9}, {
+  3.68396923135952*^9, 3.683969249290818*^9}, {3.6839698169933*^9, 
+  3.683969832551063*^9}, {3.6839699093893833`*^9, 3.6839699132740173`*^9}, {
+  3.683970734195616*^9, 3.683970781911854*^9}, {3.683971193239799*^9, 
+  3.683971308616287*^9}, {3.6839713397951736`*^9, 3.683971352473987*^9}, {
+  3.683971415744749*^9, 3.683971445090005*^9}, {3.684045987284696*^9, 
+  3.684045988740203*^9}, {3.684046075881275*^9, 3.684046137101552*^9}, {
+  3.684046171405208*^9, 3.684046195875195*^9}, {3.684046251828394*^9, 
+  3.684046424983773*^9}, {3.684049120688202*^9, 3.684049124246151*^9}, {
+  3.684054797417734*^9, 3.684054805487322*^9}, {3.684055290766148*^9, 
+  3.6840553532674923`*^9}, {3.68405562240112*^9, 3.6840556289765882`*^9}},
+ CellLabel->"In[45]:=",ExpressionUUID->"7fe1fe3a-9c82-4772-a274-9dfb8c8733cc"],
+
+Cell[BoxData[
+ RowBox[{"GraphicsColumn", "[", 
+  RowBox[{"{", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Plot", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Piecewise", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"{", 
+           RowBox[{
+            SubscriptBox["i", "on"], ",", 
+            RowBox[{
+             RowBox[{"t", ">", 
+              SubscriptBox["T", "on"]}], "&&", " ", 
+             RowBox[{"t", "<", 
+              SubscriptBox["T", "off"]}]}]}], "}"}], "}"}], ",", "0"}], "]"}],
+        "/.", "pars"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"t", ",", "0", ",", "150"}], "}"}], ",", 
+      RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+      RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", "Black"}], ",", 
+      RowBox[{"FrameLabel", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"\"\<time\>\"", ",", "\"\<stimulus\>\""}], "}"}]}]}], "]"}], 
+    ",", "\[IndentingNewLine]", 
+    RowBox[{"Plot", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{"V", "[", "t", "]"}]}], "/.", "solution"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"t", ",", "0", ",", "150"}], "}"}], ",", 
+      RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+      RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"Darker", "[", "Blue", "]"}]}], ",", 
+      RowBox[{"FrameLabel", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"\"\<time\>\"", ",", "\"\<membrane potential\>\""}], 
+        "}"}]}]}], "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"Plot", "[", 
+     RowBox[{
+      RowBox[{"Evaluate", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"m", "[", "t", "]"}], ",", 
+          RowBox[{"h", "[", "t", "]"}], ",", 
+          RowBox[{"n", "[", "t", "]"}]}], "}"}], "/.", "solution"}], "]"}], 
+      ",", 
+      RowBox[{"{", 
+       RowBox[{"t", ",", "0", ",", "150"}], "}"}], ",", 
+      RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+      RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"Red", ",", "Orange", ",", 
+         RowBox[{"Darker", "[", "Red", "]"}]}], "}"}]}], ",", 
+      RowBox[{"FrameLabel", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"\"\<time\>\"", ",", "\"\<gating variables\>\""}], "}"}]}]}], 
+     "]"}]}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.683969270857291*^9, 3.683969278744135*^9}, {
+   3.683969797999609*^9, 3.683969890206883*^9}, {3.683969934972193*^9, 
+   3.683969939804255*^9}, {3.6839700743924294`*^9, 3.683970088962118*^9}, {
+   3.6839702147170477`*^9, 3.6839702359213057`*^9}, {3.6839702895669403`*^9, 
+   3.683970304764539*^9}, {3.683970372919256*^9, 3.683970526603449*^9}, {
+   3.683970562338162*^9, 3.683970710677902*^9}, {3.6839711459132633`*^9, 
+   3.6839711477275248`*^9}, {3.683971311836618*^9, 3.683971316432727*^9}, {
+   3.6839713723103456`*^9, 3.683971407356613*^9}, {3.683971471820817*^9, 
+   3.683971494547825*^9}, 3.6840460023469954`*^9, {3.684046383624516*^9, 
+   3.6840463855243683`*^9}, {3.6840465247459393`*^9, 3.684046784220504*^9}, {
+   3.684054796151609*^9, 3.6840548019474983`*^9}},
+ CellLabel->"In[51]:=",ExpressionUUID->"83787306-2e75-486a-8e2b-5a8a2572314f"],
+
+Cell[TextData[{
+ StyleBox["Q1: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Adjust the scale of the plots to zoom in on a single action \
+potential, and examine the changes in the membrane potential in relation to \
+the dynamic of the gating variables. Describe what happens to the ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["Na", "+"], TraditionalForm]],
+  FontWeight->"Bold",
+  FontSlant->"Plain",ExpressionUUID->"dda3513f-dd6a-4be8-99f9-c860905aa274"],
+ StyleBox[" and ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox[
+    StyleBox["K",
+     FontSlant->"Plain"], "+"], TraditionalForm]],ExpressionUUID->
+  "f26f2868-0b9f-4093-a6a5-8eb03f995507"],
+ StyleBox[" currents during the different phases of the action potential.",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+  3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+  3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+  3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+  3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+  3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+  3.684055117799378*^9}, {3.684055163023621*^9, 
+  3.68405517446024*^9}},ExpressionUUID->"8c8d7f30-7921-4f62-b16a-\
+1d0a853b880a"],
+
+Cell["", "Text",
+ CellChangeTimes->{{3.68405520395356*^9, 
+  3.684055203955825*^9}},ExpressionUUID->"537ba235-3966-4d84-b946-\
+09d32a2072dd"],
+
+Cell[TextData[{
+ StyleBox["Q2: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Manipulate the intensity of the stimulus and describe how the \
+nerve cell responds. Is there an upper limit to amplitude of the action \
+potential, or to the number of action potentials that can be generated within \
+the 50 ms of the step stimulus. Do weak stimuli also elicit an action \
+potential?",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+  3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+  3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+  3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+  3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+  3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+  3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+  3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+  3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+  3.684055546653903*^9, 
+  3.684055605766163*^9}},ExpressionUUID->"55add061-b4c8-4fe0-a8b1-\
+68e9e834a853"],
+
+Cell["", "Text",
+ CellChangeTimes->{{3.68405520395356*^9, 
+  3.684055203955825*^9}},ExpressionUUID->"a0342cf4-898c-47aa-a547-\
+2123ba5557dc"],
+
+Cell[TextData[{
+ StyleBox["Q3: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["For the original parameter conditions ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{
+     SubscriptBox["i", "on"], "=", "10.0"}]}], TraditionalForm]],
+  FontWeight->"Bold",ExpressionUUID->"343af1da-0da8-4f86-b0bb-bc4369a598f2"],
+ StyleBox["), the stimulus elicits four action potentials. If you look \
+closely, you will see that the first action potential has a slightly larger \
+amplitude than the following ones. Can you explain why this is so?",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+  3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+  3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+  3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+  3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+  3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+  3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+  3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+  3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+  3.684055546653903*^9, 3.684055605766163*^9}, {3.684055644187067*^9, 
+  3.684055811615841*^9}},ExpressionUUID->"a46a408f-24ee-4051-87e5-\
+2a0c7ce43fb8"],
+
+Cell["", "Text",
+ CellChangeTimes->{{3.68405520395356*^9, 
+  3.684055203955825*^9}},ExpressionUUID->"be99ddcb-3ce9-4061-bb2c-\
+c2678b45e594"],
+
+Cell[TextData[{
+ "The Hodgin-Huxley model can also be used to simulate the propagation of the \
+action potential along the axon of a nerve cell. To do this, we consider the \
+membrane potential ",
+ Cell[BoxData[
+  FormBox["V", TraditionalForm]],ExpressionUUID->
+  "37000496-30eb-46c4-9ce3-a52028a1d1e1"],
+ " and the gating variables ",
+ Cell[BoxData[
+  FormBox["m", TraditionalForm]],ExpressionUUID->
+  "1e7e01df-6745-4c20-93f7-ec19e0cb00aa"],
+ ", ",
+ Cell[BoxData[
+  FormBox["h", TraditionalForm]],ExpressionUUID->
+  "260263ce-2f1f-4533-942c-9cd936041054"],
+ " and ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "5375d8da-8bc8-487b-a436-490cd49df876"],
+ " as functions of a spatial coordinate ",
+ Cell[BoxData[
+  FormBox["x", TraditionalForm]],ExpressionUUID->
+  "ebda2cbc-b2b3-4581-8214-450215e84861"],
+ "(representing the spatial position along the axon) and time ",
+ Cell[BoxData[
+  FormBox["t", TraditionalForm]],ExpressionUUID->
+  "41880ec0-1da1-41b2-9d34-73fb5278a29b"],
+ ". The ionic currents diffuse along the axon, which is captured by including \
+a diffusion term for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"V", "(", 
+    RowBox[{"x", ",", "t"}], ")"}], TraditionalForm]],ExpressionUUID->
+  "228fa4af-0603-4bad-aa94-44b6b76cfbaa"],
+ " in the equation for the membrane potential. We further assume that the \
+axon is stimulated at one end by a sinusoidal current, and that there is no \
+flux of voltage at the other end of the axon. The resulting partial \
+differential equation is solved numerically by a call to ",
+ StyleBox["NDSolve", "Input"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+  3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+  3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+  3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+  3.684054759434245*^9}, {3.684055856354288*^9, 3.684055891118384*^9}, {
+  3.6840559401362743`*^9, 3.684056342616802*^9}, {3.684056410896696*^9, 
+  3.684056441600119*^9}},ExpressionUUID->"0f40d611-57b1-41ec-9ae3-\
+0c86e48556f8"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"pars", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"C", "\[Rule]", "1.0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[GothicCapitalD]", "V"], "\[Rule]", " ", "0.05"}], ",", 
+     RowBox[{"A", "\[Rule]", "20.0"}], ",", 
+     RowBox[{"f", "\[Rule]", "0.1"}], ",", 
+     RowBox[{"L", "\[Rule]", " ", "10.0"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"vars", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"V", "[", 
+      RowBox[{"x", ",", "t"}], "]"}], ",", 
+     RowBox[{"m", "[", 
+      RowBox[{"x", ",", "t"}], "]"}], ",", 
+     RowBox[{"h", "[", 
+      RowBox[{"x", ",", "t"}], "]"}], ",", 
+     RowBox[{"n", "[", 
+      RowBox[{"x", ",", "t"}], "]"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"sys", "=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"V", "[", 
+         RowBox[{"x", ",", "t"}], "]"}], ",", "t"}], "]"}], "==", 
+      RowBox[{
+       RowBox[{"eqV", "[", 
+        RowBox[{
+         RowBox[{"V", "[", 
+          RowBox[{"x", ",", "t"}], "]"}], ",", 
+         RowBox[{"m", "[", 
+          RowBox[{"x", ",", "t"}], "]"}], ",", 
+         RowBox[{"h", "[", 
+          RowBox[{"x", ",", "t"}], "]"}], ",", 
+         RowBox[{"n", "[", 
+          RowBox[{"x", ",", "t"}], "]"}]}], "]"}], " ", "+", 
+       RowBox[{
+        SubscriptBox["\[GothicCapitalD]", "V"], " ", 
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"V", "[", 
+           RowBox[{"x", ",", "t"}], "]"}], ",", "x", ",", "x"}], "]"}]}]}]}], 
+     ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"m", "[", 
+         RowBox[{"x", ",", "t"}], "]"}], ",", "t"}], "]"}], "==", 
+      RowBox[{"eqm", "[", 
+       RowBox[{
+        RowBox[{"V", "[", 
+         RowBox[{"x", ",", "t"}], "]"}], ",", 
+        RowBox[{"m", "[", 
+         RowBox[{"x", ",", "t"}], "]"}]}], "]"}]}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"h", "[", 
+         RowBox[{"x", ",", "t"}], "]"}], ",", "t"}], "]"}], "==", 
+      RowBox[{"eqh", "[", 
+       RowBox[{
+        RowBox[{"V", "[", 
+         RowBox[{"x", ",", "t"}], "]"}], ",", 
+        RowBox[{"h", "[", 
+         RowBox[{"x", ",", "t"}], "]"}]}], "]"}]}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"n", "[", 
+         RowBox[{"x", ",", "t"}], "]"}], ",", "t"}], "]"}], "==", 
+      RowBox[{"eqn", "[", 
+       RowBox[{
+        RowBox[{"V", "[", 
+         RowBox[{"x", ",", "t"}], "]"}], ",", 
+        RowBox[{"n", "[", 
+         RowBox[{"x", ",", "t"}], "]"}]}], "]"}]}]}], "\[IndentingNewLine]", 
+    " ", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"init", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"V", "[", 
+       RowBox[{"x", ",", "0"}], "]"}], "\[Equal]", "0.0"}], ",", " ", 
+     RowBox[{
+      RowBox[{"m", "[", 
+       RowBox[{"x", ",", "0"}], "]"}], "\[Equal]", "0.05"}], ",", " ", 
+     RowBox[{
+      RowBox[{"h", "[", 
+       RowBox[{"x", ",", "0"}], "]"}], "\[Equal]", "0.59"}], ",", 
+     RowBox[{
+      RowBox[{"n", "[", 
+       RowBox[{"x", ",", "0"}], "]"}], "\[Equal]", "0.32"}], ",", 
+     RowBox[{
+      RowBox[{"V", "[", 
+       RowBox[{"0", ",", "t"}], "]"}], " ", "\[Equal]", 
+      RowBox[{"A", " ", 
+       RowBox[{"Sin", "[", 
+        RowBox[{"2", "\[Pi]", " ", "f", " ", "t"}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox["V", 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{"L", ",", "t"}], "]"}], "\[Equal]", "0"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"solution", " ", "=", " ", 
+   RowBox[{"NDSolve", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Join", "[", 
+       RowBox[{"sys", ",", " ", "init"}], "]"}], " ", "/.", " ", "pars"}], 
+     ",", " ", "vars", ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", " ", "0", ",", " ", "100"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", "0", ",", "10"}], "}"}], ",", 
+     RowBox[{"Method", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"\"\<PDEDiscretization\>\"", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"\"\<MethodOfLines\>\"", ",", " ", 
+          RowBox[{"\"\<SpatialDiscretization\>\"", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"\"\<TensorProductGrid\>\"", ",", 
+             RowBox[{"\"\<MinPoints\>\"", "\[Rule]", "500"}]}], "}"}]}]}], 
+         "}"}]}], "}"}]}]}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->CompressedData["
+1:eJwdzzlIQgEABuDnQzoGMSMKQzGLLu1QFAMju8CWDnEIOsgwhIrIkiQ0KwqC
+cOxABEsRykApCAKJTn0V5eJglEVDghS5tDlU0Pvf8PMN//L/YqNZbyIJghDR
+gazMcJHHkmk3GHQSKFvJ8Hdojb21Aii8F43BPj/PBBPW0DS8omrM0NFx+wg/
+689foTlUzd2l9YU3hbDAYhPDDwm3Av4mshKof/c3wGbBxFaE9uLIxTiucHjh
+V2tFAM5np4LQzXIcQuWq/QQWLohiMEcrr4vSjsaoRngZjJEUfqwd5kJf5IED
+5wK9xbCT+BFDta6pGl4LVFI4aXhRQuqI0sDBAo4WbvTk2Zi+OW6HpGZxGepT
+qnV4+va8Cdmzyy5GjXMX8u5+vbC737IHz5zpfThTNRCEyRFhCObzZccw9Cdn
+tHe9hKFyqCQKS9vUcWha6mcUfLufoFPWkoJWdrrshjbD/WFUODmVkCQ1NdCT
+LD+4w/5tKeM/cqIAXw==
+  "],
+ CellLabel->"In[52]:=",ExpressionUUID->"7b00a617-90d6-487d-9f6c-3c161f01a1cd"],
+
+Cell[TextData[{
+ "The solution is plotted below in three different ways: the upper diagram \
+shows time-plots of the membrane potential recorded at five different \
+positions along the axon; the middle diagram show a snapshot of the potential \
+along the axon at ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"t", "=", "23"}], ",", " ", 
+    RowBox[{"t", "=", "24"}], ",", " ", 
+    RowBox[{"t", "=", "25"}], ",", " ", 
+    RowBox[{"t", "=", 
+     RowBox[{
+      RowBox[{"26", " ", "and", " ", "t"}], "=", "27"}]}]}], 
+   TraditionalForm]],ExpressionUUID->"4cc556d6-8610-4571-a232-686c5c71fc7c"],
+ "; the lower diagram uses a color scale to show the membrane potential at \
+any point along the axon at any point in time. "
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+  3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+  3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+  3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+  3.684054759434245*^9}, {3.684055856354288*^9, 3.684055891118384*^9}, {
+  3.6840559401362743`*^9, 3.684056342616802*^9}, {3.684056410896696*^9, 
+  3.684056441600119*^9}, {3.684056475187724*^9, 3.6840565698255177`*^9}, {
+  3.68405663460765*^9, 3.684056651914877*^9}, {3.6840566937022333`*^9, 
+  3.684056708088512*^9}, {3.684056741400457*^9, 3.684056752678194*^9}, {
+  3.684058223240677*^9, 3.684058282930686*^9}, {3.684058596448498*^9, 
+  3.6840586510419407`*^9}},ExpressionUUID->"f7caf562-7bf4-473a-b945-\
+03af51bd2cc1"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"v", "[", 
+    RowBox[{"x_", ",", "t_"}], "]"}], "=", 
+   RowBox[{
+    RowBox[{"-", 
+     RowBox[{"V", "[", 
+      RowBox[{"x", ",", "t"}], "]"}]}], "/.", "solution"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"GraphicsColumn", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Plot", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"v", "[", 
+          RowBox[{"0", ",", "t"}], "]"}], ",", 
+         RowBox[{"v", "[", 
+          RowBox[{"1.0", ",", "t"}], "]"}], ",", 
+         RowBox[{"v", "[", 
+          RowBox[{"2.0", ",", "t"}], "]"}], ",", 
+         RowBox[{"v", "[", 
+          RowBox[{"3.0", ",", "t"}], "]"}], ",", 
+         RowBox[{"v", "[", 
+          RowBox[{"4.0", ",", "t"}], "]"}], ",", 
+         RowBox[{"v", "[", 
+          RowBox[{"5.0", ",", "t"}], "]"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"t", ",", "0", ",", "100"}], "}"}], ",", 
+       RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+       RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+       RowBox[{"PlotStyle", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"Black", ",", 
+          RowBox[{"Darker", "[", "Blue", "]"}], ",", 
+          RowBox[{"Darker", "[", "Green", "]"}], ",", 
+          RowBox[{"Darker", "[", "Yellow", "]"}], ",", "Orange", ",", 
+          RowBox[{"Darker", "[", "Red", "]"}]}], "}"}]}], ",", 
+       RowBox[{"FrameLabel", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"\"\<time\>\"", ",", "\"\<membrane potential\>\""}], "}"}]}],
+        ",", 
+       RowBox[{"AspectRatio", "\[Rule]", "1"}]}], "]"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Plot", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"v", "[", 
+          RowBox[{"x", ",", "23.0"}], "]"}], ",", 
+         RowBox[{"v", "[", 
+          RowBox[{"x", ",", "24.0"}], "]"}], ",", 
+         RowBox[{"v", "[", 
+          RowBox[{"x", ",", "25.0"}], "]"}], ",", 
+         RowBox[{"v", "[", 
+          RowBox[{"x", ",", "26.0"}], "]"}], ",", 
+         RowBox[{"v", "[", 
+          RowBox[{"x", ",", "27.0"}], "]"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", "0", ",", "10"}], "}"}], ",", 
+       RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+       RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+       RowBox[{"PlotStyle", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Darker", "[", "Blue", "]"}], ",", 
+          RowBox[{"Darker", "[", "Green", "]"}], ",", 
+          RowBox[{"Darker", "[", "Yellow", "]"}], ",", "Orange", ",", 
+          RowBox[{"Darker", "[", "Red", "]"}]}], "}"}]}], ",", 
+       RowBox[{"FrameLabel", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<position along axon\>\"", ",", "\"\<membrane potential\>\""}], 
+         "}"}]}], ",", 
+       RowBox[{"AspectRatio", "\[Rule]", "1"}]}], "]"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"DensityPlot", "[", 
+      RowBox[{
+       RowBox[{"v", "[", 
+        RowBox[{"x", ",", "t"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"t", ",", "0", ",", "100"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", "0", ",", "10"}], "}"}], ",", 
+       RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+       RowBox[{"ColorFunction", "\[Rule]", "\"\<ThermometerColors\>\""}], ",", 
+       RowBox[{"PlotPoints", "\[Rule]", "100"}], ",", 
+       RowBox[{"FrameLabel", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"\"\<time\>\"", ",", "\"\<position along axon\>\""}], 
+         "}"}]}], ",", 
+       RowBox[{"MeshFunctions", "->", 
+        RowBox[{"{", 
+         RowBox[{"#3", "&"}], "}"}]}], ",", 
+       RowBox[{"Mesh", "\[Rule]", "8"}]}], "]"}]}], "}"}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", "Large"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.684049450732829*^9, 3.6840495043061123`*^9}, {
+   3.684049591284625*^9, 3.684049633968052*^9}, {3.684049690442356*^9, 
+   3.684049848815494*^9}, {3.6840499697395287`*^9, 3.684049970810413*^9}, {
+   3.684050006183666*^9, 3.684050067282*^9}, {3.684050134293542*^9, 
+   3.684050148616465*^9}, {3.6840502019750957`*^9, 3.684050206205854*^9}, {
+   3.684050283780036*^9, 3.68405030479743*^9}, {3.684050334821117*^9, 
+   3.6840503538603897`*^9}, {3.684050473020976*^9, 3.684050480045898*^9}, {
+   3.684050546016603*^9, 3.6840505840094213`*^9}, {3.6840506835763187`*^9, 
+   3.6840507118864326`*^9}, {3.684051014954348*^9, 3.684051080729702*^9}, {
+   3.684051147807724*^9, 3.684051150221663*^9}, 3.684051184090312*^9, {
+   3.684051873939975*^9, 3.684051875042906*^9}, {3.684052866949162*^9, 
+   3.684052875074492*^9}, {3.6840529630319977`*^9, 3.6840529910710983`*^9}, {
+   3.684056383515396*^9, 3.6840563899336567`*^9}, {3.684058298730534*^9, 
+   3.68405837258429*^9}, {3.684058460503146*^9, 3.684058566400079*^9}},
+ CellLabel->"In[57]:=",ExpressionUUID->"8ce2d5ac-0ca7-448f-9647-2680c6b39f46"],
+
+Cell[TextData[{
+ StyleBox["Q4: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Why are the curves in the upper and middle panel displaced \
+relative to one another?",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+  3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+  3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+  3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+  3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+  3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+  3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+  3.684056826738449*^9, 3.684056926092456*^9}, {3.684057896419353*^9, 
+  3.6840578964832373`*^9}, {3.684058426558601*^9, 
+  3.6840584339564543`*^9}},ExpressionUUID->"84787901-8b20-4759-a81f-\
+c6296865328b"],
+
+Cell[TextData[StyleBox["",
+ FontWeight->"Bold"]], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+  3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+  3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+  3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+  3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+  3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+  3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+  3.684056826738449*^9, 
+  3.68405689205987*^9}},ExpressionUUID->"3725f38c-74b9-48ee-9746-\
+c73886107900"],
+
+Cell[TextData[{
+ StyleBox["Q5: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["How can you infer from the lower diagram at what speed the action \
+potential travels along the axon? Which parameter of the model has a direct \
+effect on this speed?",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+   3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+   3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+   3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+   3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+   3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+   3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+   3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+   3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+   3.684055546653903*^9, 3.684055605766163*^9}, 3.684056896106309*^9, {
+   3.684056937816987*^9, 3.68405694385879*^9}, {3.6840572368878202`*^9, 
+   3.684057251638556*^9}, {3.684057900274572*^9, 
+   3.6840579003587093`*^9}},ExpressionUUID->"cabf4f86-0faf-489e-b93b-\
+591528277239"],
+
+Cell["", "Text",
+ CellChangeTimes->{{3.68405520395356*^9, 
+  3.684055203955825*^9}},ExpressionUUID->"2f3cd4a7-dfd2-4110-945d-\
+93bd90efa4e6"],
+
+Cell[TextData[{
+ StyleBox["Q6: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["For the original parameter set (",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"C", "\[Rule]", "1.0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[GothicCapitalD]", "V"], "\[Rule]", " ", "0.05"}], ",", 
+     RowBox[{"A", "\[Rule]", "20.0"}], ",", 
+     RowBox[{"f", "\[Rule]", "0.1"}], ",", 
+     RowBox[{"L", "\[Rule]", " ", "10.0"}]}], "}"}], "Input"]],
+  CellChangeTimes->CompressedData["
+1:eJwdzzlIQgEABuDnQzoGMSMKQzGLLu1QFAMju8CWDnEIOsgwhIrIkiQ0KwqC
+cOxABEsRykApCAKJTn0V5eJglEVDghS5tDlU0Pvf8PMN//L/YqNZbyIJghDR
+gazMcJHHkmk3GHQSKFvJ8Hdojb21Aii8F43BPj/PBBPW0DS8omrM0NFx+wg/
+689foTlUzd2l9YU3hbDAYhPDDwm3Av4mshKof/c3wGbBxFaE9uLIxTiucHjh
+V2tFAM5np4LQzXIcQuWq/QQWLohiMEcrr4vSjsaoRngZjJEUfqwd5kJf5IED
+5wK9xbCT+BFDta6pGl4LVFI4aXhRQuqI0sDBAo4WbvTk2Zi+OW6HpGZxGepT
+qnV4+va8Cdmzyy5GjXMX8u5+vbC737IHz5zpfThTNRCEyRFhCObzZccw9Cdn
+tHe9hKFyqCQKS9vUcWha6mcUfLufoFPWkoJWdrrshjbD/WFUODmVkCQ1NdCT
+LD+4w/5tKeM/cqIAXw==
+   "],ExpressionUUID->"d3ee5906-95bd-4c14-9c24-bdf82ce742ab"],
+ StyleBox["), you can see in the upper diagram that the first and the second \
+peak of the stimulus elicit an action potential, whereas the third peak does \
+not. Moreover, this pattern repeats itself, leading to a 3:2 ratio of \
+stimulus peaks to action potentials. Why does the axon not respond to every \
+third stimulus peak? Test your hypothesis by changing the frequency and the \
+amplitude of the stimulus.  ",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.6839654986734343`*^9, 3.68396551251654*^9}, {
+  3.683965551442984*^9, 3.683965862639476*^9}, {3.68396590505615*^9, 
+  3.683965968696045*^9}, {3.6839660310347424`*^9, 3.683966044021246*^9}, {
+  3.6840536562257547`*^9, 3.684053728836813*^9}, {3.6840544710714273`*^9, 
+  3.684054759434245*^9}, {3.68405487253192*^9, 3.684054887159724*^9}, {
+  3.684054918148314*^9, 3.6840549505665693`*^9}, {3.6840549895912647`*^9, 
+  3.684055117799378*^9}, {3.684055163023621*^9, 3.68405517446024*^9}, {
+  3.684055211738501*^9, 3.6840552134481087`*^9}, {3.6840552705866137`*^9, 
+  3.684055270668708*^9}, {3.6840553660471888`*^9, 3.684055513882366*^9}, {
+  3.684055546653903*^9, 3.684055605766163*^9}, {3.684055644187067*^9, 
+  3.684055811615841*^9}, {3.684057020824923*^9, 3.6840572255825253`*^9}, {
+  3.6840572879875813`*^9, 3.684057493083308*^9}, {3.684057903479944*^9, 
+  3.6840579035448017`*^9}},ExpressionUUID->"2cac5d44-aa78-4b9b-800b-\
+427cb90dea3a"],
+
+Cell["", "Text",
+ CellChangeTimes->{{3.68405520395356*^9, 
+  3.684055203955825*^9}},ExpressionUUID->"298f8848-97be-41c4-a6eb-\
+ed2b690618f5"],
+
+Cell[TextData[{
+ StyleBox["Q7: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Return once more to the original parameter set, and verify in the \
+lower diagram that the first, third and fifth action potential propagate \
+along the axon at a slightly higher speed than action potential 2, 4 and 6. \
+How do you explain this effect? What pattern would you expect to observe at \
+the end of an infinitely long axon? ",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQBmIQfawn1H120WvH+nYBTxD9VuedL4ieVnalBET/Pq1Y
+BaIZ3MSaQPQcmYedIJpnXUM3iE6yZA8+BqR1jkvFgGglz0c7QHTY07d3QHQt
+q+BrEF0m8/QNiP6778gHsLzipS8gesnrTT9BdOOUnZzHQfTBBH4Q7bnrnACI
+PruwXBREvwhbB6a7jl6SAdF8aVfB9KSmgxogOsLGxhpEH3sTYg+iM1p2uIHo
+kj+t3iD6x5biBBB9NHXWdxDNs8RI8ASQdpn1XwJEp+h52oNoNiZrTxC9SetW
+JIg+su5iMohmvxiZBqIBmIKlNw==
+  "],ExpressionUUID->"4a8276b4-5970-4ca0-93ff-ebc8ccacbe05"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Dissecting the dynamics of the action potential by model simplification\
+\>", "Section",
+ CellChangeTimes->{{3.6829992928352165`*^9, 3.6829992962185545`*^9}, {
+  3.684053399255887*^9, 3.6840534106583014`*^9}, {3.684654781552939*^9, 
+  3.6846548024536753`*^9}, {3.778735785831059*^9, 3.778735816005369*^9}, {
+  3.778735887970601*^9, 
+  3.778735891805604*^9}},ExpressionUUID->"d498c8e2-1000-4a8c-a6e2-\
+6b72f8b3ed23"],
+
+Cell["\<\
+The Hodgkin-Huxley model accurately reconstructs the action potential, but it \
+is too complex to generate much insight in the mechanism responsible for the \
+generation of the action potential. One way to simplify the model is to \
+separate the variables into a groups of fast and slow variables, and to focus \
+on the dynamics of the fast variables. First, let\[CloseCurlyQuote]s plot all \
+variables in a single diagram:\
+\>", "Text",
+ CellChangeTimes->{{3.68472484608594*^9, 3.68472503182694*^9}, {
+  3.778735997720009*^9, 
+  3.778736017805834*^9}},ExpressionUUID->"fb9dc17c-a266-474e-a23a-\
+fca7846ba4aa"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"TwoAxisPlot", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"f_", ",", "g_"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"x_", ",", "x1_", ",", "x2_"}], "}"}]}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "fgraph", ",", "ggraph", ",", "frange", ",", "grange", ",", "fticks", 
+      ",", "gticks"}], "}"}], ",", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"fgraph", ",", "ggraph"}], "}"}], "=", 
+      RowBox[{"MapIndexed", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Plot", "[", 
+          RowBox[{"#", ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", "x1", ",", "x2"}], "}"}], ",", 
+           RowBox[{"Axes", "\[Rule]", "True"}], ",", 
+           RowBox[{"PlotStyle", "\[Rule]", 
+            RowBox[{
+             RowBox[{"ColorData", "[", "1", "]"}], "[", 
+             RowBox[{"#2", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "]"}]}]}], "]"}], "&"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f", ",", "g"}], "}"}]}], "]"}]}], ";", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"frange", ",", "grange"}], "}"}], "=", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"PlotRange", "/.", 
+           RowBox[{"AbsoluteOptions", "[", 
+            RowBox[{"#", ",", "PlotRange"}], "]"}]}], ")"}], "[", 
+         RowBox[{"[", "2", "]"}], "]"}], "&"}], "/@", 
+       RowBox[{"{", 
+        RowBox[{"fgraph", ",", "ggraph"}], "}"}]}]}], ";", 
+     RowBox[{"fticks", "=", 
+      RowBox[{"N", "@", 
+       RowBox[{"FindDivisions", "[", 
+        RowBox[{"frange", ",", "5"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"gticks", "=", 
+      RowBox[{"Quiet", "@", 
+       RowBox[{"Transpose", "@", 
+        RowBox[{"{", 
+         RowBox[{"fticks", ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"ToString", "[", 
+             RowBox[{
+              RowBox[{"NumberForm", "[", 
+               RowBox[{"#", ",", "2"}], "]"}], ",", "StandardForm"}], "]"}], 
+            "&"}], "/@", 
+           RowBox[{"Rescale", "[", 
+            RowBox[{"fticks", ",", "frange", ",", "grange"}], "]"}]}]}], 
+         "}"}]}]}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Show", "[", 
+      RowBox[{"fgraph", ",", 
+       RowBox[{"ggraph", "/.", 
+        RowBox[{
+         RowBox[{"Graphics", "[", 
+          RowBox[{"graph_", ",", "s___"}], "]"}], "\[RuleDelayed]", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{
+           RowBox[{"GeometricTransformation", "[", 
+            RowBox[{"graph", ",", 
+             RowBox[{"RescalingTransform", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"0", ",", "1"}], "}"}], ",", "grange"}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"0", ",", "1"}], "}"}], ",", "frange"}], "}"}]}], 
+              "]"}]}], "]"}], ",", "s"}], "]"}]}]}], ",", 
+       RowBox[{"Axes", "\[Rule]", "False"}], ",", 
+       RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+       RowBox[{"FrameStyle", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"ColorData", "[", "1", "]"}], "/@", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "2"}], "}"}]}], ",", 
+          RowBox[{"{", 
+           RowBox[{"Automatic", ",", "Automatic"}], "}"}]}], "}"}]}], ",", 
+       RowBox[{"FrameTicks", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"fticks", ",", "gticks"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"Automatic", ",", "Automatic"}], "}"}]}], "}"}]}], ",", 
+       RowBox[{"FrameLabel", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+           "\"\<membrane potential\>\"", ",", "\"\<gating variables\>\""}], 
+           "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"\"\<time\>\"", ",", "None"}], "}"}]}], "}"}]}]}], 
+      "]"}]}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.684654905169428*^9, 3.684654962105564*^9}, 
+   3.684655076024561*^9, 3.684655158305015*^9, {3.684655368049741*^9, 
+   3.684655454968349*^9}, {3.684655616567111*^9, 3.6846556290913363`*^9}},
+ CellLabel->"In[59]:=",ExpressionUUID->"05b40a00-64ac-4926-90e8-61ef9f4eb4be"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"pars", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"C", "\[Rule]", "1.0"}], ",", 
+     RowBox[{
+      SubscriptBox["T", "on"], "\[Rule]", "50"}], ",", 
+     RowBox[{
+      SubscriptBox["T", "off"], "\[Rule]", "100"}], ",", 
+     RowBox[{
+      SubscriptBox["i", "on"], "\[Rule]", "10.0"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"vars", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"V", "[", "t", "]"}], ",", 
+     RowBox[{"m", "[", "t", "]"}], ",", 
+     RowBox[{"h", "[", "t", "]"}], ",", 
+     RowBox[{"n", "[", "t", "]"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"sys", "=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"V", "[", "t", "]"}], ",", "t"}], "]"}], "==", 
+      RowBox[{
+       RowBox[{"eqV", "[", 
+        RowBox[{
+         RowBox[{"V", "[", "t", "]"}], ",", 
+         RowBox[{"m", "[", "t", "]"}], ",", 
+         RowBox[{"h", "[", "t", "]"}], ",", 
+         RowBox[{"n", "[", "t", "]"}]}], "]"}], "-", 
+       FractionBox[
+        RowBox[{"S", "[", "t", "]"}], "C"]}]}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"m", "[", "t", "]"}], ",", "t"}], "]"}], "==", 
+      RowBox[{"eqm", "[", 
+       RowBox[{
+        RowBox[{"V", "[", "t", "]"}], ",", 
+        RowBox[{"m", "[", "t", "]"}]}], "]"}]}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"h", "[", "t", "]"}], ",", "t"}], "]"}], "==", 
+      RowBox[{"eqh", "[", 
+       RowBox[{
+        RowBox[{"V", "[", "t", "]"}], ",", 
+        RowBox[{"h", "[", "t", "]"}]}], "]"}]}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"n", "[", "t", "]"}], ",", "t"}], "]"}], "==", 
+      RowBox[{"eqn", "[", 
+       RowBox[{
+        RowBox[{"V", "[", "t", "]"}], ",", 
+        RowBox[{"n", "[", "t", "]"}]}], "]"}]}]}], "\[IndentingNewLine]", " ",
+     "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"init", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"V", "[", "0", "]"}], "\[Equal]", "0.0"}], ",", " ", 
+     RowBox[{
+      RowBox[{"m", "[", "0", "]"}], "\[Equal]", "0.05"}], ",", " ", 
+     RowBox[{
+      RowBox[{"h", "[", "0", "]"}], "\[Equal]", "0.59"}], ",", 
+     RowBox[{
+      RowBox[{"n", "[", "0", "]"}], "\[Equal]", "0.32"}], ",", 
+     RowBox[{
+      RowBox[{"S", "[", "0", "]"}], "\[Equal]", "0.0"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"stimulus", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"WhenEvent", "[", 
+      RowBox[{
+       RowBox[{"t", "\[Equal]", 
+        SubscriptBox["T", "on"]}], ",", 
+       RowBox[{
+        RowBox[{"S", "[", "t", "]"}], "\[Rule]", 
+        SubscriptBox["i", "on"]}]}], "]"}], ",", 
+     RowBox[{"WhenEvent", "[", 
+      RowBox[{
+       RowBox[{"t", "\[Equal]", 
+        SubscriptBox["T", "off"]}], ",", 
+       RowBox[{
+        RowBox[{"S", "[", "t", "]"}], "\[Rule]", "0.0"}]}], "]"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"solution", "=", 
+   RowBox[{"NDSolve", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Join", "[", 
+       RowBox[{"sys", ",", "init", ",", "stimulus"}], "]"}], "/.", "pars"}], 
+     ",", "vars", ",", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", "0", ",", "150"}], "}"}], ",", 
+     RowBox[{"DiscreteVariables", "\[Rule]", "S"}]}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.683967138903687*^9, 3.683967314511642*^9}, {
+  3.68396923135952*^9, 3.683969249290818*^9}, {3.6839698169933*^9, 
+  3.683969832551063*^9}, {3.6839699093893833`*^9, 3.6839699132740173`*^9}, {
+  3.683970734195616*^9, 3.683970781911854*^9}, {3.683971193239799*^9, 
+  3.683971308616287*^9}, {3.6839713397951736`*^9, 3.683971352473987*^9}, {
+  3.683971415744749*^9, 3.683971445090005*^9}, {3.684045987284696*^9, 
+  3.684045988740203*^9}, {3.684046075881275*^9, 3.684046137101552*^9}, {
+  3.684046171405208*^9, 3.684046195875195*^9}, {3.684046251828394*^9, 
+  3.684046424983773*^9}, {3.684049120688202*^9, 3.684049124246151*^9}, {
+  3.684054797417734*^9, 3.684054805487322*^9}, {3.684055290766148*^9, 
+  3.6840553532674923`*^9}, {3.68405562240112*^9, 3.6840556289765882`*^9}},
+ CellLabel->"In[60]:=",ExpressionUUID->"8ad3ede1-43df-4358-b863-34b0f1b9f280"],
+
+Cell[BoxData[
+ RowBox[{"TwoAxisPlot", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"-", 
+       RowBox[{"V", "[", "t", "]"}]}], ",", 
+      RowBox[{"{", " ", 
+       RowBox[{
+        RowBox[{"m", "[", "t", "]"}], ",", " ", 
+        RowBox[{"h", "[", "t", "]"}], ",", " ", 
+        RowBox[{"n", "[", "t", "]"}]}], "}"}]}], "}"}], "/.", 
+    RowBox[{"First", "[", "solution", "]"}]}], ",", 
+   RowBox[{"{", 
+    RowBox[{"t", ",", "50", ",", "60"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.684655161203904*^9, 3.684655280166162*^9}, {
+  3.684655411461142*^9, 3.684655412248476*^9}, {3.684655590398406*^9, 
+  3.684655611148753*^9}},
+ CellLabel->"In[66]:=",ExpressionUUID->"3f693c7c-95c4-4df4-abcd-79ddfc573039"],
+
+Cell[TextData[{
+ "The gating variables ",
+ Cell[BoxData[
+  FormBox["h", TraditionalForm]],ExpressionUUID->
+  "b18374b9-eb22-4c0e-b4ea-d1166a3adfb5"],
+ " and ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "bf029ce0-5725-4399-9a56-85fea6aee420"],
+ " changes much more slowly than ",
+ Cell[BoxData[
+  FormBox["V", TraditionalForm]],ExpressionUUID->
+  "892d1297-ae30-4750-8f28-e72840440111"],
+ " and ",
+ Cell[BoxData[
+  FormBox["m", TraditionalForm]],ExpressionUUID->
+  "852aaac0-5a0d-44ba-8bbc-df11b3910d11"],
+ ". Moreover, the trajectories of ",
+ Cell[BoxData[
+  FormBox["h", TraditionalForm]],ExpressionUUID->
+  "41294286-4207-4989-9d0a-45d09c625856"],
+ " and ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "af28e53d-ffbe-4c86-91fb-567b83bd0038"],
+ " are nearly mirror images of each other, so we can describe their dynamics \
+by a single variable. In fact, the following plot illustrates that ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"h", "\[TildeTilde]", 
+    RowBox[{"0.85", "-", "n"}]}], TraditionalForm]],ExpressionUUID->
+  "30bd5234-5b4b-45bc-96bd-45238ddc338e"],
+ ":"
+}], "Text",
+ CellChangeTimes->{{3.68472504768894*^9, 3.68472520485494*^9}, {
+  3.77873610438835*^9, 3.77873613103274*^9}, {3.778736208221924*^9, 
+  3.778736226635734*^9}},ExpressionUUID->"7bbcb618-de3f-44e2-82aa-\
+6c25c1dff8b5"],
+
+Cell[BoxData[
+ RowBox[{"ParametricPlot", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"h", "[", "t", "]"}], ",", " ", 
+        RowBox[{"n", "[", "t", "]"}]}], "}"}], " ", "/.", " ", "solution"}], 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"0.85", "-", 
+        RowBox[{"t", "/", "150"}]}], ",", 
+       RowBox[{"t", "/", "150"}]}], "}"}]}], "}"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{"t", ",", " ", "0", ",", " ", "150"}], "}"}], ",", " ", 
+   RowBox[{"PlotRange", " ", "->", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0.7"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0.2", ",", "0.8"}], "}"}]}], "}"}]}], ",", " ", 
+   RowBox[{"Frame", " ", "->", " ", "True"}], ",", " ", 
+   RowBox[{"PlotStyle", " ", "->", " ", 
+    RowBox[{"{", 
+     RowBox[{"Black", ",", "Red"}], "}"}]}], ",", " ", 
+   RowBox[{"FrameLabel", " ", "->", " ", 
+    RowBox[{"{", 
+     RowBox[{"\"\<h\>\"", ",", " ", "\"\<n\>\""}], "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.6846502000621223`*^9, 3.684650216233428*^9}, {
+  3.684650255170637*^9, 3.684650261210163*^9}, {3.684650309715184*^9, 
+  3.684650389836763*^9}, {3.6846504309773407`*^9, 3.6846504495124474`*^9}, {
+  3.68465580787687*^9, 3.6846558388546457`*^9}, {3.68472507931994*^9, 
+  3.68472508010394*^9}},
+ CellLabel->"In[67]:=",ExpressionUUID->"3be511b3-c631-4508-8674-7717085c9298"],
+
+Cell[TextData[{
+ "We can now study the dynamics of the two fast variables, treating the slow \
+variables ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "2c0b441b-57d7-4c9d-85cb-44d6d20d34c3"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"h", "\[TildeTilde]", 
+    RowBox[{"0.85", "-", "n"}]}], TraditionalForm]],ExpressionUUID->
+  "6748aa2d-60ff-4fc8-b9aa-4b3598e3cd23"],
+ " as a parameter. The reduced model has only two equations instead of four, \
+so we can study its dynamics by 2D phase-space analysis. The following \
+procedure produces a phaseportrait with null-isoclines, vector field and some \
+example trajectories:"
+}], "Text",
+ CellChangeTimes->{{3.6847252223899403`*^9, 3.68472537694387*^9}, {
+  3.778736318270042*^9, 3.778736453696205*^9}, {3.7787365317123938`*^9, 
+  3.778736589545977*^9}},ExpressionUUID->"86fdde94-3d55-4f88-a9e3-\
+6b683eb70281"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"phasePortrait", "[", 
+   RowBox[{"n_", ",", 
+    RowBox[{"initialConditions_List", ":", 
+     RowBox[{"{", "}"}]}]}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "eql", ",", "fixedPoints", ",", "nullClines", ",", "vectorField", ",", 
+      "sys", ",", "vars", ",", "tEnd", ",", "init", ",", "solution", ",", 
+      "trajectories"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"(*", " ", 
+     RowBox[{"locate", " ", "equilibria"}], " ", "*)"}], 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Off", "[", 
+      StyleBox[
+       RowBox[{"NSolve", "::", "ratnz"}], "MessageName"], 
+      StyleBox["]", "MessageName"]}], 
+     StyleBox[";", "MessageName"], 
+     RowBox[{"eql", "=", 
+      RowBox[{"NSolve", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"eqV", "[", 
+             RowBox[{
+              RowBox[{"-", "V"}], ",", "m", ",", 
+              RowBox[{"0.85", "-", "n"}], ",", "n"}], "]"}], "\[Equal]", 
+            "0.0"}], ",", 
+           RowBox[{
+            RowBox[{"eqm", "[", 
+             RowBox[{
+              RowBox[{"-", "V"}], ",", "m"}], "]"}], "\[Equal]", "0.0"}]}], 
+          "}"}], "/.", "pars"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"V", ",", "m"}], "}"}], ",", "Reals"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"fixedPoints", " ", "=", " ", 
+      RowBox[{"ListPlot", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"V", ",", " ", "m"}], "}"}], " ", "/.", " ", "eql"}], " ", 
+        ",", " ", 
+        RowBox[{"PlotStyle", " ", "\[Rule]", " ", 
+         RowBox[{"{", 
+          RowBox[{"{", 
+           RowBox[{"Black", ",", " ", 
+            RowBox[{"PointSize", "[", "0.02", "]"}]}], "}"}], "}"}]}], ",", 
+        RowBox[{"PlotRange", " ", "\[Rule]", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "20"}], ",", " ", "120"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"0.", ",", " ", "1.05"}], "}"}]}], "}"}]}], ",", 
+        RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+        RowBox[{"FrameLabel", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"\"\<V\>\"", ",", "\"\<n\>\""}], "}"}]}], ",", 
+        RowBox[{"AspectRatio", "\[Rule]", "1"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{"draw", " ", "null", " ", "clines"}], " ", "*)"}], 
+     "\[IndentingNewLine]", 
+     RowBox[{"nullClines", " ", "=", " ", 
+      RowBox[{"ContourPlot", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"eqV", "[", 
+              RowBox[{
+               RowBox[{"-", "V"}], ",", "m", ",", 
+               RowBox[{"0.85", "-", "n"}], ",", "n"}], "]"}], " ", "/.", " ", 
+             "pars"}], ")"}], " ", "==", " ", "0"}], ",", " ", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"eqm", "[", 
+              RowBox[{
+               RowBox[{"-", "V"}], ",", "m"}], "]"}], " ", "/.", " ", 
+             "pars"}], ")"}], " ", "==", " ", "0"}]}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"V", ",", " ", 
+          RowBox[{"-", "20"}], ",", " ", "120"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"m", ",", " ", "0.", ",", " ", "1.05"}], "}"}], ",", 
+        RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+        RowBox[{"FrameLabel", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"\"\<V\>\"", ",", "\"\<m\>\""}], "}"}]}], ",", 
+        RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+        RowBox[{"PlotPoints", " ", "\[Rule]", " ", "100"}], ",", " ", 
+        RowBox[{"ContourStyle", " ", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"Dashed", ",", "Orange"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"Dashed", ",", " ", 
+             RowBox[{"Darker", "[", "Red", "]"}]}], "}"}]}], "}"}]}]}], 
+       "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{"draw", " ", "vector", " ", "field"}], " ", "*)"}], 
+     "\[IndentingNewLine]", 
+     RowBox[{"vectorField", " ", "=", " ", 
+      RowBox[{"VectorPlot", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", 
+            RowBox[{"eqV", "[", 
+             RowBox[{
+              RowBox[{"-", "V"}], ",", "m", ",", 
+              RowBox[{"0.85", "-", "n"}], ",", "n"}], "]"}]}], ",", " ", 
+           RowBox[{"eqm", "[", 
+            RowBox[{
+             RowBox[{"-", "V"}], ",", "m"}], "]"}]}], " ", "}"}], "/.", 
+         "pars"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"V", ",", " ", 
+          RowBox[{"-", "20"}], ",", " ", "120"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"m", ",", " ", "0.0", ",", " ", "1.0"}], "}"}], ",", 
+        RowBox[{"VectorStyle", "\[Rule]", " ", "Gray"}], ",", 
+        RowBox[{"VectorPoints", "\[Rule]", "Fine"}], ",", 
+        RowBox[{"PlotRange", " ", "\[Rule]", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "20"}], ",", "120"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"0.", ",", " ", "1.05"}], "}"}]}], "}"}]}], ",", 
+        RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+        RowBox[{"FrameLabel", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"\"\<V\>\"", ",", "\"\<m\>\""}], "}"}]}], ",", 
+        RowBox[{"AspectRatio", "\[Rule]", "1"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{"run", " ", "simulations"}], " ", "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Length", "[", "initialConditions", "]"}], ">", "0"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"sys", " ", "=", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"D", "[", 
+              RowBox[{
+               RowBox[{"-", 
+                RowBox[{"V", "[", "t", "]"}]}], ",", " ", "t"}], "]"}], " ", "==",
+              " ", 
+             RowBox[{"eqV", "[", 
+              RowBox[{
+               RowBox[{"-", 
+                RowBox[{"V", "[", "t", "]"}]}], ",", " ", 
+               RowBox[{"m", "[", "t", "]"}], ",", " ", 
+               RowBox[{"0.85", "-", "n"}], ",", "n"}], "]"}]}], ",", " ", 
+            RowBox[{
+             RowBox[{"D", "[", 
+              RowBox[{
+               RowBox[{"m", "[", "t", "]"}], ",", " ", "t"}], "]"}], " ", "==",
+              " ", 
+             RowBox[{"eqm", "[", 
+              RowBox[{
+               RowBox[{"-", 
+                RowBox[{"V", "[", "t", "]"}]}], ",", " ", 
+               RowBox[{"m", "[", "t", "]"}]}], "]"}]}]}], "}"}], " ", "/.", 
+          " ", "pars"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"Print", "[", "sys", "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"vars", " ", "=", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"V", "[", "t", "]"}], ",", " ", 
+           RowBox[{"m", "[", "t", "]"}]}], "}"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"tEnd", "=", "10.0"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"trajectories", "=", 
+         RowBox[{
+          RowBox[{"Reap", "[", 
+           RowBox[{"Do", "[", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"init", "=", 
+               RowBox[{"Thread", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"V", "[", "0", "]"}], ",", 
+                   RowBox[{"m", "[", "0", "]"}]}], "}"}], "\[Equal]", 
+                 RowBox[{"initialConditions", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}]}], "]"}]}], " ", ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"solution", " ", "=", " ", 
+               RowBox[{"NDSolve", "[", 
+                RowBox[{
+                 RowBox[{"Join", "[", 
+                  RowBox[{"sys", ",", " ", "init"}], "]"}], ",", " ", "vars", 
+                 ",", " ", 
+                 RowBox[{"{", 
+                  RowBox[{"t", ",", " ", "0", ",", " ", "tEnd"}], "}"}]}], 
+                "]"}]}], ";", "\[IndentingNewLine]", 
+              RowBox[{"Print", "[", 
+               RowBox[{
+               "\"\<Trajectory \>\"", ",", " ", "i", ",", 
+                "\"\< : initial point \>\"", ",", " ", "init", " ", ",", " ", 
+                "\"\<, final point \>\"", ",", " ", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"Thread", "[", 
+                   RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"V", "[", "tEnd", "]"}], ",", 
+                    RowBox[{"m", "[", "tEnd", "]"}]}], "}"}], "\[Equal]", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"V", "[", "t", "]"}], ",", 
+                    RowBox[{"m", "[", "t", "]"}]}], "}"}]}], "]"}], "/.", 
+                  "solution"}], "/.", 
+                 RowBox[{"{", 
+                  RowBox[{"t", "\[Rule]", "tEnd"}], "}"}]}]}], "]"}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"Sow", "[", 
+               RowBox[{"ParametricPlot", "[", 
+                RowBox[{
+                 RowBox[{"vars", "/.", " ", "solution"}], ",", " ", 
+                 RowBox[{"{", 
+                  RowBox[{"t", ",", " ", "0", ",", " ", "tEnd"}], "}"}], ",", 
+                 RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+                 RowBox[{"PlotStyle", "\[Rule]", 
+                  RowBox[{"Darker", "[", "Blue", "]"}]}]}], "]"}], "]"}]}], 
+             "\[IndentingNewLine]", ",", 
+             RowBox[{"{", 
+              RowBox[{"i", ",", "1", ",", 
+               RowBox[{"Length", "[", "initialConditions", "]"}]}], "}"}]}], 
+            "]"}], "]"}], "[", 
+          RowBox[{"[", 
+           RowBox[{"2", ",", "1"}], "]"}], "]"}]}], ";", 
+        RowBox[{"Show", "[", 
+         RowBox[{
+         "vectorField", ",", "trajectories", ",", "nullClines", ",", 
+          "fixedPoints"}], "]"}]}], ",", "\[IndentingNewLine]", 
+       RowBox[{"Show", "[", 
+        RowBox[{"vectorField", ",", "nullClines", ",", "fixedPoints"}], 
+        "]"}]}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.6842149602606897`*^9, 3.684214972901458*^9}, {
+   3.684216265890827*^9, 3.684216295942092*^9}, {3.684216429983124*^9, 
+   3.6842164559468727`*^9}, {3.684216487441*^9, 3.684216539215165*^9}, {
+   3.684216717132718*^9, 3.6842167535293713`*^9}, {3.684216792014792*^9, 
+   3.684216948090811*^9}, {3.6842169874704847`*^9, 3.684217123296563*^9}, {
+   3.684217178933083*^9, 3.684217240747828*^9}, {3.684217298951655*^9, 
+   3.684217322754793*^9}, 3.684217523738673*^9, {3.684217882820589*^9, 
+   3.6842179554013977`*^9}, {3.684217986824456*^9, 3.684218076245056*^9}, {
+   3.684218157363532*^9, 3.684218196511654*^9}, {3.684218226710465*^9, 
+   3.684218230059585*^9}, {3.684221223577529*^9, 3.68422134366823*^9}, {
+   3.6842213766738567`*^9, 3.684221423671937*^9}, {3.6842214584550962`*^9, 
+   3.684221539159855*^9}, {3.684221633957801*^9, 3.684221640762398*^9}, {
+   3.684221673871037*^9, 3.684222056698704*^9}, {3.684222119995228*^9, 
+   3.6842222791028013`*^9}, {3.684222310857464*^9, 3.684222368380294*^9}, {
+   3.6842224640274687`*^9, 3.684222478802886*^9}, {3.684222582983652*^9, 
+   3.684222668919992*^9}, {3.684222784582831*^9, 3.68422290735781*^9}, {
+   3.684222941676785*^9, 3.684222960935747*^9}, {3.684466728703023*^9, 
+   3.684466794645322*^9}, {3.684468855611334*^9, 3.684468939707773*^9}, {
+   3.684469007193169*^9, 3.6844692133697166`*^9}, {3.684469247373988*^9, 
+   3.684469370661408*^9}, {3.68446940123172*^9, 3.684469660308744*^9}, {
+   3.6844697115630903`*^9, 3.684469797219705*^9}, {3.6844698791438627`*^9, 
+   3.6844700939087954`*^9}, {3.684470146433529*^9, 3.6844701677645407`*^9}, {
+   3.684470238560404*^9, 3.6844702391137333`*^9}, {3.6844703294704514`*^9, 
+   3.684470359240965*^9}, {3.6844704291467047`*^9, 3.684470536350451*^9}, {
+   3.68447058323136*^9, 3.684470592894072*^9}, {3.6844707744146757`*^9, 
+   3.6844707764781637`*^9}, {3.6844709001794367`*^9, 
+   3.6844709007441597`*^9}, {3.6844709416861153`*^9, 3.684471041904587*^9}, {
+   3.684471086187058*^9, 3.684471088608673*^9}, {3.6844711301715717`*^9, 
+   3.684471140124374*^9}, {3.684471231275481*^9, 3.684471675616062*^9}, {
+   3.6844717515987387`*^9, 3.6844717761471577`*^9}, {3.684471809576696*^9, 
+   3.6844718792985153`*^9}, {3.68447191510767*^9, 3.684471991687014*^9}, {
+   3.684472061846026*^9, 3.684472062544099*^9}, {3.684472180366705*^9, 
+   3.684472187781329*^9}, {3.6844840191485786`*^9, 3.68448402000487*^9}, {
+   3.684484127608417*^9, 3.684484170331066*^9}, {3.6844901599161043`*^9, 
+   3.684490163863453*^9}, {3.684490564570525*^9, 3.6844905650910378`*^9}, {
+   3.684650553676258*^9, 3.684650792161696*^9}, {3.68465114417175*^9, 
+   3.684651156478973*^9}, {3.684651189973678*^9, 3.6846511917568197`*^9}, {
+   3.684651246814975*^9, 3.6846512546598253`*^9}, {3.684651395823172*^9, 
+   3.684651417568904*^9}, {3.684651464223208*^9, 3.684651469113687*^9}, {
+   3.684651571418521*^9, 3.6846515817459383`*^9}, {3.6846516400619383`*^9, 
+   3.684651693875038*^9}, {3.810351162676525*^9, 3.810351194078911*^9}, {
+   3.8103514585773907`*^9, 3.810351507839753*^9}},
+ CellLabel->"In[68]:=",ExpressionUUID->"c97917b1-d8b6-4ada-9ebe-15682fc4c74d"],
+
+Cell["Here is the output for the resting state of the nerve cell:", "Text",
+ CellChangeTimes->{{3.778736596062316*^9, 
+  3.778736610496254*^9}},ExpressionUUID->"41f9811b-4748-464d-82f7-\
+f13f0d8ff4e1"],
+
+Cell[BoxData[
+ RowBox[{"phasePortrait", "[", 
+  RowBox[{"0.32", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"4.0", ",", " ", "0.02"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"8.0", ",", " ", "0.02"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "4.0"}], ",", " ", "0.2"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1.0"}], ",", " ", "0.2"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"80", ",", "0.8"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"70", ",", "0.78"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0.915"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"10", ",", "0.92"}], "}"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.684650859966213*^9, 3.6846508661087914`*^9}, {
+   3.68465091466656*^9, 3.6846509159239483`*^9}, {3.6846509531428967`*^9, 
+   3.684650975611672*^9}, {3.6846510477363167`*^9, 3.68465104789598*^9}, {
+   3.684651292208503*^9, 3.684651297467807*^9}, {3.684651353134625*^9, 
+   3.684651353416321*^9}, {3.6846517216516953`*^9, 3.684651889150941*^9}, 
+   3.684652395306793*^9},
+ CellLabel->"In[69]:=",ExpressionUUID->"18e7d5d2-b332-43d6-af36-96e4ccd4c384"],
+
+Cell[TextData[{
+ StyleBox["Q8: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Which of the equilibria are stable/unstable?   ",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQAWIQfawn1H120WvH+nYBTxD9VuedL4ieVnalBET/Pq1Y
+BaIZ3MSaQPQcmYedIJpnXUM3iE6yZA8+BqR1jkvFgGglz0c7QHTY07d3QHQt
+q+BrEF0m8/QNiP6778gHsLzipS8gesnrTT9BdOOUnZzHQfTBBH4Q7bnrnACI
+PruwXBREvwhbB6a7jl6SAdF8aVfB9KSmgxogOsLGxhpEH3sTYg+iM1p2uIHo
+kj+t3iD6x5biBBB9NHXWdxDNs8RI8ASQdpn1XwJEp+h52oNoNiZrTxC9SetW
+JIg+su5iMohmvxiZBqLvv2V0jFN/4yiypMEdRAMALCisKQ==
+  "],ExpressionUUID->"fb748ab4-7063-4a53-91f9-343eb2fa3614"],
+
+Cell[TextData[{
+ StyleBox["Q9: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Which of the equilibria represent the resting state of the neuron? \
+Where is the boundary of its basin of attraction? Explain how you can see \
+from the phase diagram that the neuron behaves as an excitable system (i.e., \
+a system that produces a large response when triggered by a small \
+perturbation)",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQB2IQfawn1H120WvH+nYBTxD9VuedL4ieVnalBET/Pq1Y
+BaIZ3MSaQPQcmYedIJpnXUM3iE6yZA8+BqR1jkvFgGglz0c7QHTY07d3QHQt
+q+BrEF0m8/QNiP6778gHsLzipS8gesnrTT9BdOOUnZzHQfTBBH4Q7bnrnACI
+PruwXBREvwhbB6a7jl6SAdF8aVfB9KSmgxogOsLGxhpEH3sTYg+iM1p2uIHo
+kj+t3iD6x5biBBB9NHXWdxDNs8RI8ASQdpn1XwJEp+h52oNoNiZrTxC9SetW
+JIg+su5iMohmvxiZBqLvv2V0jFN/43iKozEIRLO9z4oH0XZVLqkgOu1eVyaI
+Nj6slQOiK2ZZFYDo1R1rqkE0AHurwXY=
+  "],ExpressionUUID->"4ba6c79c-2913-404d-aba2-674566558cc4"],
+
+Cell[TextData[{
+ StyleBox["Q10: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Follow how the phase-portrait changes as the action potential \
+develops and the slow gating variables start the change. For example, study \
+the phase-portrait for ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"n", "=", "0.5"}], TraditionalForm]],ExpressionUUID->
+  "08fa5be7-04a7-4c4c-85be-5796b05ae82a"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"n", "=", "0.738"}], TraditionalForm]],ExpressionUUID->
+  "f6cd7972-2d77-4303-b813-20af960101f0"],
+ " ",
+ StyleBox["and ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"n", "=", "0.75"}], TraditionalForm]],ExpressionUUID->
+  "4fb1c3c4-5f4a-4615-8cbc-31eeb68eb447"],
+ ". ",
+ StyleBox["Describe how the system moves from the resting state to the \
+excited state and back again.",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGCQAGIQfawn1H120WvH+nYBTxD9VuedL4ieVnalBET/Pq1Y
+BaIZ3MSaQPQcmYedIJpnXUM3iE6yZA8+BqR1jkvFgGglz0c7QHTY07d3QHQt
+q+BrEF0m8/QNiP6778gHsLzipS8gesnrTT9BdOOUnZzHQfTBBH4Q7bnrnACI
+PruwXBREvwhbB6a7jl6SAdF8aVfB9KSmgxogOsLGxhpEH3sTYg+iM1p2uIHo
+kj+t3iD6x5biBBB9NHXWdxDNs8RI8ASQdpn1XwJEp+h52oNoNiZrTxC9SetW
+JIg+su5iMohmvxiZBqLvv2V0jFN/43iKozEIRLO9z4oH0XZVLqkgOu1eVyaI
+Nj6slQOiK2ZZFYDo1R1rqsH6Hs2rB9ETFncsAtEA4yfKAQ==
+  "],ExpressionUUID->"318a596d-bac9-4707-b797-bdc6b7e88f7a"],
+
+Cell[TextData[{
+ StyleBox["Q11: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Draw a sketch showing the equilibrium values of the membrane \
+potential as a function of the value of the slow variable ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "79bc3ebc-92b3-4fd2-aeb6-26c1cea6a8fb"],
+ " ",
+ StyleBox["and interpret it as a bifurcation diagram. What bifurcations do \
+you recognise? Indicate how the state of the nerve cell moves  through the \
+bifurcation diagram during an action potential. ",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGCQAGIQfawn1H120WvH+nYBTxD9VuedL4ieVnalBET/Pq1Y
+BaIZ3MSaQPQcmYedIJpnXUM3iE6yZA8+BqR1jkvFgGglz0c7QHTY07d3QHQt
+q+BrEF0m8/QNiP6778gHsLzipS8gesnrTT9BdOOUnZzHQfTBBH4Q7bnrnACI
+PruwXBREvwhbB6a7jl6SAdF8aVfB9KSmgxogOsLGxhpEH3sTYg+iM1p2uIHo
+kj+t3iD6x5biBBB9NHXWdxDNs8RI8ASQdpn1XwJEp+h52oNoNiZrTxC9SetW
+JIg+su5iMohmvxiZBqLvv2V0jFN/43iKozEIRLO9z4oH0XZVLqkgOu1eVyaI
+Nj6slQOiK2ZZFYDo1R1rqsH6Hs2rB9HFzxL2gWgA47DKGw==
+  "],ExpressionUUID->"21050e04-f166-4bbb-9122-1411507b2b13"],
+
+Cell[BoxData[
+ RowBox[{"phasePortrait", "[", 
+  RowBox[{"0.5", ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"4.0", ",", " ", "0.02"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"8.0", ",", " ", "0.02"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "4.0"}], ",", " ", "0.2"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1.0"}], ",", " ", "0.2"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"80", ",", " ", "0.8"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"70", ",", " ", "0.78"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", " ", "0.915"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"10", ",", " ", "0.92"}], "}"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.68465249443335*^9, 3.684652502797072*^9}, {
+  3.6846525412138147`*^9, 3.6846525416446333`*^9}},
+ CellLabel->"In[70]:=",ExpressionUUID->"918b1587-ac6b-4a98-9f58-c62c955a0414"],
+
+Cell[BoxData[
+ RowBox[{"phasePortrait", "[", 
+  RowBox[{"0.738", ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"4.0", ",", " ", "0.02"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"8.0", ",", " ", "0.02"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "4.0"}], ",", " ", "0.2"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1.0"}], ",", " ", "0.2"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"80", ",", "0.8"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"70", ",", "0.78"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0.915"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"10", ",", "0.92"}], "}"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.6846519222438993`*^9, 3.6846519629041557`*^9}, {
+  3.684652006459676*^9, 3.684652145502777*^9}, {3.684652180296213*^9, 
+  3.684652371076268*^9}},
+ CellLabel->"In[71]:=",ExpressionUUID->"a62e3567-5216-48e4-b791-c9a5af41e2c1"],
+
+Cell[BoxData[
+ RowBox[{"phasePortrait", "[", 
+  RowBox[{"0.75", ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"4.0", ",", " ", "0.02"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"8.0", ",", " ", "0.02"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "4.0"}], ",", " ", "0.2"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1.0"}], ",", " ", "0.2"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"80", ",", "0.8"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"70", ",", "0.78"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0.915"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"10", ",", "0.92"}], "}"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.6846519222438993`*^9, 3.6846519629041557`*^9}, {
+  3.684652006459676*^9, 3.684652145502777*^9}, {3.684652180296213*^9, 
+  3.684652371076268*^9}, {3.68465243837501*^9, 3.684652457855682*^9}},
+ CellLabel->"In[72]:=",ExpressionUUID->"4d3df0fa-7c6f-4bc7-b4b3-33d6afd36566"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["The Fitzhugh-Nagumo model", "Section",
+ CellChangeTimes->{{3.6829992928352165`*^9, 3.6829992962185545`*^9}, {
+  3.684053399255887*^9, 3.6840534106583014`*^9}, {3.684654781552939*^9, 
+  3.6846548024536753`*^9}, {3.6847254004012156`*^9, 
+  3.684725408585034*^9}},ExpressionUUID->"40550abb-2fb3-4e1c-a598-\
+30df89098a09"],
+
+Cell["\<\
+The dynamics of the acion potential is described phenomenologically by a much \
+simpler model of only two equations that was proposed by Fitzhugh and Nagumo:\
+\>", "Text",
+ CellChangeTimes->{{3.7787377455478153`*^9, 
+  3.778737827304044*^9}},ExpressionUUID->"b51c3875-3cda-4956-8e96-\
+d8aaa9386251"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"eqV", "[", 
+   RowBox[{"V_", ",", "w_"}], "]"}], ":=", 
+  RowBox[{"V", "-", 
+   FractionBox[
+    SuperscriptBox["V", "3"], "3"], "-", "w", "+", 
+   "S"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"eqw", "[", 
+   RowBox[{"V_", ",", "w_"}], "]"}], ":=", 
+  RowBox[{
+   FractionBox["1", "\[Tau]"], 
+   RowBox[{"(", 
+    RowBox[{"V", "+", "a", "-", 
+     RowBox[{"b", " ", "w"}]}], ")"}]}]}]}], "Input",
+ CellChangeTimes->{{3.683964484161379*^9, 3.683964490258279*^9}, {
+   3.6839653752745037`*^9, 3.683965476662602*^9}, {3.683969983081421*^9, 
+   3.6839699835452633`*^9}, {3.6839711053905287`*^9, 3.683971108712481*^9}, {
+   3.6839713270067787`*^9, 3.683971357182889*^9}, 3.684049099658181*^9, {
+   3.6847255469348674`*^9, 3.684725606784852*^9}},
+ CellLabel->"In[73]:=",ExpressionUUID->"9ba631bc-334d-4007-a34f-8b31a637a682"],
+
+Cell[TextData[{
+ "The first equation is meant to describe the membrane potential; the second \
+models the slowly changing intracellular state of the nerve cell. Here\
+\[CloseCurlyQuote]s a piece ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " code to simulate the model and draw the phase diagram:"
+}], "Text",
+ CellChangeTimes->{{3.7787378462706757`*^9, 3.7787379041029367`*^9}, {
+  3.7787380534904623`*^9, 
+  3.778738079143568*^9}},ExpressionUUID->"6e20efaa-cd65-462b-a430-\
+fbd01ff3cf53"],
+
+Cell[BoxData[
+ RowBox[{"pars", "=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"a", "\[Rule]", "0.7"}], ",", 
+    RowBox[{"b", "\[Rule]", "0.8"}], ",", 
+    RowBox[{"\[Tau]", "\[Rule]", "12.5"}], ",", 
+    RowBox[{"S", "\[Rule]", "0.0"}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.684725617519925*^9, 3.684725650930266*^9}, {
+   3.6847260999221606`*^9, 3.6847261286830363`*^9}, {3.6847262480959764`*^9, 
+   3.68472629279233*^9}, {3.7787379758115807`*^9, 3.778738000316269*^9}, {
+   3.778738804711941*^9, 3.778738845147727*^9}, {3.778739220177998*^9, 
+   3.7787392205725193`*^9}, {3.810364748402501*^9, 3.810364776153359*^9}, 
+   3.810364851328567*^9, 3.810364902307644*^9, 3.810365160825395*^9},
+ CellLabel->
+  "In[159]:=",ExpressionUUID->"3bc3950e-0842-4332-b583-597d1d582216"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"eql", " ", "=", " ", 
+   RowBox[{"NSolve", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"eqV", "[", 
+          RowBox[{"V", ",", " ", "w"}], "]"}], " ", "==", " ", "0.0"}], ",", 
+        " ", 
+        RowBox[{
+         RowBox[{"eqw", "[", 
+          RowBox[{"V", ",", " ", "w"}], "]"}], " ", "==", " ", "0.0"}]}], 
+       "}"}], " ", "/.", " ", "pars"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"V", ",", " ", "w"}], "}"}], ",", " ", "Reals"}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"fixedPoints", " ", "=", " ", 
+    RowBox[{"ListPlot", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"V", ",", " ", "w"}], "}"}], " ", "/.", " ", "eql"}], " ", 
+      ",", " ", 
+      RowBox[{"PlotStyle", " ", "->", " ", 
+       RowBox[{"{", 
+        RowBox[{"{", 
+         RowBox[{"Black", ",", " ", 
+          RowBox[{"PointSize", "[", "0.02", "]"}]}], "}"}], "}"}]}], ",", " ", 
+      RowBox[{"PlotRange", " ", "->", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "3"}], ",", " ", "3"}], "}"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "2"}], ",", " ", "2"}], "}"}]}], "}"}]}], ",", " ", 
+      RowBox[{"Frame", " ", "->", " ", "True"}], ",", " ", 
+      RowBox[{"FrameLabel", " ", "->", " ", 
+       RowBox[{"{", 
+        RowBox[{"\"\<V\>\"", ",", " ", "\"\<w\>\""}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", " ", "->", " ", "1"}]}], "]"}]}], ";"}], "  ", 
+  "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{"draw", " ", "null", " ", "clines"}], " ", "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"nullClines", " ", "=", " ", 
+    RowBox[{"ContourPlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"eqV", "[", 
+            RowBox[{"V", ",", " ", "w"}], "]"}], " ", "/.", " ", "pars"}], 
+          ")"}], " ", "==", " ", "0"}], ",", " ", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"eqw", "[", 
+            RowBox[{"V", ",", " ", "w"}], "]"}], " ", "/.", " ", "pars"}], 
+          ")"}], " ", "==", " ", "0"}]}], "}"}], ",", " ", 
+      RowBox[{"{", 
+       RowBox[{"V", ",", " ", 
+        RowBox[{"-", "3"}], ",", " ", "3"}], "}"}], ",", " ", 
+      RowBox[{"{", 
+       RowBox[{"w", ",", " ", 
+        RowBox[{"-", "2"}], ",", " ", "2"}], "}"}], ",", " ", 
+      RowBox[{"Frame", " ", "->", " ", "True"}], ",", " ", 
+      RowBox[{"FrameLabel", " ", "->", " ", 
+       RowBox[{"{", 
+        RowBox[{"\"\<V\>\"", ",", " ", "\"\<w\>\""}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", " ", "->", " ", "1"}], ",", " ", 
+      RowBox[{"PlotPoints", " ", "->", " ", "100"}], ",", " ", 
+      RowBox[{"ContourStyle", " ", "->", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"Dashed", ",", " ", "Orange"}], "}"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"Dashed", ",", " ", 
+           RowBox[{"Darker", "[", "Red", "]"}]}], "}"}]}], "}"}]}]}], "]"}]}],
+    ";"}], "\n", " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{"draw", " ", "vector", " ", "field"}], " ", "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"vectorField", " ", "=", " ", 
+    RowBox[{"VectorPlot", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"eqV", "[", 
+          RowBox[{"V", ",", " ", "w"}], "]"}], ",", " ", 
+         RowBox[{"eqw", "[", 
+          RowBox[{"V", ",", " ", "w"}], "]"}]}], " ", "}"}], " ", "/.", " ", 
+       "pars"}], ",", " ", 
+      RowBox[{"{", 
+       RowBox[{"V", ",", " ", 
+        RowBox[{"-", "3"}], ",", " ", "3"}], "}"}], ",", " ", 
+      RowBox[{"{", 
+       RowBox[{"w", ",", " ", 
+        RowBox[{"-", "2"}], ",", " ", "2"}], "}"}], ",", " ", 
+      RowBox[{"VectorStyle", " ", "->", " ", "Gray"}], ",", " ", 
+      RowBox[{"VectorPoints", " ", "->", " ", "Fine"}], ",", " ", 
+      RowBox[{"PlotRange", " ", "->", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "3"}], ",", " ", "3"}], "}"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "2"}], ",", " ", "2"}], "}"}]}], "}"}]}], ",", " ", 
+      RowBox[{"Frame", " ", "->", " ", "True"}], ",", " ", 
+      RowBox[{"FrameLabel", " ", "->", " ", 
+       RowBox[{"{", 
+        RowBox[{"\"\<V\>\"", ",", " ", "\"\<w\>\""}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", " ", "->", " ", "1"}]}], "]"}]}], ";"}], "\n", 
+  " ", "\n", "  ", 
+  RowBox[{"(*", " ", 
+   RowBox[{"run", " ", "simulations"}], " ", "*)"}]}], "\n", 
+ RowBox[{"   ", 
+  RowBox[{
+   RowBox[{"sys", " ", "=", " ", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"V", "[", "t", "]"}], ",", " ", "t"}], "]"}], " ", "==", 
+        " ", 
+        RowBox[{"eqV", "[", 
+         RowBox[{
+          RowBox[{"V", "[", "t", "]"}], ",", " ", 
+          RowBox[{"w", "[", "t", "]"}]}], "]"}]}], ",", " ", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"w", "[", "t", "]"}], ",", " ", "t"}], "]"}], " ", "==", 
+        " ", 
+        RowBox[{"eqw", "[", 
+         RowBox[{
+          RowBox[{"V", "[", "t", "]"}], ",", " ", 
+          RowBox[{"w", "[", "t", "]"}]}], "]"}]}]}], "}"}], " ", "/.", " ", 
+     "pars"}]}], ";"}]}], "\n", 
+ RowBox[{"   ", 
+  RowBox[{
+   RowBox[{"vars", " ", "=", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"V", "[", "t", "]"}], ",", " ", 
+      RowBox[{"w", "[", "t", "]"}]}], "}"}]}], ";"}]}], "\n", 
+ RowBox[{"   ", 
+  RowBox[{
+   RowBox[{"tEnd", " ", "=", " ", "100.0"}], ";"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"init", " ", "=", " ", 
+   RowBox[{"Thread", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"V", "[", "0", "]"}], ",", " ", 
+       RowBox[{"w", "[", "0", "]"}]}], "}"}], " ", "==", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "0.5"}], ",", 
+       RowBox[{"-", "0.6"}]}], "}"}]}], "]"}]}], " ", ";"}], "\n", 
+ RowBox[{"       ", 
+  RowBox[{
+   RowBox[{"solution", " ", "=", " ", 
+    RowBox[{"NDSolve", "[", 
+     RowBox[{
+      RowBox[{"Join", "[", 
+       RowBox[{"sys", ",", " ", "init"}], "]"}], ",", " ", "vars", ",", " ", 
+      RowBox[{"{", 
+       RowBox[{"t", ",", " ", "0", ",", " ", "tEnd"}], "}"}]}], "]"}]}], 
+   ";"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Show", "[", 
+  RowBox[{"vectorField", ",", 
+   RowBox[{"ParametricPlot", "[", 
+    RowBox[{
+     RowBox[{"vars", " ", "/.", " ", "solution"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", " ", "0", ",", " ", "tEnd"}], "}"}], ",", " ", 
+     RowBox[{"PlotRange", " ", "->", " ", "All"}], ",", " ", 
+     RowBox[{"PlotStyle", " ", "->", " ", 
+      RowBox[{"Darker", "[", "Blue", "]"}]}]}], "]"}], ",", " ", "nullClines",
+    ",", " ", "fixedPoints"}], "]"}], "\n", 
+ RowBox[{"Plot", "[", 
+  RowBox[{
+   RowBox[{"Evaluate", "[", 
+    RowBox[{"vars", " ", "/.", " ", "solution"}], "]"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{"t", ",", " ", "0", ",", " ", "tEnd"}], "}"}], ",", " ", 
+   RowBox[{"PlotRange", " ", "->", " ", "All"}], ",", " ", 
+   RowBox[{"PlotStyle", " ", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Darker", "[", "Blue", "]"}], ",", "Gray"}], "}"}]}], ",", 
+   RowBox[{"Frame", " ", "->", " ", "True"}], ",", " ", 
+   RowBox[{"FrameLabel", " ", "->", " ", 
+    RowBox[{"{", 
+     RowBox[{"\"\<V\>\"", ",", " ", "\"\<w\>\""}], "}"}]}], ",", " ", 
+   RowBox[{"AspectRatio", " ", "->", " ", "1"}]}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{" "}]}], "Input",
+ CellChangeTimes->{{3.6847256713283052`*^9, 3.6847257223354053`*^9}, {
+  3.6847257631114826`*^9, 3.684726079194088*^9}, {3.6847261407572436`*^9, 
+  3.6847261720943775`*^9}, {3.684726204087576*^9, 3.6847262365438213`*^9}},
+ CellLabel->
+  "In[160]:=",ExpressionUUID->"b3f13f80-ea69-487a-a071-8d19474981db"],
+
+Cell[TextData[{
+ StyleBox["Q12: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Compare the phase-diagram of the Fitzhugh-Nagumo model to the \
+bifurcation diagram of the Hodgkin-Huxley model that you drew in ",
+  FontWeight->"Bold"],
+ StyleBox["Q11",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox[" (notice that the membrane potential is plotted on a different \
+axis in both plots). Discuss the similarities and differences.",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGCQAmIQfawn1H120WvH+nYBTxD9VuedL4ieVnalBET/Pq1Y
+BaIZ3MSaQPQcmYedIJpnXUM3iE6yZA8+BqR1jkvFgGglz0c7QHTY07d3QHQt
+q+BrEF0m8/QNiP6778gHsLzipS8gesnrTT9BdOOUnZzHQfTBBH4Q7bnrnACI
+PruwXBREvwhbB6a7jl6SAdF8aVfB9KSmgxogOsLGxhpEH3sTYg+iM1p2uIHo
+kj+t3iD6x5biBBB9NHXWdxDNs8RI8ASQdpn1XwJEp+h52oNoNiZrTxC9SetW
+JIg+su5iMohmvxiZBqLvv2V0jFN/43iKozEIRLO9z4oH0XZVLqkgOu1eVyaI
+Nj6slQOiK2ZZFYDo1R1rqsH6Hs2rB9HFzxL2gWi+6LYvIHqC6Gm2eCD9z91L
+GER/MbkkAqIBDmnX8Q==
+  "],ExpressionUUID->"8e6c1b3c-1a28-426c-b816-d81527bc40cc"],
+
+Cell[TextData[{
+ StyleBox["Q13: ",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox["Explain the biological meaning of the parameter ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox["S", TraditionalForm]],ExpressionUUID->
+  "5e43b14f-ec0d-4de8-9d13-4fa304f90c7d"]
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJwdy00ogwEAxvFZ2ag1WxpiB3OZ1nLgxBZNa+sll2FZZGu2hRTZGk2azXyN
+JMlhpNRutMNyGIfVsg9Z1BYXabIMtQ2HFfL5Pu/h6Xd4+gv04yojnUaj1ZCD
+0bVe5c5kVmZf4hAwL37pgtvWKwv8igtskKaocMJd/v0KZPnmVqG+mdkdJRXH
+qgdgHZEOQHUmfwtni7lZaOVncvAnGH6jfkGyAL1Z/yd0bB2XxmBIVwaJk0sO
+vNif4sFntY/SHUnyIdt0TbnpDNXDPqlUAqO5njY47AoooOV7oRN+HJl1MGL0
+vEOWt5F7Rir3/FVBQwPRBhl0CQH9ohsNDPsSQ5CZ0JjgXb5INijMyc5LHCrI
+eB3Vwlab3AhNKfcIbDoVjcFpT8sEPFg+nKG69J4dmh91QcjuXyzADV6coSX9
+VXaUw/WH9kqYMrhq4VN6Xgj/Ac2O324=
+  "],ExpressionUUID->"a539c6eb-9be6-47e9-b38a-ee0bdb01dcb0"],
+
+Cell[TextData[{
+ StyleBox["Q14",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox[": Perform a stability analysis of the equilibrium of the \
+Fitzhugh-Nagumo model and study how its stability depends on the value of ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox["S", TraditionalForm]],ExpressionUUID->
+  "b4ce2b36-1b25-4e2c-a15d-95f4edc70f12"],
+ ". ",
+ StyleBox["Which bifurcation is responsbible for the loss of stability at \
+higher levels of ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox["S", TraditionalForm]],ExpressionUUID->
+  "a6df70d9-98ea-4612-877b-ec0a286f8431"],
+ " ",
+ StyleBox["(e.g., ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   StyleBox[
+    RowBox[{"S", "=", "0.4"}],
+    FontWeight->"Plain"], TraditionalForm]],
+  FontWeight->"Bold",ExpressionUUID->"fe491e07-0582-4f71-914f-31f0f1c5974c"],
+ StyleBox[")? ",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJwdyztIQgEAhWET0gKxJKwIh2wpRBqKhlISQ5RbtPQiSVJMxSQo0iysMMVe
+FhERDRZB4FY4SINFCJKPSAqUWiKMpCJQq0HIsJfnDodvOPxc9XiPlkqhUDiF
+wfB6v2x3MiW2LpcTMMN/64Y75hsTzEe5FkiRVtrhHudxFTI8C2tQ3UrvDRfk
+R2oUsI5I+uDAc+YezhezUtDMeU7DH3/wg/y58Sx0p7xf0LZ9UhqBAVUZJE6v
+y+HVwTQbvg54SJ2hOAcydbekW/ZAAxwUCgUwnO4TQb3DJ4Wm78UumDs2qmBI
+6/qEDHcT66KgxPVXDTWNhAjSqAICenl3chj0xEYgPSbXwYdMkXi4Pi2+LLH1
+QNq7QQnbLRIt1CWco7D5nDcGZ1xtE/Bw5WiW7JL7Vmh8Ufkhc2gpCzfZUZqy
+4K+sswJuPHVUwYTGUQunznItUG9QCKBnLi+B//6V5pI=
+  "],ExpressionUUID->"a8fac5a7-0c69-4900-b678-b1a4234d2105"],
+
+Cell[TextData[{
+ StyleBox["Q15",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ StyleBox[": Apart from capturing the behaviour of an excitable neural cell, \
+the Fitzhugh-Nagumo model can also model the behaviour of a spontaneously \
+firing pacemaker cell. Investigate how changing the parameters ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox["a", TraditionalForm]],ExpressionUUID->
+  "771c3a6e-0f8f-45af-96ef-465340c94185"],
+ " ",
+ StyleBox["and ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox["b", TraditionalForm]],ExpressionUUID->
+  "ff1f64e1-26e4-4f19-bffb-e3ecb0619441"],
+ " ",
+ StyleBox["shifts the null-isocline for the variable ",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox["w", TraditionalForm]],ExpressionUUID->
+  "3451a63e-8758-4d44-b9fa-7094e865fd6f"],
+ StyleBox[". Apply this knowledge to find a set of parameters appropriate for \
+a pacemaker cell.",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJwdy00ogwEAxvFZ2SgNaUhL5oCWHMiBLZrW9JLLfG1NtsbWiMhmNDRbPmct
+SdRIKTfaYTmMllr2IYuauEhkbVptw0GZ5mvPe3j6HZ7+bMWYSEmlUCil6UGf
+pbt1ZyLGNyznETBR/doBt3S3WpgKsPWQIiw0wV3W8yrMsc+vQUUDvdOXttpf
+0gfLiZAT9kQSD3AuMz8GdaxIHP6ced7Jn33zAQ9iji9o3DzJ9kO3PBcSp9d5
+8Gp/igmjPXZSs/eGBRmqO9INk7sKink8LvTFu5qhesEphNrvxXaYPNbIoVdp
++4Q5B7X5F2kFtr9iOFhDNEMalUtAB+deAj324ACkByUq+JTI4PdXxvmXWUYR
+pL0Ny2CTXqCEqkfzEKw754zAaVvjODxcOZohu9CeAWpe5GeQIV36gOvMAE2W
+9re1rQBawy1F8HFwoQxOupL1UD3cx4X22ZQARl0WKRT3hkehtmJbC0MSqwH+
+A9oi9dg=
+  "],ExpressionUUID->"311b5b4c-54cd-42a0-8656-2f0e5ffb23ea"]
+}, Open  ]]
+}, Open  ]]
+},
+NotebookEventActions->{"WindowClose" :> FrontEndExecute[
+    FrontEndToken["DeleteGeneratedCells"]]},
+WindowSize->{1748, 1067},
+WindowMargins->{{143, Automatic}, {Automatic, 124}},
+PrintingCopies->1,
+PrintingPageRange->{32000, 32000},
+PrintingOptions->{"Magnification"->1.,
+"PaperOrientation"->"Portrait",
+"PaperSize"->{595.1999999999999, 841.68}},
+TaggingRules->{"TryRealOnly" -> False},
+Magnification->1.5,
+FrontEndVersion->"12.1 for Mac OS X x86 (64-bit) (June 19, 2020)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[
+    StyleDefinitions -> 
+     FrontEnd`FileName[{"Book"}, "Monograph.nb", CharacterEncoding -> 
+       "WindowsANSI"]]]}, Visible -> False, FrontEndVersion -> 
+  "12.1 for Mac OS X x86 (64-bit) (June 19, 2020)", StyleDefinitions -> 
+  "PrivateStylesheetFormatting.nb"],
+ExpressionUUID->"7c7fe11e-1fa7-4ad7-9a61-96d336e1d851"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 444, 6, 134, "BookChapterLabel",ExpressionUUID->"ac1a8ae5-549a-47ee-b8f3-731ccb4cf90c"],
+Cell[1027, 30, 372, 7, 207, "BookChapterTitle",ExpressionUUID->"2c4b54dc-161f-49c6-b974-51f703a2ebc5"],
+Cell[CellGroupData[{
+Cell[1424, 41, 161, 3, 61, "Author",ExpressionUUID->"cc1a0af8-a0d3-4818-9a63-45f7648b8f81"],
+Cell[1588, 46, 203, 3, 19, "Institution",ExpressionUUID->"ccdf730c-e421-405b-a283-cd41e68a3cb8"],
+Cell[1794, 51, 169, 3, 19, "Department",ExpressionUUID->"faf78349-c108-4a22-a772-4bbe13bea055"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2000, 59, 294, 4, 102, "Section",ExpressionUUID->"5fb5a7d7-ae6a-435c-855e-6ad11004cb7f"],
+Cell[2297, 65, 568, 10, 47, "Text",ExpressionUUID->"55bda558-86e7-4179-86be-28928a5b8f82"],
+Cell[2868, 77, 959, 23, 47, "Text",ExpressionUUID->"6bb003e3-c4a6-40af-a52e-de12f2688671"],
+Cell[3830, 102, 944, 24, 69, "Input",ExpressionUUID->"503877eb-d9d2-4441-9437-735ee32e824d"],
+Cell[4777, 128, 1693, 42, 70, "Text",ExpressionUUID->"707a657b-535b-45b6-af84-f84b8be59779"],
+Cell[6473, 172, 1722, 53, 189, "Input",ExpressionUUID->"5588f7fe-ad00-4a2e-9c79-6b19e92a862d"],
+Cell[8198, 227, 1313, 30, 49, "Text",ExpressionUUID->"a08fc8f3-fcf3-4a69-927b-6ccfe787da54"],
+Cell[9514, 259, 4397, 119, 381, "Input",ExpressionUUID->"7fe1fe3a-9c82-4772-a274-9dfb8c8733cc"],
+Cell[13914, 380, 3274, 76, 164, "Input",ExpressionUUID->"83787306-2e75-486a-8e2b-5a8a2572314f"],
+Cell[17191, 458, 1388, 32, 49, "Text",ExpressionUUID->"8c8d7f30-7921-4f62-b16a-1d0a853b880a"],
+Cell[18582, 492, 141, 3, 23, "Text",ExpressionUUID->"537ba235-3966-4d84-b946-09d32a2072dd"],
+Cell[18726, 497, 1192, 22, 47, "Text",ExpressionUUID->"55add061-b4c8-4fe0-a8b1-68e9e834a853"],
+Cell[19921, 521, 141, 3, 23, "Text",ExpressionUUID->"a0342cf4-898c-47aa-a547-2123ba5557dc"],
+Cell[20065, 526, 1419, 28, 49, "Text",ExpressionUUID->"a46a408f-24ee-4051-87e5-2a0c7ce43fb8"],
+Cell[21487, 556, 141, 3, 23, "Text",ExpressionUUID->"be99ddcb-3ce9-4061-bb2c-c2678b45e594"],
+Cell[21631, 561, 2109, 47, 74, "Text",ExpressionUUID->"0f40d611-57b1-41ec-9ae3-0c86e48556f8"],
+Cell[23743, 610, 5324, 152, 341, "Input",ExpressionUUID->"7b00a617-90d6-487d-9f6c-3c161f01a1cd"],
+Cell[29070, 764, 1551, 29, 47, "Text",ExpressionUUID->"f7caf562-7bf4-473a-b945-03af51bd2cc1"],
+Cell[30624, 795, 4887, 113, 309, "Input",ExpressionUUID->"8ce2d5ac-0ca7-448f-9647-2680c6b39f46"],
+Cell[35514, 910, 926, 18, 23, "Text",ExpressionUUID->"84787901-8b20-4759-a81f-c6296865328b"],
+Cell[36443, 930, 671, 11, 23, "Text",ExpressionUUID->"3725f38c-74b9-48ee-9746-c73886107900"],
+Cell[37117, 943, 1240, 22, 23, "Text",ExpressionUUID->"cabf4f86-0faf-489e-b93b-591528277239"],
+Cell[38360, 967, 141, 3, 23, "Text",ExpressionUUID->"2f3cd4a7-dfd2-4110-945d-93bd90efa4e6"],
+Cell[38504, 972, 2516, 48, 75, "Text",ExpressionUUID->"2cac5d44-aa78-4b9b-800b-427cb90dea3a"],
+Cell[41023, 1022, 141, 3, 23, "Text",ExpressionUUID->"298f8848-97be-41c4-a6eb-ed2b690618f5"],
+Cell[41167, 1027, 894, 18, 47, "Text",ExpressionUUID->"4a8276b4-5970-4ca0-93ff-ebc8ccacbe05"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[42098, 1050, 425, 8, 102, "Section",ExpressionUUID->"d498c8e2-1000-4a8c-a6e2-6b72f8b3ed23"],
+Cell[42526, 1060, 620, 11, 47, "Text",ExpressionUUID->"fb9dc17c-a266-474e-a23a-fca7846ba4aa"],
+Cell[43149, 1073, 4403, 117, 251, "Input",ExpressionUUID->"05b40a00-64ac-4926-90e8-61ef9f4eb4be"],
+Cell[47555, 1192, 4397, 119, 381, "Input",ExpressionUUID->"8ad3ede1-43df-4358-b863-34b0f1b9f280"],
+Cell[51955, 1313, 745, 19, 47, "Input",ExpressionUUID->"3f693c7c-95c4-4df4-abcd-79ddfc573039"],
+Cell[52703, 1334, 1347, 37, 47, "Text",ExpressionUUID->"7bbcb618-de3f-44e2-82aa-6c25c1dff8b5"],
+Cell[54053, 1373, 1458, 37, 77, "Input",ExpressionUUID->"3be511b3-c631-4508-8674-7717085c9298"],
+Cell[55514, 1412, 888, 20, 47, "Text",ExpressionUUID->"86fdde94-3d55-4f88-a9e3-6b683eb70281"],
+Cell[56405, 1434, 13754, 304, 831, "Input",ExpressionUUID->"c97917b1-d8b6-4ada-9ebe-15682fc4c74d"],
+Cell[70162, 1740, 201, 3, 23, "Text",ExpressionUUID->"41f9811b-4748-464d-82f7-f13f0d8ff4e1"],
+Cell[70366, 1745, 1210, 29, 47, "Input",ExpressionUUID->"18e7d5d2-b332-43d6-af36-96e4ccd4c384"],
+Cell[71579, 1776, 626, 14, 23, "Text",ExpressionUUID->"fb748ab4-7063-4a53-91f9-343eb2fa3614"],
+Cell[72208, 1792, 929, 19, 47, "Text",ExpressionUUID->"4ba6c79c-2913-404d-aba2-674566558cc4"],
+Cell[73140, 1813, 1400, 37, 47, "Text",ExpressionUUID->"318a596d-bac9-4707-b797-bdc6b7e88f7a"],
+Cell[74543, 1852, 1104, 24, 47, "Text",ExpressionUUID->"21050e04-f166-4bbb-9122-1411507b2b13"],
+Cell[75650, 1878, 980, 25, 47, "Input",ExpressionUUID->"918b1587-ac6b-4a98-9f58-c62c955a0414"],
+Cell[76633, 1905, 992, 26, 47, "Input",ExpressionUUID->"a62e3567-5216-48e4-b791-c9a5af41e2c1"],
+Cell[77628, 1933, 1036, 26, 47, "Input",ExpressionUUID->"4d3df0fa-7c6f-4bc7-b4b3-33d6afd36566"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[78701, 1964, 324, 5, 102, "Section",ExpressionUUID->"40550abb-2fb3-4e1c-a598-30df89098a09"],
+Cell[79028, 1971, 309, 6, 23, "Text",ExpressionUUID->"b51c3875-3cda-4956-8e96-d8aaa9386251"],
+Cell[79340, 1979, 863, 21, 129, "Input",ExpressionUUID->"9ba631bc-334d-4007-a34f-8b31a637a682"],
+Cell[80206, 2002, 498, 11, 23, "Text",ExpressionUUID->"6e20efaa-cd65-462b-a430-fbd01ff3cf53"],
+Cell[80707, 2015, 777, 15, 47, "Input",ExpressionUUID->"3bc3950e-0842-4332-b583-597d1d582216"],
+Cell[81487, 2032, 8032, 220, 599, "Input",ExpressionUUID->"b3f13f80-ea69-487a-a071-8d19474981db"],
+Cell[89522, 2254, 1030, 23, 47, "Text",ExpressionUUID->"8e6c1b3c-1a28-426c-b816-d81527bc40cc"],
+Cell[90555, 2279, 842, 19, 23, "Text",ExpressionUUID->"a539c6eb-9be6-47e9-b38a-ee0bdb01dcb0"],
+Cell[91400, 2300, 1454, 38, 47, "Text",ExpressionUUID->"a8fac5a7-0c69-4900-b678-b1a4234d2105"],
+Cell[92857, 2340, 1507, 37, 47, "Text",ExpressionUUID->"311b5b4c-54cd-42a0-8656-2f0e5ffb23ea"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
